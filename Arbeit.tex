@@ -25,96 +25,51 @@
     \begin{spacing}{1}
         \pagenumbering{roman}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Deckblatt                                      %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \pagestyle{empty}
         \input{abschnitte/Deckblatt}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Erklärung                                      %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \pagestyle{bisHauptteil}
-       % \input{abschnitte/Erklaerung}
-       
-       % \newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Inhaltsverzeichnis                             %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \input{abschnitte/Erklärung}
+        \newpage
         \tableofcontents
         \newpage
+        
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Abbildungsverzeichnis                          %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %\listoffigures
-        %\newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Abkürzungsverzeichnis                          %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %\printglossary[title={Abkürzungsverzeichnis},type=\acronymtype]
-        %\newpage
+        
+    %\printglossary[title={Abkürzungsverzeichnis}, type=\acronymtype]
+        
     \end{spacing}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Problemstellung_und_Zielsetzung                %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \pagestyle{Hauptteil}
     \setcounter{page}{1}
     \pagenumbering{arabic}
     \begin{spacing}{1.25}
-    \input{abschnitte/Problemstellung}
-	%\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Grundlagen                                     %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\input{abschnitte/Fragestellung}
-	%\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Vorgehen_im_Projekt                            %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \input{abschnitte/Ziele_Hypothesen}
-	\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Projektergebnisse                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %\input{abschnitte/Theoriebezug_Forschungsstand}
-    %\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Projektergebnisse                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \input{abschnitte/Methode}
-    %\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Projektergebnisse                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \input{abschnitte/Evaluierungsstrategie}
-    \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Projektergebnisse                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Literaturverzeichnis                           %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \input{abschnitte/Einleitung}
+
+	\input{abschnitte/Grundlagen}
+
+    \input{abschnitte/Methodik}
+
+    \input{abschnitte/Projektergebnisse}
+
+	\input{abschnitte/Evaluation}
+	
+    \input{abschnitte/Fazit_Ausblick}
+
     \printbibliography[title={Literaturverzeichnis}]
     
-    \input{abschnitte/Gliederung}
+    %\input{abschnitte/Gliederung}
     \end{spacing}
 %	\newpage
 %	\begin{spacing}{1.25}
-%	\input{abschnitte/Erklärung}
+%	
 %	\end{spacing}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Anhang                                         %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
   % \input{abschnitte/Anhang}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Ende                                           %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
