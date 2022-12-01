@@ -1,0 +1,247 @@
+\section{Beschreibung der Umsetzung}
+\subsection{Konzept}
+Zu Beginn des Dashboard Projekts, welches ich mit zwei anderen Pflichtpraktikanten durchgeführt habe, wurde ein Konzept erstellt. In diesem Konzept wurden die Vision, eine konkrete Ideenbeschreibung, mehrere User Stories, Mockups und die geplanten Technologien, die zum Einsatz kommen werden, festgehalten. 
+
+Die Vision des Projekts DashNET lautete: \glqq Bis Ende Mai wollen wir ein individuell konfigurierbares Web-Dashboard entwickelt haben, welches Usern interessante und aktuelle Informationen zum Unternehmen oder Orten ihrer Wahl anzeigt.\grqq{} Diese Vision haben wir verfolgt und konnte nach zwei Monaten Entwicklungszeit erreicht werden. 
+
+Um eine gute Anforderungsübersicht zu erhalten, wurden mehrere User Stories verfasst. Die Zielgruppe für das Dashboard sind CONET Mitarbeiter gewesen. Jedoch sollte sich das Projekt auch für zukünftige Entwickler eignen, die auf dieser Grundlage ihre eigene Software aufsetzen möchten. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/userstories}
+    \caption{Userstories}
+\end{figure}
+
+Für das Frontende haben wir uns für das Web-Framework Angular mit dem UI-Kit PrimeNG entschieden. Das Backend sollte mit Flask, einem Python Server Package, entwickelt werden. Aufgrund des geringen Boilerplate Codes, also der Code der nötig ist, den Server zum Laufen zu bekommen, ist eine zügige Entwicklung und ein einfaches Deployment möglich. Als Datenbank wurde eine MongoDB gewählt. Da fast alle Daten innerhalb des Dashboard im JSON Format vorliegen, war eine dokumentenbasierte Datenbank die beste Wahl.
+
+\subsection{Grundlegender Aufbau des Dashboards}
+Ein Dashboard besteht aus mehreren Widgets. Ein Widget ist eine Kachel, die beliebigen Inhalt anzeigen kann. Für das DashNET Dashboard haben wir uns entschieden, folgende Widgets prototypisch zu implementieren: Eine Textanzeige, eine Textanzeige mit einem Icon (für Wetteranzeigen und Ähnliches), eine Bildanzeige und einen Graphen.
+
+Anders als typische Implementationen von Dashboards, sind die Widgets nicht fest mit dem anzuzeigenden Inhalt und der dahinterstehenden API verbunden. Es handelt sich hierbei um einen generischen Ansatz, der versucht möglichst viele Use-Cases abzudecken. Der Vorteil an dieser Vorgehensweise ist, dass nicht für jede API ein neues Widget angelegt werden muss, sondern vorhandene Widget-Typen mehrmals genutzt werden können.
+
+Damit ein Widget die Daten erhält, die es braucht, wird vom Frontend ein GET oder POST Request an das Backend gestellt. Innerhalb dieses Requests wird eine ID mitgeliefert. Das Backend nimmt diese ID und sucht in der MongoDB nach dem passenden Dashboard, um herauszufinden, was der Typ des Widgets ist. Anschließend wird mithilfe des Typs die aufzurufende API ermittelt.  Danach kann das Backend mittels einer Konfigurationsdatei einen Request an die Externe API senden und die Response mithilfe von Filtern und Maps einem Widget zuordnen. Das Backend kann jetzt in vereinheitlichter Form dem Frontend die Widgetdaten in der Response zurückschicken. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/dashboard}
+    \caption{Dashbaord}
+\end{figure}
+
+\subsection{Aufbau des Backends}
+Der Flask Server wurde nach REST-Vorgaben als API entwickelt. Die Hauptdatei des Backends ist die \texttt{app.py} Datei. Das ist der Ausgangspunk des Projekts. In dieser Datei wir eine Flask Instanz erstellt und alle Parameter, die der Server zum Starten braucht, eingegeben. Für eine einfachere Kommunikation mit den anderen Entwicklern, sowie für eine bessere Übersicht, wird hier ebenfalls eine Swagger Dokumentation erzeugt. Diese gibt einen Überblick über alle Schnittstellen des Backends, wie diese aufzurufen sind und welche Ergebnisse diese liefern. Ebenso kann man die Aufrufe dort ausprobieren, ohne sie fest in einer Software implementieren zu müssen. Dies hat sich im Nachhinein als sehr wertvoll herausgestellt. Mit Flask kann in nur wenigen Zeilen Code eine nach außen ansprechbare Route definiert werden. Im folgenden Quellcodeausschnitt ist eine solche Route abgebildet. 
+
+\begin{python}
+@app.route('/')
+def index():
+	return redirect('http://127.0.0.1:5000/apidocs', code=303)
+\end{python}
+
+Beim Aufruf der Domain ohne eine bestimmte Route, wird der Nutzer auf die API Dokumentation weitergeleitet. Der aufrufende Client bekommt dabei den HTTP-Response Code 303 zurück. Dies ist einer der Weiterleitungscodes mit der Beschreibung \glqq See Other\grqq{}.
+
+Für die Swagger Dokumentation wurde ein hybrider Ansatz aus automatischer Generierung und manueller Dokumentierung gewählt. Mittels der \texttt{swag\_{}from} Annotation wird zu der Methode die passende Dokumenation generiert. Diese enthält die aufzurufende Route und eventuelle Parameter, die übergeben werden können. Weitere Beschreibungen der Route werden in einer Yaml Datei hinterlegt.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/swagger}
+    \caption{Swagger Dokumentation mit Flasgger}
+\end{figure}
+
+Im nachfolgenden Code ist die Login Route abgebildet. Diese kann nur mittels eines POST-Requests an \texttt{/account/login} aufgerufen werden. Normale GET-Requests, wie sie zum Beispiel bei einer URL Eingabe in einem Browser abgeschickt werden, werden von der Funktion nicht akzeptiert. Dies macht zwar aus sicherheitstechnischer Sicht keinen Unterschied, jedoch kann nach REST Spezifikation abgelesen werden, welche Befugnisse die Funktion hat. POST Requests können Änderungen am Server vornehmen und sind oft abhängig vom Body des Requests. GET Requests hingegen dürfen lediglich Daten lesen und diese zurückgeben. Die Login Funktion nimmt zwei Query Parameter an, E-Mail und Passwort. Diese werden in der URL beim Aufruf mit übergeben. Der Aufruf wird dann in folgender Form gestellt: \texttt{/account/login?email=test@example.de\&{}password=abc123}. Über \texttt{request.args.get('Query Parameter')} kann der Query Parameter ausgelesen und für die weitere Überprüfungen genutzt werden. 
+
+\begin{python}
+@account_routes.route('/account/login', methods=['POST'])
+@swag_from(os.path.dirname(__file__) + "/../docs/login.yml")
+def login():
+    email = request.args.get('email')
+    password = request.args.get('password')
+
+    status = account.login(email, password)
+    token = encode_token({'email': email})
+    if status:
+        return r.respond({'status': True, 'token': token})
+    return r.respond({"status": False, "description": "e-mail or password invalid"}, 400)
+\end{python}
+
+\subsection{Implementierung der Modularität}
+Wie bereits in der Userstory 15 in Abbildung 4 beschrieben wird, soll die Anbindung an neue Datenquellen möglichst einfach sein. Bereits angebundene Schnittstellen sollen an einer einzigen Stelle austauschbar sein, sodass zukünftige Entwickler nicht den gesamten Quellcode lesen und verstehen müssen, um zu sehen, an welchen Stellen Anpassungen gemacht werden müssen. Um dieses Konzept umzusetzen, habe ich ein Schema für eine Konfigurationsdatei entwickelt, das simpel genug ist, dass Änderungen von einem Unbeteiligten vorgenommen werden können. Das Schema musste allerdings auch gleichzeitig so umfangreich sein, dass alle APIs sämtlicher Anbieter angebunden werden können. Das Schema und die Implementierung des Schemas sollte ebenfalls überprüfbar und testbar sein. 
+
+Die Konfiguration wurde in mehrere \texttt{*.config} Dateien aufgeteilt. Grundlegend gibt es zwei verschiedene config Typen. Die API Config beschreibt die Datenquellen und wie diese verarbeitet werden sollen. Die Widget Config beschreibt den Aufbau der Widgets, die im Frontend angezeigt werden.
+
+\subsubsection{API Config}
+
+Die Konfigurationsdatei ist im JSON Format geschrieben, damit sie in Entwicklungsumgebungen einfach gelesen und bearbeitet werden kann. Zusätzlich dazu können in den meisten Editoren Textblöcke ein- und wieder ausgeklappt werden. Python bietet ebenfalls sehr gute Packages, mit denen JSON Dateien gelesen und manipuliert werden können. Um jedoch der Verwechslung mit klassischen JSON Dateien vorzubeugen, haben die Konfigurationsdateien die Dateiendung \texttt{*.config}. In Abbildung 7 ist eine der config Dateien beispielhaft abgebildet. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 13cm]{bilder/api_config}
+    \caption{Konfigurationsdatei der Openweather API}
+\end{figure}
+
+Am Anfang jeder config Datei wird der Name der API festgelegt. Dieser wird auch in der Konfiguration der einzelnen Widgets festgelegt, damit die Datenquelle zugeordnet werden kann. Die aufzurufende URL setzt sich zusammen aus der URL die am Anfang der Konfiguration angegeben wird und der URL die im jeweiligen Request festgelegt wird. Sollte sich die Domain der API ändern, muss nicht jeder einzelne Request angepasst werden, sondern die URL kann zentral für alle Requests angepasst werden. 
+
+Innerhalb des Requests wird ebenfalls ein Name festgelegt. Dieser wird innerhalb eines Widgets referenziert. Über den Parameter \texttt{type} lässt sich die Request Methode, die an die externe API geschickt wird bestimmen. Hier sind alle gängigen Methoden möglich: \texttt{GET, POST, PUT, DELETE, HEAD, PATCH}.
+
+Beim Aufruf einer API müssen häufig Query Parameter in der URL mitgegeben werden. Diese können in \texttt{params} eingetragen werden. Dort findet ein Mapping von einer internen Bezeichnung zur Bezeichnung, wie sie die externe API erwartet, statt. Dieses Mapping sorgt dafür, dass das Widget selber nicht wissen muss, wie genau die API angesprochen wird, sondern lediglich wie die Bezeichnung heißt. Als Beispiel kann bei einer Wettersuche für eine Stadt im Widget das Attribut \texttt{city} befüllt werden. Dass die API von Openweather als Query Parameter nicht \texttt{city}, sondern \texttt{q} benötigt, muss das Widget nicht wissen. Dies hat den weiteren Vorteil, dass APIs im Nachhinein beliebig ausgetauscht werden können. 
+
+Über die \texttt{dynamic\_{}params} können Query Parameter aus dem ankommenden Request Body entnommen und in die ausgehende URL eingesetzt werden. Dies war unter Anderem für die Anbindung einer CONET internen API notwendig. Das Frontend kann im Request Body den Inhalt eines Authentication Cookies der API schicken. Teil des Inhalts ist eine UserID, die dann aus dem Request Body ausgelesen wird und über die \texttt{dynamic\_{}params} in die URL eingefügt wird. In der URL in der config Datei wird der Name des dynamischen Parameters in geschweifte Klammern gesetzt, sodass er beim Aufruf zur Laufzeit ausgetauscht werden kann. Dies sieht dann wie folgendermaßen aus:  \texttt{\glqq url\grqq{}: \glqq http://.../\{UserID\}\grqq{}}.
+
+Der letzte Teil der der Request Konfiguration sind die Response Filter. Die Response Filter bestehen aus einem Array mit jeweils drei Attributen pro Arrayeintrag. Der erste Parameter ist die \texttt{query}. Wenn das Backend den Request an die Externe API gestellt hat und eine Response erhält, wird diese Response mit der query gefiltert. Dazu nutzt das Python Backend die JMES-Path Bibliothek. Diese bietet die Möglichkeit mit einfacher Syntax bestimmte Bereiche aus der JSON Response rauszufiltern. Sollte nicht nur ein einzelnes Attribut in der JSON Response ausgewählt werden, sondern ein ganzer JSON-Bereich, muss der Parameter \texttt{json\_{}response} auf \texttt{true} gestellt werden. Dadurch wird die darauffolgende Formatierung übersprungen. Mithilfe des \glqq map\grqq{} Attributs, kann das Ergebnis der Query auf ein Content-Attribut eines Widgets gemapped werden. Wenn die \texttt{json\_{}response} false ist, gibt es die Möglichkeit das Ergebnis der Query zu formatieren. Der Standardwert des \texttt{format} Attributs ist \texttt{\{q\}}. Alles innerhalb der geschweiften Klammern wird als Python Code ausgewertet. \texttt{q} ist dabei das Ergebnis der Query. Alles außerhalb der Klammern wird als String übernommen und ohne weitere Evaluierung angefügt. 
+
+\subsubsection{Widget Config}
+
+Innerhalb der Widget Config Datei werden alle Widgets definiert. In Abbildung 8 ist die Konfiguration des Wetter Widgets beispielhaft abgebildet.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 7cm]{bilder/widget_config}
+    \caption{Konfigurationsdatei des Weather Widgets}
+\end{figure}
+
+Dort wird zunächst der Typ des Widgets definiert. Dieser Typ wird im Frontend genutzt, um die passende Darstellung zuordnen zu können. Der Parameter \texttt{api} wird auf einen Namen einer API config  gemapped. Hierbei ist es wichtig, dass der Name exakt übereinstimmt, da die Zuordnung sonst nicht erfolgen kann. Eine weitere Zuordnung findet beim Request statt. Das Content Attribut beinhaltet ein Array mit allen Daten, die das Widget anzeigen soll. Diese können entweder simple Strings oder ganze JSON-Blöcke sein. Die Attribute werden ebenfalls der API Config zugeordnet. Das Gegenstück wird in der API Config unter \texttt{requests > response\_{}filter > map} angegeben.
+
+Im Setup Bereich können die Felder definiert werden, die das Widget für die initiale Einrichtung braucht. Der Typ beschreibt hierbei die Art des Eingabefeldes, was im Frontend angezeigt wird. Aktuell im Projekt implementiert sind \texttt{textbox} und \texttt{dropdown}. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/add_widget}
+    \caption{Dialog zum Hinzufügen eines Widgets}
+\end{figure}
+
+\subsection{Aufbau des Requests}
+Der Request des Backends an eine externe API wird in den Konfigurationsdateien definiert. Der tatsächliche Zusammenbau und der Aufruf des Requests findet allerdings in der \texttt{request\_{}generator.py} statt. Beim Initialisieren der Datei werden die Konfigurationsdateien, sowie die API Keys in zwei Dictionaries geladen.
+ 
+\begin{python}
+config = api_loader.load_config()
+keys = api_loader.load_keys()
+\end{python}
+
+Die \texttt{load\_{}config()} Methode iteriert dabei über alle Dateien in einem speziellen Unterordner des Projekt und baut daraus ein Dictionary mit JSON Objekten zusammen. 
+Die \texttt{load\_{}keys()} Methode liest nur eine key Datei ein und konvertiert sie zu einem JSON Objekt.
+
+\begin{python}
+def load_config():
+    """Lädt die api config dateien und parsed sie als json objekt"""
+    _, _, filenames = next(os.walk((os.path.dirname(__file__) + "/../config/apis")))
+    apis = {}
+    for f in filenames:
+        api = json.load(open(os.path.dirname(__file__) + f"/../config/apis/{f}", "r", encoding="utf-8"))
+        apis[api['name']] = api
+    return apis
+
+
+def load_keys():
+    """Lädt die key.config datei und parsed sie als json objekt"""
+    return json.load(open(os.path.dirname(__file__) + "/../config/api_keys.config", "r"))
+\end{python}
+
+Wird jetzt ein Request vom Frontend für ein Widget gestellt, wird folgende Route angesteuert:
+
+\begin{python}
+@dashboard_routes.route('/dashboards/<path:dashboard_id>/widgets/<path:widget_id>', methods=['POST'])
+@swag_from(os.path.dirname(__file__) + "/../docs/get_widget_by_id.yml")
+@token_required
+def get_widget_by_id(email, dashboard_id, widget_id):
+    body = request.json
+
+    type = db.get_widget_type(email, dashboard_id, widget_id)
+    api = get_widget_api(type)
+    api_request = get_widget_request(type)
+
+    query_parameter = request.args.to_dict()
+
+    response, status, dump = request_generator.api_call(api, api_request, query_parameter, body)
+
+    return r.respond(response, status, dump)
+\end{python}
+
+Der Funktion wird eine Id übergeben. Anhand dieser Id und dem aktuell angemeldeten Nutzer wird die Datenbank nach dem Widget durchsucht. Wurde das Widget gefunden, kann der Widget Typ daraus abgelesen werden und damit ein externer API Aufruf gestartet werden. Dieser wird in der \texttt{api\_{}call()} Methode durchgeführt. Die \texttt{api\_{}call()} Methode ruft zunächst eine Hilfsmethode auf, die mittels der Konfigurationsdatei und Keydatei alle nötigen Daten für den Request zusammenbaut. 
+
+\begin{python}
+def build_request(api_name, request_name, params, body):
+    """Baut den API Aufruf aus der config und den übergebenen Parametern zusammen"""
+    for request in config[api_name]['requests']:
+        if request['name'] == request_name:
+            url = config[api_name]['url'] + request['url']
+            # Setzt header
+            headers = config[api_name]['header']
+
+            # Check ob übergebener Parameter nicht in der Config steht
+            argument_mismatch = False
+            for p in params:
+                if p not in request['params']:
+                    argument_mismatch = True
+                    return argument_mismatch, "", "", "", "", "", ""
+
+            # Parameter aus body in url und header und parameter einsetzen
+            if body is not None:
+                for key in body:
+                    url = url.replace("{" + f"{key}" + "}", f"{body[key]}")
+                    for header in headers:
+                        headers[header] = headers[header].replace("{" + f"{key}" + "}", f"{body[key]}")
+
+            # Tauscht input query parameter mit alias
+            api_params = {}
+            for k, v in params.items():
+                api_params[request['params'][k]] = v
+
+            # Setzt dynamische parameter aus dem body in query parameter ein
+            for i in request['dynamic_params']:
+                api_params[i] = body[i]
+
+            # Fixed Params evaluieren und in parameter einsetzen
+            for k, v in request['fixed_params'].items():
+                if '{' in v:
+                    v = v.replace('{', '').replace('}', '')
+                    v = eval(v)
+                api_params[k] = v
+
+            # Setzt key in request ein
+            key_alias = config[api_name]['key_alias']
+            for entry in keys['keys']:
+                if entry['name'] == api_name:
+                    api_params[key_alias] = entry['key']
+
+            # Bestimmt request type
+            request_type = request['type']
+            # Lädt Filter
+            filter = request['response_filter']
+
+            is_json = request['json_response']
+
+            return argument_mismatch, url, request_type, api_params, headers, filter, is_json
+    return True, "", "", "", ""
+\end{python}
+
+Die Methode \texttt{build\_{}request()} wird direkt zu Beginn der \texttt{api\_{}call()} Methode aufgerufen, damit eine gewisse logische Kapselung zwischen Zusammenbau des Requests und Aufruf des Requests gewährleistet werden kann. Über \texttt{requests.request(request\_{}type, url, params=params, headers=headers)} wird der Request an die externe API gestellt. Anschließend wird die Response gefiltert, formatiert und einem Widget zugeordnet. Die Filter, Formatierungsvorlagen und Mappings werden in der Konfigurationsdatei angegeben und an dieser Stelle geladen und ausgeführt. Wie bereits zuvor erläutert, wird das Formatieren übersprungen, wenn ein JSON-Block als Inhalt für ein Widget-Content Attribut vorgesehen ist.  
+
+\begin{python}
+def api_call(api, request, params, body):
+    """Stellt Request an externe API"""
+    argument_mismatch, url, request_type, params, headers, filter, is_json = build_request(api, request, params, body)
+
+    if argument_mismatch:
+        return {"error": "argument mismatch"}, 400, True
+
+    r = requests.request(request_type, url, params=params, headers=headers)
+    # Error log falls Statuscode nicht 200 oder 201 ist
+    if r.status_code not in [200, 201]:
+        api_err.log_err(api, request, params, r.url, request_type, r.status_code, r.text)
+        return r.text, 400, False
+
+    filter_list = rg.extract_filter(filter)
+    mapping_list = rg.extract_mapping(filter)
+    format_list = rg.extract_format(filter)
+
+    if not is_json:
+        query_response_list = rg.apply_filter(filter_list, r.json())
+        query_response_list = rg.apply_format(format_list, query_response_list)
+        widget = build_widget_json(mapping_list, query_response_list)
+    else:
+        query_response_list = rg.apply_filter(filter_list, r.json())
+        widget = build_widget_json(mapping_list, query_response_list)
+
+    return widget, 200, True
+\end{python}
+
+Anschließend werden die Daten für das Widget in der \texttt{build\_{}widget\_{}json()} Methode zusammengebaut und zusammen mit dem Statuscode 200 zurückgegeben. 
+

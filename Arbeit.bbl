@@ -1,0 +1,113 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{Sus}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=3e26b7fa1c97091f0b7033d1d02f5900}{%
+           family={Administration},
+           familyi={A\bibinitperiod},
+           given={U.S.\bibnamedelimi General\bibnamedelima Services},
+           giveni={U\bibinitperiod\bibinitdelim G\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{3e26b7fa1c97091f0b7033d1d02f5900}
+      \strng{fullhash}{3e26b7fa1c97091f0b7033d1d02f5900}
+      \strng{bibnamehash}{3e26b7fa1c97091f0b7033d1d02f5900}
+      \strng{authorbibnamehash}{3e26b7fa1c97091f0b7033d1d02f5900}
+      \strng{authornamehash}{3e26b7fa1c97091f0b7033d1d02f5900}
+      \strng{authorfullhash}{3e26b7fa1c97091f0b7033d1d02f5900}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{System Usability Scale (SUS)}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.usability.gov/how-to-and-tools/methods/system-usability-scale.html
+      \endverb
+      \verb{url}
+      \verb https://www.usability.gov/how-to-and-tools/methods/system-usability-scale.html
+      \endverb
+    \endentry
+    \entry{Memory}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5abd794983b222497406d0ec43c6ee8f}{%
+           family={Snyder},
+           familyi={S\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {(MIT press)}%
+      }
+      \strng{namehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{fullhash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{bibnamehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{authorbibnamehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{authornamehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{authorfullhash}{5abd794983b222497406d0ec43c6ee8f}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Music and memory: An introduction}}
+      \field{year}{2000}
+    \endentry
+    \entry{Datenmenge}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=62182ca58a739daa8ddd8a48b7b19abb}{%
+           family={Statista},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{fullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{bibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorbibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authornamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorfullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Volumen der jährlich generierten digitalen Datenmenge}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/
+      \endverb
+      \verb{url}
+      \verb https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

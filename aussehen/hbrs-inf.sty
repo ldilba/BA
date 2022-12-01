@@ -1,0 +1,199 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Copyright Free Software Lab, 2011                                                %
+%                                                                                  %
+% Dieses Programm ist freie Software. Sie können es unter den Bedingungen der      %
+% GNU General Public License, wie von der Free Software Foundation veröffentlicht, %
+% weitergeben und/oder modifizieren, entweder gemäß Version 3 derLizenz oder       %
+% (nach Ihrer Option) jeder späteren Version.                                      %
+%                                                                                  %
+% Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen      %
+% von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite    %
+% Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK.      %
+% Details finden Sie in der GNU General Public License.                            %
+%                                                                                  %
+% Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem      %
+% Programm erhalten haben. Falls nicht, siehe <http://www.gnu.org/licenses/>.      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{graphicx}
+\usepackage[usenames]{xcolor}
+\usepackage{svg}
+\usepackage{datetime}
+\usepackage{fontspec}
+\usepackage{pythonhighlight}
+\setmainfont{Arial}
+\setlength{\headheight}{1.3\baselineskip}
+\usepackage{float}
+
+\usepackage{hyperref}
+
+\usepackage{xcolor}
+\usepackage{color}
+
+\definecolor{keyword}{rgb}{0,0.6,0}
+\definecolor{identifier}{rgb}{0,0,0}
+\definecolor{string}{rgb}{0.69,0,0.25}
+\definecolor{comment}{rgb}{0.58,0,0.82}
+
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,
+  showstringspaces=false,
+  keywordstyle=\bfseries\color{keyword},
+  commentstyle=\itshape\color{comment},
+  identifierstyle=\color{identifier},
+  stringstyle=\color{string},
+}
+
+
+
+% Metadaten der PDF-Datei setzen
+\hypersetup{
+    pdftitle={\ThesisTitle},
+    pdfsubject={\ThesisSubject},
+    pdfauthor={\ThesisAuthor},
+    pdfcreator={LuaLaTeX},
+    pdfkeywords={\ThesisKeywords}
+}
+
+% Links anklickbar machen
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\hypersetup{
+    colorlinks = true,
+    linkcolor = black,
+    urlcolor = black,
+    citecolor = black,
+    breaklinks = true,
+}
+
+% Abkürzungsverzeichnis (muss vor ngerman stehen)
+\usepackage[acronym, toc]{glossaries-extra}
+\makeglossaries
+\loadglsentries{datenbanken/Abkuerzungsverzeichnis.tex}
+
+% Deutsch und passende Seitenränder
+\usepackage[ngerman]{babel,isodate}
+\usepackage{csquotes}
+\usepackage[paper=a4paper,left=40mm,right=20mm,top=25mm,bottom=10mm]{geometry}
+\setlength{\footskip}{6mm} % Abstand Seitenzahl zu Text
+
+%% Literatur
+% Zitate
+\usepackage{hypernat}
+
+% Literaturverzeichnis nach ISO 690 (Nachfolger von DIN 1505)
+% Further help at https://github.com/michal-h21/biblatex-iso690
+\usepackage[style=iso-authoryear]{biblatex}
+\addbibresource{datenbanken/Literaturverzeichnis.bib}
+
+\clubpenalty=10000 % schliesst Schusterjungen aus
+\widowpenalty=10000 % schliesst Hurenkinder aus
+
+\usepackage{setspace}
+
+\parskip0.5ex % parskip auf font/2
+\parindent0ex % kein Einzug am Absatzbeginn
+
+\RedeclareSectionCommand[beforeskip=12pt,afterskip=5pt]{section}
+\RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{subsection}
+\RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{subsubsection}
+\RedeclareSectionCommand[beforeskip=11pt,afterskip=0pt]{paragraph}
+
+% Kopfzeile und Fußzeile default
+\usepackage{lastpage}
+\usepackage[automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearmainofpairofpagestyles
+\addtokomafont{pageheadfoot}{\upshape}
+
+% Kopfzeile und Fußzeile definiert für Seiten zwischen Deckblatt und dem Hauptteil
+\newpagestyle{bisHauptteil}{
+        {\hfill}
+        {\hfill}
+        {\ThesisSubjectType\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\pagemark}
+}
+
+\newpagestyle{Hauptteil}{
+        {\hfill}
+        {\hfill}
+        {\ThesisSubjectType\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+
+% Quellcode einfuegen und highlighten
+\usepackage{listings}
+\definecolor{light-gray}{gray}{0.80}
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt,showstringspaces=false}
+\lstset{basicstyle=\ttfamily\small,commentstyle=\itshape,backgroundcolor=\color{light-gray}}
+\lstset{captionpos=b,extendedchars=true,inputencoding=utf8,breaklines=true,language=C++}
+
+% Gantt-Diagramm unterstützung
+\usepackage{pgfgantt}
+
+% versucht, Umbrueche zu erzwingen, auch wenn es zu Lasten
+% des Schriftbildes geht. Hier gewaehlt, damit auf keinen Fall
+% Woerter im Blocksatz ueber den Rand laufen.
+\tolerance 9999
+
+
+%%%%%%%%
+%Makros
+%%%%%%%%
+
+% Figure Item, Caption, label
+\newcommand{\fhbrsfigure}[3]{
+    \begin{figure}[h]
+        #1
+        \caption{#2}\label{fig:#3}
+    \end{figure}
+}
+
+% Graphicsname, Caption, width, label
+\newcommand{\fhbrsgraphics}[4]{
+    \begin{figure}[h]
+        \begin{center}
+            \includegraphics[width=#3]{img/#1}
+        \end{center}
+        \caption{#2}\label{fig:#4}
+    \end{figure}
+}
+
+% pos, Caption, Columns
+\newenvironment{fhbrstable}[3]{
+    \begin{table}[#1]
+        \caption{#3}
+        \begin{tabular*}{\textwidth}{#2}
+            \label{tab:table}
+        \end{tabular*}
+    \end{table}
+}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\module}[1]{\texttt{#1}}
+
+\newcommand{\introterm}[1]{\emph{#1}}
+
+% Name, Comment
+\newcommand{\introglosterm}[2]{
+    \xglossary{name={#1},description={#2}}{\emph{#1}}
+}
+
+\newcommand{\introglostermshort}[3]{
+    \xglossary{name={#1},description={#2.\\#3}}{#1 (\emph{#2})}
+}
+
+% Text
+\newcommand{\todo}[1]{
+    \begin{itemize}
+        \color{red}{\item#1}
+    \end{itemize}
+}
