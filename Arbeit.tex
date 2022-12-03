@@ -1,23 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Copyright Free Software Lab, 2011                                                %
-%                                                                                  %
-% Dieses Programm ist freie Software. Sie können es unter den Bedingungen der      %
-% GNU General Public License, wie von der Free Software Foundation veröffentlicht, %
-% weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder      %
-% (nach Ihrer Option) jeder späteren Version.                                      %
-%                                                                                  %
-% Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen      %
-% von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite    %
-% Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK.      %
-% Details finden Sie in der GNU General Public License.                            %
-%                                                                                  %
-% Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem      %
-% Programm erhalten haben. Falls nicht, siehe <http://www.gnu.org/licenses/>.      %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Anfang                                         %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[a4paper,11pt,headings=small,headsepline,titlepage,listof=totoc,index=totoc,bibliography=totoc,bibliography=totocnumbered]{scrartcl}
 \include{Meta}
 \usepackage{aussehen/hbrs-inf}
@@ -36,8 +16,9 @@
         
 
         %\listoffigures
-        
-    %\printglossary[title={Abkürzungsverzeichnis}, type=\acronymtype]
+        \input{datenbanken/Abkuerzungsverzeichnis}
+        \newpage
+%    \printglossary[title={Abkürzungsverzeichnis},type=\acronymtype] 
         
     \end{spacing}
 
@@ -49,16 +30,24 @@
     
     
     \input{abschnitte/Einleitung}
+    \newpage
 
 	\input{abschnitte/Grundlagen}
+	\newpage
 
     \input{abschnitte/Methodik}
-
+	\newpage
+	
     \input{abschnitte/Projektergebnisse}
+    \newpage
 
 	\input{abschnitte/Evaluation}
+	\newpage
 	
     \input{abschnitte/Fazit_Ausblick}
+    \newpage
+    
+    \nocite{*}
 
     \printbibliography[title={Literaturverzeichnis}]
     

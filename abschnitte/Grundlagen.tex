@@ -1,10 +1,18 @@
 \section{Grundlagen}
 
 \subsection{Python API mit Flask}
-text
+Python ist eine um 1991 von Guido van Rossum entwickelte Programmiersprache. Bei der Entwicklung von Python wurde ein besonderer Fokus auf die Lesbarkeit von Code gesetzt. Dank der simplifizierten Syntax im Vergleich zu anderen höheren Programmiersprachen wie Java oder C\#, ist Python auch in Bereichen, wie in der Mathematik oder der Wissenschaft ein häufig genutztes Werkzeug. Python bietet ebenfalls die Möglichkeit, von anderen Entwicklern bereitgestellte Bibliotheken in das eigene Projekt zu integrieren.\footcite{python2021python} 
+
+Flask ist eine der verfügbaren Bibliotheken, die ein Framework für die Implementierung eines Webbasierten \ac{api} bereitstellt. Eine API dient dazu, Funktionen und Routen zu definieren, um die Kommunikation zwischen dem Frontend und dem Backend herzustellen. Das Flask Framework ist im Gegensatz zu anderen Frameworks sehr klein. Dies ermöglicht ein schnelles aufsetzen und entwickeln. Da Flask nur die nötigsten Grundlagen für eine API mitliefert, ist der Code besser lesbar und damit für andere Entwickler besser wartbar.\footcite{grinberg2018flask} 
+
+Die Flask API wird für die Anbindung des Frontends an die Datenbank, sowie die Anbindung an die Kommunikationsschnittstelle von RabbitMQ verwendet. Sie nimmt die Daten oder die Eingaben des Nutzers entgegen und vermittelt sie an den richtigen Dienst, damit sie von einer KI-Schnittstelle ausgewertet werden können. Anschließend kann die API angefragt werden, ob es bereits Antworten von einer \ac{ki} zu der vorher geschickten Anfrage gab. Falls die API die Auswertung der KI erhalten hat, wird diese ans Frontend geschickt, um sie dort anzeigen zu können.  
 
 \subsection{Angular Frontend}
-text
+Eine grundlegende Website wird klassisch mit \ac{html} und JavaScript erstellt. Um eine moderne Website zu entwickeln, die ihren Inhalt nicht beim ersten Aufrufen lädt, sondern erst dann, wenn er benötigt wird, müssen Konzepte wie \ac{ajax} verwendet werden. Angular ist ein von Google gebaut und gepflegtes Open Source Framework, welches das Entwickeln von komplexen webbasierten Anwendungen vereinfachen soll. Angular bietet im Gegensatz zu anderen Webframeworks wie React und Vue.js eine vollumfängliche Bibliothek mit der nahezu alle Aspekte in der Web Entwicklung abgedeckt werden können.\footcite{moiseev2018angular}
+
+In Angular wird die Programmiersprache TypeScript verwendet. Diese ist eine Erweiterung der Programmiersprache JavaScript und implementiert Konzepte wie feste Typisierung von Variablen. Weitere Konzepte wie Dependency Injection oder die Trennung von \ac{bl} und \ac{ui} ermöglichen eine schnelle Entwicklung von komplexen Systemen. 
+
+Das Frontend wird für die Ein- und Ausgabe der Daten verwendet. Der Nutzer kann auf der Webseite seine Suchanfrage in ein Textfeld schreiben und dieses hochladen. Anschließend wird dort die Möglichkeit bereitgestellt, die eingegeben Daten automatisiert zu manipulieren. Im gleichen Zug wird die Eingabe des Nutzers in ein für die KI verständliches Format konvertiert. Im letzten Schritt kann der Nutzer die Anfrage an das Backend schicken, dass mit der Analyse der Eingabe begonnen werden soll. Das Frontend fängt daraufhin an beim Backend in regelmäßigen Abständen nach Antworten der KI zu fragen. Wenn Antworten vorhanden sind, könne diese in einer Liste Visualisiert werden.
 
 \subsection{Redis API Cache}
 text

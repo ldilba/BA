@@ -19,93 +19,92 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
-    \entry{Sus}{online}{}
+    \entry{grinberg2018flask}{book}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=3e26b7fa1c97091f0b7033d1d02f5900}{%
-           family={Administration},
-           familyi={A\bibinitperiod},
-           given={U.S.\bibnamedelimi General\bibnamedelima Services},
-           giveni={U\bibinitperiod\bibinitdelim G\bibinitperiod\bibinitdelim S\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{3e26b7fa1c97091f0b7033d1d02f5900}
-      \strng{fullhash}{3e26b7fa1c97091f0b7033d1d02f5900}
-      \strng{bibnamehash}{3e26b7fa1c97091f0b7033d1d02f5900}
-      \strng{authorbibnamehash}{3e26b7fa1c97091f0b7033d1d02f5900}
-      \strng{authornamehash}{3e26b7fa1c97091f0b7033d1d02f5900}
-      \strng{authorfullhash}{3e26b7fa1c97091f0b7033d1d02f5900}
-      \field{sortinit}{A}
-      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
-      \field{labeldatesource}{nodate}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{System Usability Scale (SUS)}
-      \field{urlday}{25}
-      \field{urlmonth}{7}
-      \field{urlyear}{2022}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://www.usability.gov/how-to-and-tools/methods/system-usability-scale.html
-      \endverb
-      \verb{url}
-      \verb https://www.usability.gov/how-to-and-tools/methods/system-usability-scale.html
-      \endverb
-    \endentry
-    \entry{Memory}{book}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=5abd794983b222497406d0ec43c6ee8f}{%
-           family={Snyder},
-           familyi={S\bibinitperiod},
-           given={B.},
-           giveni={B\bibinitperiod},
+        {{un=0,uniquepart=base,hash=aaaef1648428eda18566aae5dfb5acc8}{%
+           family={Grinberg},
+           familyi={G\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
            givenun=0}}%
       }
       \list{publisher}{1}{%
-        {(MIT press)}%
+        {O'Reilly Media, Inc.}%
       }
-      \strng{namehash}{5abd794983b222497406d0ec43c6ee8f}
-      \strng{fullhash}{5abd794983b222497406d0ec43c6ee8f}
-      \strng{bibnamehash}{5abd794983b222497406d0ec43c6ee8f}
-      \strng{authorbibnamehash}{5abd794983b222497406d0ec43c6ee8f}
-      \strng{authornamehash}{5abd794983b222497406d0ec43c6ee8f}
-      \strng{authorfullhash}{5abd794983b222497406d0ec43c6ee8f}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \strng{namehash}{aaaef1648428eda18566aae5dfb5acc8}
+      \strng{fullhash}{aaaef1648428eda18566aae5dfb5acc8}
+      \strng{bibnamehash}{aaaef1648428eda18566aae5dfb5acc8}
+      \strng{authorbibnamehash}{aaaef1648428eda18566aae5dfb5acc8}
+      \strng{authornamehash}{aaaef1648428eda18566aae5dfb5acc8}
+      \strng{authorfullhash}{aaaef1648428eda18566aae5dfb5acc8}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{{Music and memory: An introduction}}
-      \field{year}{2000}
+      \field{title}{Flask web development: developing web applications with python}
+      \field{year}{2018}
     \endentry
-    \entry{Datenmenge}{online}{}
+    \entry{python2021python}{article}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=62182ca58a739daa8ddd8a48b7b19abb}{%
-           family={Statista},
-           familyi={S\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=b62cf485e750766d4812e8b7e2d0c8b0}{%
+           family={Josheph},
+           familyi={J\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
       }
-      \strng{namehash}{62182ca58a739daa8ddd8a48b7b19abb}
-      \strng{fullhash}{62182ca58a739daa8ddd8a48b7b19abb}
-      \strng{bibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
-      \strng{authorbibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
-      \strng{authornamehash}{62182ca58a739daa8ddd8a48b7b19abb}
-      \strng{authorfullhash}{62182ca58a739daa8ddd8a48b7b19abb}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{labeldatesource}{nodate}
+      \strng{namehash}{b62cf485e750766d4812e8b7e2d0c8b0}
+      \strng{fullhash}{b62cf485e750766d4812e8b7e2d0c8b0}
+      \strng{bibnamehash}{b62cf485e750766d4812e8b7e2d0c8b0}
+      \strng{authorbibnamehash}{b62cf485e750766d4812e8b7e2d0c8b0}
+      \strng{authornamehash}{b62cf485e750766d4812e8b7e2d0c8b0}
+      \strng{authorfullhash}{b62cf485e750766d4812e8b7e2d0c8b0}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Volumen der jährlich generierten digitalen Datenmenge}
-      \field{urlday}{25}
-      \field{urlmonth}{7}
-      \field{urlyear}{2022}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/
-      \endverb
-      \verb{url}
-      \verb https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/
-      \endverb
+      \field{journaltitle}{Python Releases for Windows}
+      \field{title}{Python}
+      \field{volume}{24}
+      \field{year}{2021}
+    \endentry
+    \entry{moiseev2018angular}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=238fb333d025cfef15d8482c144de8a8}{%
+           family={Moiseev},
+           familyi={M\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=49718fd69072167a5ae0a0ee8b965fc4}{%
+           family={Fain},
+           familyi={F\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{2}{%
+        {Simon}%
+        {Schuster}%
+      }
+      \strng{namehash}{61a5c10b13699cceecd8f427ba626727}
+      \strng{fullhash}{08909ada031f558617d7350cc1016236}
+      \strng{bibnamehash}{08909ada031f558617d7350cc1016236}
+      \strng{authorbibnamehash}{08909ada031f558617d7350cc1016236}
+      \strng{authornamehash}{61a5c10b13699cceecd8f427ba626727}
+      \strng{authorfullhash}{08909ada031f558617d7350cc1016236}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Angular Development with TypeScript}
+      \field{year}{2018}
     \endentry
   \enddatalist
 \endrefsection
