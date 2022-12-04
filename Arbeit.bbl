@@ -19,6 +19,33 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
+    \entry{dubois2008mysql}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=14c0b6381090e21dacb3d828f06a4b8c}{%
+           family={DuBois},
+           familyi={D\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Education}%
+      }
+      \strng{namehash}{14c0b6381090e21dacb3d828f06a4b8c}
+      \strng{fullhash}{14c0b6381090e21dacb3d828f06a4b8c}
+      \strng{bibnamehash}{14c0b6381090e21dacb3d828f06a4b8c}
+      \strng{authorbibnamehash}{14c0b6381090e21dacb3d828f06a4b8c}
+      \strng{authornamehash}{14c0b6381090e21dacb3d828f06a4b8c}
+      \strng{authorfullhash}{14c0b6381090e21dacb3d828f06a4b8c}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{MySQL}
+      \field{year}{2008}
+    \endentry
     \entry{grinberg2018flask}{book}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=aaaef1648428eda18566aae5dfb5acc8}{%
@@ -45,6 +72,36 @@
       \field{labeltitlesource}{title}
       \field{title}{Flask web development: developing web applications with python}
       \field{year}{2018}
+    \endentry
+    \entry{ionescu2015analysis}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=0dbe41eb7c039833e8e878dd3649636d}{%
+           family={Ionescu},
+           familyi={I\bibinitperiod},
+           given={V.M.},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{0dbe41eb7c039833e8e878dd3649636d}
+      \strng{fullhash}{0dbe41eb7c039833e8e878dd3649636d}
+      \strng{bibnamehash}{0dbe41eb7c039833e8e878dd3649636d}
+      \strng{authorbibnamehash}{0dbe41eb7c039833e8e878dd3649636d}
+      \strng{authornamehash}{0dbe41eb7c039833e8e878dd3649636d}
+      \strng{authorfullhash}{0dbe41eb7c039833e8e878dd3649636d}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2015 14th RoEduNet International Conference-Networking in Education and Research (RoEduNet NER)}
+      \field{title}{The analysis of the performance of RabbitMQ and ActiveMQ}
+      \field{year}{2015}
+      \field{pages}{132\bibrangedash 137}
+      \range{pages}{6}
     \endentry
     \entry{python2021python}{article}{}
       \name{author}{1}{}{%
@@ -105,6 +162,32 @@
       \field{labeltitlesource}{title}
       \field{title}{Angular Development with TypeScript}
       \field{year}{2018}
+    \endentry
+    \entry{paksula2010persisting}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=8e4c0e27e6de471326841da3a0ac6fab}{%
+           family={Paksula},
+           familyi={P\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8e4c0e27e6de471326841da3a0ac6fab}
+      \strng{fullhash}{8e4c0e27e6de471326841da3a0ac6fab}
+      \strng{bibnamehash}{8e4c0e27e6de471326841da3a0ac6fab}
+      \strng{authorbibnamehash}{8e4c0e27e6de471326841da3a0ac6fab}
+      \strng{authornamehash}{8e4c0e27e6de471326841da3a0ac6fab}
+      \strng{authorfullhash}{8e4c0e27e6de471326841da3a0ac6fab}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{University of Helsinki, Department of Computer Science}
+      \field{title}{Persisting objects in redis key-value database}
+      \field{volume}{27}
+      \field{year}{2010}
     \endentry
   \enddatalist
 \endrefsection
