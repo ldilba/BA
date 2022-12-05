@@ -19,6 +19,74 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
+    \entry{anderson2015docker}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=3aa40398350d3c8fd46db105c5bb5b3c}{%
+           family={Anderson},
+           familyi={A\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{3aa40398350d3c8fd46db105c5bb5b3c}
+      \strng{fullhash}{3aa40398350d3c8fd46db105c5bb5b3c}
+      \strng{bibnamehash}{3aa40398350d3c8fd46db105c5bb5b3c}
+      \strng{authorbibnamehash}{3aa40398350d3c8fd46db105c5bb5b3c}
+      \strng{authornamehash}{3aa40398350d3c8fd46db105c5bb5b3c}
+      \strng{authorfullhash}{3aa40398350d3c8fd46db105c5bb5b3c}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Ieee Software}
+      \field{number}{3}
+      \field{title}{Docker [software engineering]}
+      \field{volume}{32}
+      \field{year}{2015}
+      \field{pages}{102\bibrangedash c3}
+      \range{pages}{-1}
+    \endentry
+    \entry{chakraborty2021grafana}{incollection}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=ff3268f0d96f7ba0dcf28f84b33420f1}{%
+           family={Chakraborty},
+           familyi={C\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5f714417e45dd889d7841341b814b008}{%
+           family={Kundan},
+           familyi={K\bibinitperiod},
+           given={A.P.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{603a4d57cde5f381be206cb8c56b2ddd}
+      \strng{fullhash}{ff12dff063d97936e286a04c22ec78fb}
+      \strng{bibnamehash}{ff12dff063d97936e286a04c22ec78fb}
+      \strng{authorbibnamehash}{ff12dff063d97936e286a04c22ec78fb}
+      \strng{authornamehash}{603a4d57cde5f381be206cb8c56b2ddd}
+      \strng{authorfullhash}{ff12dff063d97936e286a04c22ec78fb}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Monitoring Cloud-Native Applications}
+      \field{title}{Grafana}
+      \field{year}{2021}
+      \field{pages}{187\bibrangedash 240}
+      \range{pages}{54}
+    \endentry
     \entry{dubois2008mysql}{book}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=14c0b6381090e21dacb3d828f06a4b8c}{%
@@ -45,6 +113,44 @@
       \field{labeltitlesource}{title}
       \field{title}{MySQL}
       \field{year}{2008}
+    \endentry
+    \entry{FrauchigerDaniel2017AvDS}{incollection}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=85e49d9a6032cf4a2a57f3aeede73429}{%
+           family={Frauchiger},
+           familyi={F\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {ger}%
+      }
+      \list{location}{1}{%
+        {Wiesbaden}%
+      }
+      \list{publisher}{1}{%
+        {Springer Fachmedien Wiesbaden}%
+      }
+      \strng{namehash}{85e49d9a6032cf4a2a57f3aeede73429}
+      \strng{fullhash}{85e49d9a6032cf4a2a57f3aeede73429}
+      \strng{bibnamehash}{85e49d9a6032cf4a2a57f3aeede73429}
+      \strng{authorbibnamehash}{85e49d9a6032cf4a2a57f3aeede73429}
+      \strng{authornamehash}{85e49d9a6032cf4a2a57f3aeede73429}
+      \strng{authorfullhash}{85e49d9a6032cf4a2a57f3aeede73429}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Anwendungen von Design Science Research in der Praxis}
+      \field{booktitle}{Wirtschaftsinformatik in Theorie und Praxis}
+      \field{title}{Anwendungen von Design Science Research in der Praxis}
+      \field{year}{2017}
+      \field{pages}{107\bibrangedash 118}
+      \range{pages}{12}
+      \keyw{Architektur ; Design ; Design Science Research ; Forschungsmethoden ; Wirtschaftsinformatik}
     \endentry
     \entry{grinberg2018flask}{book}{}
       \name{author}{1}{}{%
