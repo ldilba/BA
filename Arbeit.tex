@@ -12,14 +12,16 @@
         \input{abschnitte/Erklärung}
         \newpage
         \tableofcontents
+        %\newpage
+        \listoffigures
+        %\newpage
+        \listoftables
         \newpage
-        
-
-        %\listoffigures
+        \setcounter{secnumdepth}{0}
         \input{datenbanken/Abkuerzungsverzeichnis}
+        \setcounter{secnumdepth}{3}
         \newpage
-%    \printglossary[title={Abkürzungsverzeichnis},type=\acronymtype] 
-        
+      
     \end{spacing}
 
     \pagestyle{Hauptteil}

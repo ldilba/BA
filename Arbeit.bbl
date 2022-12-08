@@ -209,6 +209,43 @@
       \field{pages}{132\bibrangedash 137}
       \range{pages}{6}
     \endentry
+    \entry{jones2015json}{report}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=3656094aa90ce6b5927293e625dedee3}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ac7ec83304c92610359a406f07ad45a}{%
+           family={Bradley},
+           familyi={B\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2764fe7207c045fdc85a76e2d51203a3}{%
+           family={Sakimura},
+           familyi={S\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5683aecbbdfe106e64cf9e667351ba26}
+      \strng{fullhash}{5b3ff80030418207cdd5756912287da3}
+      \strng{bibnamehash}{5b3ff80030418207cdd5756912287da3}
+      \strng{authorbibnamehash}{5b3ff80030418207cdd5756912287da3}
+      \strng{authornamehash}{5683aecbbdfe106e64cf9e667351ba26}
+      \strng{authorfullhash}{5b3ff80030418207cdd5756912287da3}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Json web token (jwt)}
+      \field{type}{techreport}
+      \field{year}{2015}
+    \endentry
     \entry{python2021python}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=b62cf485e750766d4812e8b7e2d0c8b0}{%
@@ -234,6 +271,33 @@
       \field{title}{Python}
       \field{volume}{24}
       \field{year}{2021}
+    \endentry
+    \entry{masse2011rest}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d17b34343fbf45b0a0ec9962f1ac0431}{%
+           family={Masse},
+           familyi={M\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {" O'Reilly Media, Inc."}%
+      }
+      \strng{namehash}{d17b34343fbf45b0a0ec9962f1ac0431}
+      \strng{fullhash}{d17b34343fbf45b0a0ec9962f1ac0431}
+      \strng{bibnamehash}{d17b34343fbf45b0a0ec9962f1ac0431}
+      \strng{authorbibnamehash}{d17b34343fbf45b0a0ec9962f1ac0431}
+      \strng{authornamehash}{d17b34343fbf45b0a0ec9962f1ac0431}
+      \strng{authorfullhash}{d17b34343fbf45b0a0ec9962f1ac0431}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{REST API design rulebook: designing consistent RESTful web service interfaces}
+      \field{year}{2011}
     \endentry
     \entry{moiseev2018angular}{book}{}
       \name{author}{2}{}{%

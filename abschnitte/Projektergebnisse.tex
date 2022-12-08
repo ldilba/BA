@@ -21,23 +21,128 @@ Der im Prototypen implementierte KI-Service nutzt das BERT Modell von Google zum
 \begin{figure}[H]
   \centering
     \includegraphics[width = 15cm]{bilder/Architektur}
-    \caption{Architekturdiagramm}
+    \caption{Softwarearchitekturdiagramm}
 \end{figure}
 
 \subsection{REST-API mit Flask}
-text
+Eine API stellt einen Satz an Daten und Funktionen bereit, um den Austausch von Daten zwischen verschiedenen Programmen zu ermöglichen. REST ist ein Regelsatz, in dem die Form, Funktionalität und der Aufbau einer API beschrieben wird.\footcite{masse2011rest}
+In einer REST-API werden mehrere Routen definiert. Die Funktion der Route sollte sich nach Möglichkeit implizit durch den Aufbau der URL und den Request Typ ableiten lassen. Die im Prototypen verwendeten Request Typen sind \texttt{GET}, \texttt{POST}, und \texttt{DELETE}. Im HTTP werden noch weitere Typen unterstützt, die in dieser Arbeit jedoch keine Verwendung finden. \texttt{GET} Requests haben keine Auswirkungen auf den Zustand oder die Daten auf dem Server. Es werden nur die aktuellen angeforderten Daten in der Reponse zurückgegeben. \texttt{POST} Requests können in ihrem Body Daten beinhalten, die auf die Bearbeitung des Requests Einfluss nehmen. Die Daten werden im Prototypen in Form von JSON Dokumenten an die API übergeben.
+
 \subsubsection{Aufbau und Implementierung der REST-API}
-text
+Python bietet mit dem Package Flask die Möglichkeit einen simplen und gut skalierbaren Webserver aufzusetzen. Für das Starten einer Flask Instanz muss das Package Flask in die Python Umgebung importiert werden. Anschließend kann ein Flask-Objekt erzeugt und die Flask Instanz mit den gewünschten Parametern gestartet werden.
+
+\begin{lstlisting}[language=Python]
+from flask import Flask
+app = Flask(__name__)
+app.run(host="0.0.0.0", port=80, use_reloader=False)
+\end{lstlisting}
+
+Damit die API auch automatisiert aus einem Docker Container heraus gestartet werden kann, muss die Ausführung des Flask Services in die Main Methode von Python ausgelagert werden. Flask blockiert den Thread auf dem es ausgeführt wird, was eine asynchrone Kommunikation über RabbitMQ nicht möglich macht. Der Receiver benötigt seinen eigenen Thread, weswegen eine Multithreading-Architektur implementiert werden muss. Zu diesem Zweck wird das threading Package genutzt. Über den Parameter \texttt{daemon} kann bei der Erzeugung eines Threads festgelegt werden, dass der Thread im Hintergrund läuft und den Hauptthread nicht blockiert.
+
+\begin{lstlisting}[language=Python]
+def start_server():
+    app.run(host="0.0.0.0", port=80, use_reloader=False)
+
+if __name__ == '__main__':
+    thread_server = threading.Thread(target=start_server, daemon=True).start()
+\end{lstlisting}
+
+Eine in der API adressierbare Route kann in Flask über Function-Annotations definiert werden. Die von Flask implementierten Anntotations haben die Form \texttt{instanz.route('path', methods=["METHOD"])}. Der Name der Instanz wird am Anfang des Projekts als \texttt{app} definiert. Der \texttt{path} beschreibt die Route, die vom Frontend aufgerufen werden muss, damit die nachfolgende Funktion ausgeführt wird. Im Array \texttt{methods} besteht die Möglichkeit, ein oder mehrere Request Typen zu definieren, die die Funktion akzeptieren soll.
+
+Eine beispielhafte Nutzung der Annotations, um eine Route in der API zu definieren, ist nachfolgend aufgeführt. 
+
+\begin{lstlisting}[language=Python]
+@app.route('/', methods=["GET"])
+def index():
+    [..]
+    return r.respond({"token": token}, cookie=f"Authorization={token}")
+\end{lstlisting}
+
+Der Inhalt der Methode und deren genaue Funktionsweise wird in den folgenden Kapiteln näher erläutert.
+
+Die Funktion \texttt{respond} ist im Skript \texttt{api/response\_{}generator.py} definiert. Sie dient als Function Wrapper, der bei jeder ausgehenden Response die Response-Header, eventuelle Cookies und den Reponse Typen setzt. Der Output der Response wird mithilfe des \texttt{json} Packages in JSON Syntax konvertiert.
+
+\begin{lstlisting}[language=Python]
+import json
+from flask import Response
+def respond(r, status=200, json_dump=True, cookie=""):
+    [...]
+    return Response(json.dumps(r), status=status, mimetype='application/json', headers=headers)
+\end{lstlisting}
+
+In Tabelle 1 sind alle in der API verfügbaren Routen aufgelistet. Auf die genaue Funktionalität der einzelnen Funktionen wird in den folgenden Kapitel eingegangen.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|l}
+\textbf{Route} & \textbf{Typ} & \textbf{Funktion}\\
+\hline
+\texttt{'/'} & \texttt{GET} & Erstellung eines JSON Web Tokens\\
+\hline
+\texttt{'/upload/file'}  & \texttt{POST} & Hochladen einer Textdatei für den Input der KI \\
+\texttt{'/upload/text'}  & \texttt{POST} & Texteingabe für den Input des KI-Services \\    
+\texttt{'/transform'}  & \texttt{POST} & Festlegen der Tranformationseigenschaften\\ 
+\texttt{'/send'}  & \texttt{POST} & Transformieren und Senden des Inputs an einen KI-Service \\ 
+\texttt{'/poll'}  & \texttt{GET} & Abfrage der vom KI-Service gelieferten Ergebnisse \\ 
+\hline
+\texttt{'/service'}  & \texttt{GET} & Auflistung aller Services \\
+\texttt{'/service'}  & \texttt{POST} & Registrieren eines neuen Services \\ 
+\texttt{'/service'}  & \texttt{DELETE} & Löschen eines Services \\       
+\end{tabular}
+\caption{Implementierte Routen der REST-API}
+\end{table}
+
 \subsubsection{Nutzeridentifizierung mit JWT}
-text
+Innerhalb des Backendes ist es notwendig, einzelne Nutzer voneinander zu unterscheiden. Für jeden Nutzer speichert das Backend den hochgeladenen Text, die Transformationsanleitung und die Antworten des angefragten KI-Services im Redis Cache. Um Nutzer voneinander unterscheiden zu können, gibt es zwei grundlegende Möglichkeiten. 
+\begin{enumerate}
+\item Identifizierung durch den Nutzer der Software. Beispielsweise mittels Registrierung durch E-Mail Adresse und Passwort.
+\item Identifizierung durch das Backendend der Software. Generierung und Zuweisung einer zufälligen aber eindeutigen User-ID.
+\end{enumerate}
+
+Die Erhebung von personenbezogenen Daten setzt die Einhaltung der \ac{dsgvo} voraus. Dies bedeutet einen erheblichen Mehraufwand für eine Anwendung, die sonst keinen weiteren Nutzen aus den Daten zieht.
+
+Das Backend nutzt einen \ac{uuid} der sich durch das Python Package \texttt{uuid} generieren lässt. Eine UUID ist eine 32 Zeichen lange Zahl im Hexadezimalformat. Die importierte Funktion \texttt{uuid4()} erzeugt eine zufällige, ohne von Parametern beeinflusste UUID. Der Nutzer muss diese UUID mitgeteilt bekommen und für alle seine Anfragen, aufgrund der zustandslosen Implementierung der API, im Authorization Header mitschicken. Damit die UUID nicht ausgelesen oder manipuliert werden kann, wird sie nicht als einfacher Text in der Response an den Nutzer geschickt, sondern vorher in ein JSON Token geschrieben und verschlüsselt.
+
+Ein \ac{jwt} ist ein kompaktes, URL-sicheres Mittel zur Darstellung von Forderungen, die zwischen zwei Parteien übertragen werden sollen. Die Angaben in einem JWT werden als JSON-Objekt kodiert. Der Inhalt des JST kann digital signiert oder die Integrität mit einem \ac{mac} geschützt und/oder verschlüsselt werden.\footcite{jones2015json}
+
+Im nachfolgenden Codeausschnitt ist die Generierung der UUID und die Verschlüsselung des JWT dargestellt.
+\begin{lstlisting}[language=Python]
+def uuid_gen():
+    return uuid.uuid4()
+    
+def encode_token(param):
+    return jwt.encode(param, JWT_PASSWORD, algorithm="HS256")
+
+token = encode_token({'uid': str(uuid_gen())})
+\end{lstlisting}
+
 \subsubsection{Caching mit Redis Datenbank}
+Redis ist ein Key-Value Store der komplett im RAM ausgeführt werden kann. Innerhalb von Redis sind mehrere Datenbanken definiert, die in ihrer Standartkonfiguration über einen Index $i$, mit $0\leq{}i<16$ aufgerufen werden. Im Backend werden die ersten drei Datenbanken verwendet.
+\begin{enumerate}
+ \item Datenbank 0: Cache der hochgeladenen Textdateien für den Input der KI
+ \item Datenbank 1: Cache der Transformationsanleitung
+ \item Datenbank 2: Cache der vom KI-Service produzierten Ergebnisse
+ \end{enumerate} 
+
+\subsubsection{Management der Services}
+text
+\subsubsection{Automatisierte Transformation des Inputs}
 text
 \subsubsection{Fehlerbehandlung}
 text
 \subsubsection{Event Logging}
 text
-\subsection{Visualisierung der Logs in Grafana}
+\subsection{Kommunikation zwischen API und Services mit RabbitMQ}
 text
+\subsubsection{RabbitMQ vs. REST-API}
+text
+\subsection{Implementierung des KI-Services}
+text
+\subsubsection{Interpretation der Eingabe mit BERT}
+text
+\subsubsection{Cosinusähnlichkeitssuche in Elastic Search}
+text
+
 \subsection{Webseite mit Angular}
 text
 \subsubsection{Aufbau des User Interfaces}
@@ -46,15 +151,9 @@ text
 text
 \subsubsection{Kommunikation zur API}
 text
-\subsection{Kommunikation zwischen API und Services mit RabbitMQ}
+
+\subsection{Deployment der Software mit Docker}
 text
-\subsubsection{RabbitMQ vs. REST-API}
-text
-\subsection{Implementierung des KI-Services}
-text
-\subsubsection{Dynamische Registrierung neuer Services}
-text
-\subsubsection{Interpretation der Eingabe mit BERT}
-text
-\subsubsection{Cosinusähnlichkeitssuche in Elastic Search}
+
+\subsection{Visualisierung der Logs in Grafana}
 text

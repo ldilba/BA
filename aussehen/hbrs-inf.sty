@@ -133,10 +133,11 @@
 
 % Quellcode einfuegen und highlighten
 \usepackage{listings}
-\definecolor{light-gray}{gray}{0.80}
-\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt,showstringspaces=false}
+\definecolor{light-gray}{gray}{.96}
+%\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt,showstringspaces=false}
 \lstset{basicstyle=\ttfamily\small,commentstyle=\itshape,backgroundcolor=\color{light-gray}}
-\lstset{captionpos=b,extendedchars=true,inputencoding=utf8,breaklines=true,language=C++}
+\lstset{captionpos=b,extendedchars=true,inputencoding=utf8,breaklines=true,language=Python}
+%\lstset{frame=lines}
 
 % Gantt-Diagramm unterstützung
 \usepackage{pgfgantt}
@@ -199,3 +200,5 @@
         \color{red}{\item#1}
     \end{itemize}
 }
+
+%\newcommand*{\thead}[1]{\multicolumn{1}{|c|}{\bfseries #1}}
