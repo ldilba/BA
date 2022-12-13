@@ -27,9 +27,28 @@ In relationalen Datenbanken werden Daten strukturiert in Tabellenform abgespeich
 Das RDBMS MySQL wird unter Anderem für die Speicherung der Logs, die der Flask Server während der Verarbeitung von Requests oder Nachrichten an die KI produziert, verwendet. Ein weiterer Einsatzzweck der MySQL Datenbank ist die Speicherung der im System registrieren KI-Services. Ein Dienst kann über die Flask API im System registriert oder deregistriert werden. Das Frontend kann sich im Anschluss eine Auflistung der verfügbaren Services vom Backend ziehen.
 
 \subsection{Kommunikation mit RabbitMQ}
-Damit eine Kommunikation zwischen unabhängigen Programmen möglich wird, muss es einen Zwischendienst geben, der die Nachrichten von von Programm zum anderen transportiert. Beider Kommunikation zwischen einer Website und einer API wird das \ac{http} verwendet. Dieses stellt sicher, dass die Information, ob die Nachrichten am anderen Ende angekommen sind, vorhanden sind. Sollte eine Nachricht nicht angekommen sein, hat der Absender die Möglichkeit die Nachricht erneut zu schicken. Problematisch wird diese Herangehensweise, wenn die Antwortzeit sehr lang wird oder ungewiss ist, ob überhaupt eine Antwort kommen wird. 
+Kommunikation ist für den Aufbau von komplexen Strukturen essenziell. Das betrifft zum Beispiel die natürliche Sprache der Menschen, damit das Leben in einer Gesellschaft möglich wird. Für komplexe Programme in der \ac{it} gelten die gleichen Prinzipien. \footcite{dossot2014rabbitmq}
 
-RabbitMQ ist ein eine nachrichtenorientierte Middleware, die die Kommunikation zwischen zwei oder mehreren Programmen durch das  \ac{amqp} ermöglicht. Im Gegensatz zu einer direkten Kommunikation zwischen Client und Server wie bei HTTP, wird in RabbitMQ eine Queue implementiert, in der alle Anfragen gesammelt werden. Jeder Client kann Nachrichten in die Queue reinschreiben. Diese Nachrichten werden dort so lange gespeichert, bis sie von einem Dienst ausgelesen werden. Durch diese Herangehensweise wird eine asynchrone Kommunikation zwischen Client und Server ermöglicht. Da RabbitMQ frei von den Handshakes des HTTP ist, sind die Schreib- und Lesezeiten deutlich schneller.\footcite{ionescu2015analysis}
+Bei einer grundlegenden Kommunikation gibt es zwei Kommunikationspartner, einen Sender und einen Empfänger. Im Bereich der Software ist der Sender meist ein Client und der Empfänger ein Server, der öffentlich erreichbar ist. Der Client sendet eine Anfrage, der auch Request genannt wird, an den Server. Anschließend wartet der Client auf eine Antwort. Der Server erhält den Request und verarbeitet ihn. Es wird abhängig vom Request eine Antwort, die als Response bezeichnet wird, generiert und dem Client zurückgesendet. Der Client erhält die Response und schließt damit den Kommunikationsvorgang ab. Dieser Ablauf ist in Abbildung 1 visualisiert.
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/Rabbit1}
+    \caption{Grundlegende Kommunikation}
+\end{figure}
+
+Durch die Art der synchronen Kommunikation sind Client und Server sehr eng miteinander Verbunden. Wenn der Client erwartet eine Response von genau dem Server, an den er den Request geschickt hat. Das macht die Skalierung und Ausfallsicherheit allerdings relativ schwierig.
+
+Damit eine Kommunikation zwischen unabhängigen Programmen möglich wird, muss es einen Zwischendienst geben, der die Nachrichten von von Programm zum anderen transportiert. Bei der Kommunikation zwischen einer Website und einer API wird das \ac{http} verwendet. Dieses stellt sicher, dass die Information, ob die Nachrichten am anderen Ende angekommen sind, vorhanden sind. Sollte eine Nachricht nicht angekommen sein, hat der Absender die Möglichkeit die Nachricht erneut zu schicken. Problematisch wird diese Herangehensweise, wenn die Antwortzeit sehr lang wird oder ungewiss ist, ob überhaupt eine Antwort kommen wird. 
+
+RabbitMQ ist ein eine nachrichtenorientierte Middleware, die die Kommunikation zwischen zwei oder mehreren Programmen durch das \ac{amqp} ermöglicht. RabbitMQ dient als Broker, der Nachrichten von mehreren Clients an mehrere Server vermitteln kann. Im Gegensatz zu einer direkten Kommunikation zwischen Client und Server wie bei HTTP, wird in RabbitMQ eine Queue implementiert, in der alle Anfragen gesammelt werden. Jeder Client kann Nachrichten in die Queue reinschreiben. Diese Nachrichten werden dort so lange gespeichert, bis sie von einem Dienst ausgelesen werden. In Abbildung 2 ist die Kommunikation zwischen Client und Server mittels eines Brokers abgebildet.
+ 
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/Rabbit2}
+    \caption{Kommunikation über einen Broker}
+\end{figure}
+
+Durch diese Herangehensweise wird eine asynchrone Kommunikation zwischen Client und Server ermöglicht. Da RabbitMQ frei von den Handshakes des HTTP ist, sind die Schreib- und Lesezeiten deutlich schneller.\footcite{ionescu2015analysis}
 
 Die Middleware RabbitMQ wird für die Kommunikation zwischen der Flask API und den KI-Services genutzt. Der im Frontend vom Nutzer eingegebene Text-Input wird an die Flask API geschickt. Die Flask API modifiziert den Text im Anschluss so, dass es mittels der \ac{json} über den RabbitMQ Service in die Queue geschrieben werden kann. Jeder KI-Service hat eine Queue einprogrammiert, aus der die Nachrichten ausgelesen werden. Diese Nachrichten können dann verarbeitet und im Anschluss in eine Response-Queue geschrieben werden. Das Flask Backend kann diese Response-Queue auslesen und die einzelnen Antworten dann zusammenbauen.
 

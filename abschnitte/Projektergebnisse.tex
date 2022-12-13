@@ -164,7 +164,7 @@ Jede Funktion, die in innerhalb des Exception Handlers ausgeführt werden soll, 
 \subsubsection{Event Logging}
 Das Backend implementiert ein Event Logging System mit dem Zustände und Informationen des Systems in einer Datenbank gespeichert werden können. Mithilfe von Logs können Entwickler den Ablauf eines Programms besser nachvollziehen und auftretende Fehler schneller zu ihrer Quelle zurückverfolgen. Es ist ebenfalls möglich, Systeme aufzusetzen, die die auf Logs auslesen und beim Auftreten eines Errors die zuständigen Personen alarmieren. Eine Herausforderung bei einem Logging System ist es, dass das System dem Entwickler beim Loggen keinen erheblichen Mehraufwand produzieren soll. Im Backend wurde ein Logging System entwickelt, welches mit einer einzigen Funktion angesteuert werden kann. Die Log Funktions des Loggers wird in den verschiedenen Bereichen der Anwendung über \texttt{from logs.logger import log} importiert. Nach erfolgreichem Import, steht die \texttt{log} Funktion zur Verfügung. 
 
-Für einen Log müssen drei Parameter übergeben werden, der Log Level eine Message und die UUID. Die möglichen Ausdrücke für die Log Level sind in Tabelle 2 aufgeführt. Die unterstützten Log Level leiten sich aus der Funktionalität von Grafana ab, welche diese Logs mit einer zugeordneten Farbe visualisiert.
+Für einen Log müssen drei Parameter übergeben werden, der Log Level, eine Message und die UUID. Die möglichen Ausdrücke für die Log Level sind in Tabelle 2 aufgeführt. Die unterstützten Log Level leiten sich aus der Funktionalität von Grafana ab, welche diese Logs mit einer zugeordneten Farbe visualisiert.
 
 \begin{table}[H]
 \centering
@@ -192,6 +192,7 @@ trace & trace & hellblau\\
 \caption{Log Level des Event Logging Systems}
 \end{table}
 
+Innerhalb der Log Funktion wird eine Datenbank Query mit den drei Parametern und einem aktuellen Zeitstempel erstellt. Der Zeitstempel kann mithilfe des \texttt{datetime} Packages erstellt werden. Über \texttt{cursor.execute()} wird die erstellte Query in der MySQL Datenbank ausgeführt. Der Log wird als Eintrag in der Tabelle \texttt{logs} gespeichert. 
 
 \begin{lstlisting}[language=Python]
 def log(level, message, uid):
@@ -201,8 +202,33 @@ def log(level, message, uid):
     [...]
 \end{lstlisting}
 
-\subsection{Kommunikation zwischen API und Services mit RabbitMQ}
-text
+\subsection{Kommunikation zwischen Backend und Services mit RabbitMQ}
+Für den Informationsaustausch zwischen dem Backend und den verschiedenen KI-Services ist eine asynchrone Kommunikation implementiert. Je nach Komplexität des Services, kann die Verarbeitung einer vom Nutzer gestellten Anfrage mehrere Sekunden bis Minuten dauern. Eine synchrone Kommunikation, in der der Client auf unbestimmte Zeit auf eine Antwort wartet ist nicht möglich. Wenn nach einer vom Browser definierten Zeit keine Antwort auf den Request kommt, wird der Request mit einem Timeout abgebrochen. Sollte die KI nach der maximal verfügbaren Zeit ihr Ergebnis liefern, wird dieses Verworfen und ner Nutzer muss eine neue Anfrage stellen. Damit Anfragen nicht verloren gehen und die Antworten dem Server mitgeteilt werden können, wenn sie bereit sind, wird der Message Broker RabbitMQ implementiert. 
+
+RabbitMQ dient als Middleware, die Anfragen vom Server annimmt und diese im in einer Queue zwischenspeichert, um sie anschließend an die Services zu verteilen. Damit die Nachrichten in eine Queue geschrieben werden können, muss im ersten Schritt eine Verbindung zu RabbitMQ aufgebaut werden. Mithilfe des Packages \texttt{pika} kann über den Host, unter dem RabbitMQ erreichbar ist, den Port 5672 und den Login-Credentials eine \ac{tcp} Verbindung aufgebaut werden.
+
+Innerhalb einer Connection, können über einen Channel können sowohl der Server, als auch die Services eine Verbindung mit dem RabbitMQ Dient aufbauen. Ein Channel beschreibt die logische Verbindung zwischen dem Server/Service und dem Broker. Für jede TCP Verbindung mit RabbitMQ können mehrere Channels erstellt werden.\footcite{dossot2014rabbitmq}
+
+Innerhalb eines Channels wird letztendlich die Queue definiert, in der die Nachrichten zwischengespeichert werden. Im foglenden Codeausschnitt ist gezeigt, wie eine Connection, ein Channel und eine Queue erstellt werden.
+
+\begin{lstlisting}[language=Python]
+def produce(uid, service, query, params):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(rabbit_host, 5672, '/', credentials))
+    channel = connection.channel()
+    channel.queue_declare(queue=service)
+\end{lstlisting}
+
+%publishen einer nachricht
+%consumen der messages im service 
+%Ergebnisse eines Services in Response queue schreiben
+%consumen der nachricht im server
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/RAbbit3}
+    \caption{Kommunikation mit RabbitMQ}
+\end{figure}
+
+
 \subsubsection{RabbitMQ vs. REST-API}
 text
 \subsection{Implementierung des KI-Services}
