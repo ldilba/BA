@@ -116,22 +116,91 @@ def encode_token(param):
 token = encode_token({'uid': str(uuid_gen())})
 \end{lstlisting}
 
+Für jede Route, ausgenommen die \texttt{/service} Routen zum Management der Services, wird der JWT für die Ausführung benötigt. Die Überprüfung und Entschlüsselung des Tokens ist für jede Route gleich, daher ist es sinnvoll diese Funktionalität zu zentralisieren. Damit wird die Fehleranfälligkeit reduziert und und die Wartbarkeit erhöht, sollte sich zum Beispiel der Algorithmus oder das Passwort für die Verschlüsselung ändern. Wie auch Flask Annotations zum definieren einer Route verwendet, ist es möglich eigene Annotations zu entwerfen. Für diese Funktion ist das Python Package \texttt{functools} mit der Funktion \texttt{wraps} zuständig. Wraps ermöglicht es, Funktionen ineinander zu verschachteln.
+
+Im Prototypen wird die Funktion \texttt{token\_{}required(f)} definiert. Diese Funktion dient als eine Umgebung, in der eine weitere Funktion ausgeführt werden. Im Gegensatz zur normalen Ausführung einer Funktion, werden in der \texttt{token\_{}required(f)} Funktion vor der Ausführung der eigentlichen Funktion mehrere Rahmenbedingungen geprüft. Der vom Nutzer gesendete Token muss nach der erfolgreicher Entschlüsselung syntaktisch korrektes JSON enthalten. Sollte dies nicht der Fall sein, wird die die eigentliche Funktion, die zur API Route gehört, gar nicht erst ausgeführt. Der Nutzer bekommt direkt eine Respose mit dem HTTP Error-Code 401: Unauthorized gesendet. \footcite{fielding1999rfc2616}
+
+Wenn die Entschlüsselung des Tokens erfolgreich war, wird die innere Funktion ausgeführt. Als Parameter der inneren Funktion wird die im JWT enthaltene UUID übergeben. Durch diesen Aufbau ist der Code für die Verifizierung des Tokens und die Logik der Funktion unter der angesprochenen Route vollständig getrennt.
+
+\begin{lstlisting}[language=Python]
+@routes.route('/upload/text', methods=['POST'])
+@token_required
+def upload_text(uid):
+    [...]
+\end{lstlisting}
+
 \subsubsection{Caching mit Redis Datenbank}
-Redis ist ein Key-Value Store der komplett im RAM ausgeführt werden kann. Innerhalb von Redis sind mehrere Datenbanken definiert, die in ihrer Standartkonfiguration über einen Index $i$, mit $0\leq{}i<16$ aufgerufen werden. Im Backend werden die ersten drei Datenbanken verwendet.
+Redis ist ein Key-Value Store der vollständig im RAM ausgeführt wird. Innerhalb von Redis sind mehrere Datenbanken definiert, die in ihrer Standartkonfiguration über einen Index $i$, mit $0\leq{}i<16$ aufgerufen werden. Im Backend werden die ersten drei Datenbanken verwendet.
 \begin{enumerate}
  \item Datenbank 0: Cache der hochgeladenen Textdateien für den Input der KI
  \item Datenbank 1: Cache der Transformationsanleitung
  \item Datenbank 2: Cache der vom KI-Service produzierten Ergebnisse
- \end{enumerate} 
+\end{enumerate} 
+
 
 \subsubsection{Management der Services}
 text
 \subsubsection{Automatisierte Transformation des Inputs}
 text
 \subsubsection{Fehlerbehandlung}
-text
+Während des Laufzeit des Programms kann es dazu kommen, dass im vom Nutzer produzierte Fehler auftreten. Der Nutzer kann im Bereich der Transformation syntaktisch nicht korrekte Texte eingeben, die Backend verarbeitet werden. Da Nutzereingaben ohne weitere Behandlung ebenfalls ein Sicherheitsrisiko für die Infrastruktur darstellen können, wird im Backend ein System implementiert, um die Verarbeitung der Eingaben in einer isolierten Umgebung ausführen zu können. Ähnlich wie bei der Verifizierung des JWT, ist das System zur Fehlerbehandlung auch mit Function Wrappern und Annotations umgesetzt. 
+
+Im Backend wird ein Exception Handler definiert der eine Funktion mit zuvor übergebenen Parametern ausführt. Da eine fehlerhafte Ausführung auch dort zum Programmabsturz führen würde, wird die Funktion in einem try-except Block gekapselt. Alle innerhalb dieses Blocks auftretende Fehler werden abgefangen und in einem Exception Objekt gespeichert. Innerhalb des Exception Objekts ist die produzierte Fehlermeldung gespeichert. Über \texttt{str(e)} kann auf die Fehlermeldung zugegriffen werden. Innerhalb des Except Blocks wird die Fehlermeldung an den Logger weitergegeben, um diese in einer Datenbank persistent zu speichern. Nach erfolgreichem Log wird dem Frontend in einer HTTP Response der Statuscode 500 \glqq Internal Server Error\grqq{} zurückgegeben.\footcite{fielding1999rfc2616}
+
+\begin{lstlisting}[language=Python]
+[...]
+ @wraps(f)
+        def decorator(*args, **kwargs):
+            try:
+                return f(*args, **kwargs)
+            except Exception as e:
+                logger.log("error", f"[Server, {msg}]: {str(e)}", "none")
+                return r.respond({"success": False, "error": str(e)}, status=500)
+            [...]
+\end{lstlisting}
+
+Jede Funktion, die in innerhalb des Exception Handlers ausgeführt werden soll, wird mit der Annotation \texttt{@exception\_{}handler("...")} versehen. Innerhalb des Parameters, wird der Ort, an dem die Funktion ausgeführt wird, und damit der Fehler auftritt, als String übergeben. Diese Information wird genutzt, um innerhalb des Fehlerlogs den Ort des Fehlers aufzulisten.
+
 \subsubsection{Event Logging}
-text
+Das Backend implementiert ein Event Logging System mit dem Zustände und Informationen des Systems in einer Datenbank gespeichert werden können. Mithilfe von Logs können Entwickler den Ablauf eines Programms besser nachvollziehen und auftretende Fehler schneller zu ihrer Quelle zurückverfolgen. Es ist ebenfalls möglich, Systeme aufzusetzen, die die auf Logs auslesen und beim Auftreten eines Errors die zuständigen Personen alarmieren. Eine Herausforderung bei einem Logging System ist es, dass das System dem Entwickler beim Loggen keinen erheblichen Mehraufwand produzieren soll. Im Backend wurde ein Logging System entwickelt, welches mit einer einzigen Funktion angesteuert werden kann. Die Log Funktions des Loggers wird in den verschiedenen Bereichen der Anwendung über \texttt{from logs.logger import log} importiert. Nach erfolgreichem Import, steht die \texttt{log} Funktion zur Verfügung. 
+
+Für einen Log müssen drei Parameter übergeben werden, der Log Level eine Message und die UUID. Die möglichen Ausdrücke für die Log Level sind in Tabelle 2 aufgeführt. Die unterstützten Log Level leiten sich aus der Funktionalität von Grafana ab, welche diese Logs mit einer zugeordneten Farbe visualisiert.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c}
+\textbf{Ausdruck} & \textbf{Log Level} & \textbf{Farbe}\\
+\hline
+emerg & critical & lila\\
+fatal & critical & lila\\
+alert & critical & lila\\
+crit & critical & lila\\
+critical & critical & lila\\
+err & error & rot\\
+eror & error & rot\\
+error & error & rot\\
+warn & warning & gelb\\
+warning & warning & gelb\\
+info & info & grün\\
+information & info & grün\\
+notice & info & grün\\
+dbug & debug & blau\\
+debug & debug & blau\\
+trace & trace & hellblau\\
+* & unknown & grau
+\end{tabular}
+\caption{Log Level des Event Logging Systems}
+\end{table}
+
+
+\begin{lstlisting}[language=Python]
+def log(level, message, uid):
+    [...]
+    query = f"INSERT INTO logs (`level`, `message`, `timestamp`, `uid`) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (level, message, datetime.utcnow(), str(uid)))
+    [...]
+\end{lstlisting}
+
 \subsection{Kommunikation zwischen API und Services mit RabbitMQ}
 text
 \subsubsection{RabbitMQ vs. REST-API}

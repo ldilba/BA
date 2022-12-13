@@ -114,6 +114,72 @@
       \field{title}{MySQL}
       \field{year}{2008}
     \endentry
+    \entry{fielding1999rfc2616}{misc}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=a6155135a306bddfc30cc4f52d1924e6}{%
+           family={Fielding},
+           familyi={F\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4991b9e5bfacbd86d4f778b16c57f9fa}{%
+           family={Gettys},
+           familyi={G\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=678f2bf9948e77716864ffb3316b8959}{%
+           family={Mogul},
+           familyi={M\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b5c17667af68a58038b624101ab91e1f}{%
+           family={Frystyk},
+           familyi={F\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6c0c9e27a4c2f882efbbe395bd186936}{%
+           family={Masinter},
+           familyi={M\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b02d4916a516d9ce8550642ddd60faaa}{%
+           family={Leach},
+           familyi={L\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=89ce6361749d05e9c8f47cae979594e9}{%
+           family={Berners-Lee},
+           familyi={B\bibinithyphendelim L\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {RFC Editor}%
+      }
+      \strng{namehash}{55d7afa00010e0ea88cf7be388134e11}
+      \strng{fullhash}{501d697aaf6038399aa1ef25e9bc5e35}
+      \strng{bibnamehash}{501d697aaf6038399aa1ef25e9bc5e35}
+      \strng{authorbibnamehash}{501d697aaf6038399aa1ef25e9bc5e35}
+      \strng{authornamehash}{55d7afa00010e0ea88cf7be388134e11}
+      \strng{authorfullhash}{501d697aaf6038399aa1ef25e9bc5e35}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{RFC2616: Hypertext Transfer Protocol--HTTP/1.1}
+      \field{year}{1999}
+      \true{nocite}
+      \field{pages}{66}
+      \range{pages}{1}
+    \endentry
     \entry{FrauchigerDaniel2017AvDS}{incollection}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=85e49d9a6032cf4a2a57f3aeede73429}{%
