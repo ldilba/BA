@@ -209,13 +209,19 @@ RabbitMQ dient als Middleware, die Anfragen vom Server annimmt und diese im in e
 
 Innerhalb einer Connection, können über einen Channel können sowohl der Server, als auch die Services eine Verbindung mit dem RabbitMQ Dient aufbauen. Ein Channel beschreibt die logische Verbindung zwischen dem Server/Service und dem Broker. Für jede TCP Verbindung mit RabbitMQ können mehrere Channels erstellt werden.\footcite{dossot2014rabbitmq}
 
-Innerhalb eines Channels wird letztendlich die Queue definiert, in der die Nachrichten zwischengespeichert werden. Im foglenden Codeausschnitt ist gezeigt, wie eine Connection, ein Channel und eine Queue erstellt werden.
+Innerhalb eines Channels wird letztendlich die Queue definiert, in der die Nachrichten zwischengespeichert werden. Im folgenden Codeausschnitt ist gezeigt, wie eine Connection, ein Channel und eine Queue erstellt werden.
 
 \begin{lstlisting}[language=Python]
 def produce(uid, service, query, params):
     connection = pika.BlockingConnection(pika.ConnectionParameters(rabbit_host, 5672, '/', credentials))
     channel = connection.channel()
     channel.queue_declare(queue=service)
+\end{lstlisting}
+
+Eine Nachricht kann über \texttt{basic\_{}publish} in einem Channel in eine Queue geschrieben werden. 
+
+\begin{lstlisting}[language=Python]
+channel.basic_publish([...], body=f'{{"uid": "{uid}", "service": "{service}", "query": "{query}", "params":{json.dumps(params)}}}'.encode('utf-8'))
 \end{lstlisting}
 
 %publishen einer nachricht
