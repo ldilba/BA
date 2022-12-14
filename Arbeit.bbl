@@ -451,6 +451,47 @@
       \field{volume}{27}
       \field{year}{2010}
     \endentry
+    \entry{rahutomo2012semantic}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=549be81548f8277e7138befa078afd8c}{%
+           family={Rahutomo},
+           familyi={R\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=12943b464b9098a2ef17205f401e5521}{%
+           family={Kitasuka},
+           familyi={K\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8c56489e8763a624b8ae1016e98b425e}{%
+           family={Aritsugi},
+           familyi={A\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{650d623c8d0afde44e5c172bfae9a0ea}
+      \strng{fullhash}{9a8fe1d2081b701810b3512c4eaaf241}
+      \strng{bibnamehash}{9a8fe1d2081b701810b3512c4eaaf241}
+      \strng{authorbibnamehash}{9a8fe1d2081b701810b3512c4eaaf241}
+      \strng{authornamehash}{650d623c8d0afde44e5c172bfae9a0ea}
+      \strng{authorfullhash}{9a8fe1d2081b701810b3512c4eaaf241}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The 7th international student conference on advanced science and technology ICAST}
+      \field{number}{1}
+      \field{title}{Semantic cosine similarity}
+      \field{volume}{4}
+      \field{year}{2012}
+      \field{pages}{1}
+      \range{pages}{1}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
