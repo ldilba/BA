@@ -118,7 +118,7 @@ token = encode_token({'uid': str(uuid_gen())})
 
 Für jede Route, ausgenommen die \texttt{/service} Routen zum Management der Services, wird der JWT für die Ausführung benötigt. Die Überprüfung und Entschlüsselung des Tokens ist für jede Route gleich, daher ist es sinnvoll diese Funktionalität zu zentralisieren. Damit wird die Fehleranfälligkeit reduziert und und die Wartbarkeit erhöht, sollte sich zum Beispiel der Algorithmus oder das Passwort für die Verschlüsselung ändern. Wie auch Flask Annotations zum definieren einer Route verwendet, ist es möglich eigene Annotations zu entwerfen. Für diese Funktion ist das Python Package \texttt{functools} mit der Funktion \texttt{wraps} zuständig. Wraps ermöglicht es, Funktionen ineinander zu verschachteln.
 
-Im Prototypen wird die Funktion \texttt{token\_{}required(f)} definiert. Diese Funktion dient als eine Umgebung, in der eine weitere Funktion ausgeführt werden. Im Gegensatz zur normalen Ausführung einer Funktion, werden in der \texttt{token\_{}required(f)} Funktion vor der Ausführung der eigentlichen Funktion mehrere Rahmenbedingungen geprüft. Der vom Nutzer gesendete Token muss nach der erfolgreicher Entschlüsselung syntaktisch korrektes JSON enthalten. Sollte dies nicht der Fall sein, wird die die eigentliche Funktion, die zur API Route gehört, gar nicht erst ausgeführt. Der Nutzer bekommt direkt eine Respose mit dem HTTP Error-Code 401: Unauthorized gesendet. \footcite{fielding1999rfc2616}
+Im Prototypen wird die Funktion \texttt{token\_{}required(f)} definiert. Diese Funktion dient als eine Umgebung, in der eine weitere Funktion ausgeführt werden. Im Gegensatz zur normalen Ausführung einer Funktion, werden in der \texttt{token\_{}required(f)} Funktion vor der Ausführung der eigentlichen Funktion mehrere Rahmenbedingungen geprüft. Der vom Nutzer gesendete Token muss nach der erfolgreicher Entschlüsselung syntaktisch korrektes JSON enthalten. Sollte dies nicht der Fall sein, wird die die eigentliche Funktion, die zur API Route gehört, gar nicht erst ausgeführt. Der Nutzer bekommt direkt eine Response mit dem HTTP Error-Code 401: Unauthorized gesendet. \footcite{fielding1999rfc2616}
 
 Wenn die Entschlüsselung des Tokens erfolgreich war, wird die innere Funktion ausgeführt. Als Parameter der inneren Funktion wird die im JWT enthaltene UUID übergeben. Durch diesen Aufbau ist der Code für die Verifizierung des Tokens und die Logik der Funktion unter der angesprochenen Route vollständig getrennt.
 
@@ -209,7 +209,7 @@ RabbitMQ dient als Middleware, die Anfragen vom Server annimmt und diese im in e
 
 Innerhalb einer Connection, können über einen Channel können sowohl der Server, als auch die Services eine Verbindung mit dem RabbitMQ Dient aufbauen. Ein Channel beschreibt die logische Verbindung zwischen dem Server/Service und dem Broker. Für jede TCP Verbindung mit RabbitMQ können mehrere Channels erstellt werden.\footcite{dossot2014rabbitmq}
 
-Innerhalb eines Channels wird letztendlich die Queue definiert, in der die Nachrichten zwischengespeichert werden. Im folgenden Codeausschnitt ist gezeigt, wie eine Connection, ein Channel und eine Queue erstellt werden.
+In einem Channel wird letztendlich die Queue definiert, in der die Nachrichten zwischengespeichert werden. Im folgenden Codeausschnitt ist gezeigt, wie eine Connection, ein Channel und eine Queue erstellt werden.
 
 \begin{lstlisting}[language=Python]
 def produce(uid, service, query, params):
@@ -218,16 +218,34 @@ def produce(uid, service, query, params):
     channel.queue_declare(queue=service)
 \end{lstlisting}
 
-Eine Nachricht kann über \texttt{basic\_{}publish} in einem Channel in eine Queue geschrieben werden. 
+Die Nachrichten, die der Server an die Services schickt, werden mittels der im Channel definierten Methode \texttt{basic\_{}publish} in die für den Service entsprechende Queue geschrieben werden. Im vorherigen Codeausschnitt wird der Parameter \texttt{service} in der \texttt{produce} Methode übergeben. Dieser ist abhängig vom Service, an den die Anfrage gerichtet ist. Im Prototypen wurde der Service \texttt{text-similarity} implementiert. Dieser kann im Frontend als Ziel ausgewählt werden. Wenn der Nutzer im Frontend die Anfrage an den \texttt{text-similarity} Service stellt, wird die Methode \texttt{produce} mit dem String \texttt{\glqq text-similarity\grqq{}} aufgerufen.
+
+Sollte es die Queue mit dem aufgerufenen Service noch nicht geben, wird diese von RabbitMQ beim ersten Aufrufen erstellt. Ist sie bereits vorhanden, wird lediglich ein Eintrag in die entsprechende Queue geschrieben.
+
+Die Nachricht, welche aus der Anfrage des Nutzers, den eingegebenen Parametern und weiteren im Backend automatisch generierten Parametern, wie dem UUID, besteht, wird anschließend mittels AMQP an den Rabbit Broker gesendet. Dort wird die Nachricht, wie zuvor beschrieben, in die entsprechende Queue eingetragen. 
+
+Auf Seiten des Services wird eine Methode implementiert, die die Nachrichten in einer Queue auslesen kann. Zu beginn muss eine Queue definiert werden, aus der Nachrichten ausgelesen werden. Dies funktioniert analog zum erstellen einer Queue für das Schreiben von Nachrichten über \texttt{queue\_{}declare} gefolgt von dem Namen der Queue. Das Registrieren als Consumer für eine Queue wird mittels der Methode \texttt{basic\_{}consume()} durchgeführt. Innerhalb der Parameter ist eine Callback Methode definiert, die ausgelöst wird, wenn der Service eine Nachricht erfolgreich aus der Queue ausgelesen hat. Die \texttt{callback} Methode ist der Startpunkt des Services, von dem aus die eingehende Nachricht mithilfe der KI analysiert und verarbeitet wird.
+
+Um den Consumer zu starten und damit auf neue Nachrichten in der Queue zu warten, wird die Methode \texttt{start\_{}consuming()} ausgeführt. Im nachfolgenden Codesegment ist der eben beschriebene Prozess im KI-Service aufgeführt.
 
 \begin{lstlisting}[language=Python]
-channel.basic_publish([...], body=f'{{"uid": "{uid}", "service": "{service}", "query": "{query}", "params":{json.dumps(params)}}}'.encode('utf-8'))
+channel.queue_declare(queue='text-similarity')
+channel.basic_consume(queue='text-similarity',
+                          auto_ack=True,
+                          on_message_callback=callback)
+channel.start_consuming()
 \end{lstlisting}
 
-%publishen einer nachricht
-%consumen der messages im service 
-%Ergebnisse eines Services in Response queue schreiben
-%consumen der nachricht im server
+Nachdem die KI die eingehende Anfrage verarbeitet hat, schreibt der Service die Response in eine Queue. Es kann jedoch nicht die gleiche Queue für Anfragen und Antworten verwendet werden, da es sonst dazu führen könnte, dass vom Service produzierte Antworten wieder als Anfrage interpretiert werden und es so zur fehlerhaften Ausführung des KI-Algorithmus kommt. Ein weiteres Problem wäre, dass die Antworten dann aus der Queue herausgenommen wurden und der Server keine Antwort mehr zur gestellten Anfrage erhält. Um dem entgegenzuwirken wurde eine zweite \glqq Response-Queue\grqq{} implementiert, in die ausschließlich die Antworten des Services geschrieben werden. Da die Queues über ihren Namen definiert werden, hat jede Response Queue einen vom Service abhängigen, automatisch generierten Namen. Der Name hat die Form \texttt{response-\{service\}}. Im Falle des \texttt{text-similarity} Services, hat die Antwort Queue den Namen \texttt{response-text-similarity}. 
+
+\begin{lstlisting}[language=Python]
+channel.queue_declare(queue='response-text-similarity')
+channel.basic_publish([...], body=f'{{"uid": "{uid}", "service": "{service}", "message": {json.dumps(message)}}}'.encode('utf-8'))
+\end{lstlisting}
+
+Der Server implementiert, ähnlich wie der Service auch, eine Möglichkeit die Nachrichten in der Response Queue auszulesen. Innerhalb der Nachricht, die an den Service geht und vom Service wieder zurück kommt, wird die UUID des Nutzers mitgeliefert. Damit ist eine anschließende Zuordnung von Anfrage und Antwort möglich. Das Backend speichert die Antwort des KI-Services im Redis Cache und kann sie dem Frontend bei Bedarf zur Verfügung stellen.
+
+Der Ablauf der Kommunikation zwischen dem Server und den Services mit RabbitMQ ist in Abbildung 4 veranschaulicht. 
 \begin{figure}[H]
   \centering
     \includegraphics[width = 15cm]{bilder/RAbbit3}
