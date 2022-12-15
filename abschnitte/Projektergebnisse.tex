@@ -256,14 +256,16 @@ Der Ablauf der Kommunikation zwischen dem Server und den Services mit RabbitMQ i
 % Vielleicht in Evaluation. Performanceanalyse?
 text
 
-\subsection{Implementierung des KI-Services}
+\subsection{Konzeption und Implementierung des KI-Services}
+\subsubsection{Textähnlichkeitssuche mit Elasticsearch}
+
 Für den Prototypen wurde ein KI-Service zur Textähnlichkeitssuche entwickelt. Dieser Service ermöglicht eine semantische Suche in einer Datenbank. Nicht-KI gestützte Textsuchalgorithmen können in einer Datenbank lediglich nach übereinstimmenden Wörtern oder Wortteilen suchen. Wenn ein Nutzer alle Einträge zu einem bestimmten Thema aus der Datenbank herausfiltern möchte, muss die passenden Schlüsselwörter kennen, die in den Datenbankeinträgen vorhanden sind. Such man in einer Datenbank beispielsweise nach \glqq JavaScript\grqq{} und es gibt nur Artikel, die die Abkürzung \glqq JS\grqq{} beinhalten, liefert die Suche keine Ergebnisse. Eine gewisse Textähnlichkeit kann erreicht werden, wenn zum Beispiel Leerzeichen oder Groß/Kleinschreibung ignoriert werden. 
 
 Eine Textänlichkeitssuche, die mittels KI durchgeführt wird, kann zu einer Anfrage wie \glqq JavaScript\grqq{} deutlich mehr Ergebnisse liefern. Sie ist nicht durch die in der Suche  angegebenen Zeichen beschränkt, sondern versucht den Inhalt der Anfrage zu verstehen. Anschließend kann in der Datenbank nach inhaltlich ähnlichen Artikeln gesucht werden, die zur Anfrage passen. Der \glqq verstandene\grqq{} Satz, den man für die Suche in der Datenbank nutzt, ist abhängig vom verwendeten KI Modell. Für die Textähnlichkeitssuche im Prototypen wird das BERT Modell von Google verwendet, um die Anfrage in einen 512-dimensionalen Vektor zu konvertieren. Jede Dimension des Vektors wirkt sich auf die Interpretation des Vektor aus. Der Vektor wird daher auch \glqq dense vector\grqq{}, oder auch dichter Vektor genannt. Damit die Suche über den Vektor funktioniert, muss es einen zweiten Vektor geben, mit dem der, durch die Suchanfrage erzeugte, Vektor verglichen werden kann. Jeder Eintrag in der Datenbank muss daher einmalig mit dem gleichen KI-Modell analysiert werden. Der jeweils erzeugte Vektor wird ebenfalls in der Datenbank abgespeichert, um ihn für kommende Suchanfragen nutzen zu können. Dieser Prozess ist in Abbildung 5 unter \glqq Daten indizieren\grqq{} aufgeführt.
 
 Der Grundsatz des KI-Modells ist es, dass zwei Sätze, die inhaltlich ähnlich sind, auch zwei ähnliche Vektoren besitzen. Vektoren sind dann ähnlich, wenn der Abstand der beiden gering und die Richtung ähnlich ist.\footcite{rahutomo2012semantic} Diese Abstandsberechnung kann in der Elasticsearch Datenbank seit Version 7.3, welche am 31.07.2019 veröffentlicht wurde, automatisch durchgeführt werden. 
 
-Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt die Programmablaufschleife. Der erste Schritt der Schleife ist das warten auf eingehende Nachrichten. Diese Nachrichten werden über RabbitMQ aus der, für den Service definierten, Queue ausgelesen. Falls keine Anfrage an den Service eingetroffen ist, wartet der Dienst auf unbestimmte Zeit. Nach dem erfolgreichen Auslesen einer Nachricht, fängt der KI-Service an, die Anfrage zu bearbeiten. Im ersten Schritt wird aus dem Satz, den der Nutzer an den Service geschickt hat, ein semantischer Vektor generiert. Dazu wird das gleiche KI-Modell wie bei der Indizierung der Einträge in der Datenbank genutzt. Daraufhin nutzt der Service den generierten Vektor und die \texttt{cosineSimilarity()} Funktion der Elasticsearch, um die semantisch ähnlichsten Texte aus der Datenbank herauszufiltern. Die Anzahl der gelieferten Ergebnisse ist abhängig von den übergebenen Parametern. Der Nutzer kann im Frontend das Key-Value Paar \texttt{search\_{}size} eingeben, welches in der Anfrage an den Service mitgeliefert wird. Sollte der Nutzer beispielsweise \texttt{\glqq search\_{}size\grqq{} : 3} eingeben, so werden die drei ähnlichsten Artikel zur gestellten Anfrage zurückgegeben. Die Ergebnisse werden in die Response Queue des Services geschrieben, damit sie im Backend weiter verarbeitet werden können. Nach erfolgreichem Durchlaufen des Prozesses, geht der Service wieder zum Zustand \glqq Auf Anfrage warten\grqq{} über. Veranschaulicht wird der Programmablauf des Services in Abbildung 5.
+Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt die Programmablaufschleife. Der erste Schritt der Schleife ist das warten auf eingehende Nachrichten. Diese Nachrichten werden über RabbitMQ aus der, für den Service definierten, Queue ausgelesen. Falls keine Anfrage an den Service eingetroffen ist, wartet der Dienst auf unbestimmte Zeit. Nach dem erfolgreichen Auslesen einer Nachricht, fängt der KI-Service an, die Anfrage zu bearbeiten. Im ersten Schritt wird aus dem Satz, den der Nutzer an den Service geschickt hat, ein semantischer Vektor generiert. Dazu wird das gleiche KI-Modell wie bei der Indizierung der Einträge in der Datenbank genutzt. Daraufhin nutzt der Service den generierten Vektor und die \texttt{cosineSimilarity()} Funktion der Elasticsearch, um die semantisch ähnlichsten Texte aus der Datenbank herauszufiltern. Die Anzahl der gelieferten Ergebnisse ist abhängig von den übergebenen Parametern. Der Nutzer kann im Frontend das Key-Value Paar \texttt{search\_{}size} eingeben, welches in der Anfrage an den Service mitgeliefert wird. Sollte der Nutzer beispielsweise \texttt{\glqq search\_{}size : 3\grqq{}} eingeben, so werden die drei ähnlichsten Artikel zur gestellten Anfrage zurückgegeben. Die Ergebnisse werden in die Response Queue des Services geschrieben, damit sie im Backend weiter verarbeitet werden können. Nach erfolgreichem Durchlaufen des Prozesses, geht der Service wieder zum Zustand \glqq Auf Anfrage warten\grqq{} über. Veranschaulicht wird der Programmablauf des Services in Abbildung 5.
 
 \begin{figure}[H]
   \centering
@@ -271,13 +273,57 @@ Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt 
     \caption{Ablaufdiagramm der Textähnlichkeitssuche}
 \end{figure}
 
-Damit der KI-Service eine Textähnlichkeitssuche durchführen kann, muss zunächst das BERT Modell importiert werden.  
+\subsubsection{Implementierung des KI-Services}
+Damit der KI-Service eine Textähnlichkeitssuche durchführen kann, muss zunächst das BERT Modell importiert werden. Dieses kann der Service beim Starten automatisch aus dem offiziellen Tensorflow Hub herunterladen. Anschließen wird eine Tensorflow Session erstellt und gestartet. 
 
+\begin{lstlisting}[language=Python]
+embed = hub.Module("https://tfhub.dev/google/universal-sentence-encoder/2")
+\end{lstlisting}
 
-\subsubsection{Interpretation der Eingabe mit BERT}
-text
-\subsubsection{Cosinusähnlichkeitssuche in Elastic Search}
-text
+Im zweiten Schritt verbindet sich der Service mit der Elasticsearch Datenbank. Dazu wird die URL, unter der die Elasticsearch erreichbar ist aus den Environment Variablen geladen. Die Environment Variablen können entweder beim manuellen Starten des Services mitgegeben werden, oder falls der Service mit Docker gestartet wird, in der Docker-Compose File definiert werden. Mithilfe der URL initialisiert der Service eine Elasticsearch Instanz und speichert sie in der Variable \texttt{client} ab. 
+
+\begin{lstlisting}[language=Python]
+elasticsearch_url = os.environ.get('ELASTIC_URL')
+client = Elasticsearch(elasticsearch_url)
+\end{lstlisting}
+
+Nachdem sich der Service erfolgreich mit der Elasticsearch verbunden hat, beginnt das Indizieren der Daten in der Datenbank. Dazu wird die Methode \texttt{index\_{}data()} aufgerufen. Der Datensatz, der für den Prototypen verwendet wurde, ist ein Auszug aus den gestellten Fragen im Forum Stackoverflow. In dem Datensatz sind 18.600 Fragen vorhanden. Jede Frage besteht aus einem Titel und einem Body. In einem Fragen-Body ist eine genauere Erläuterung der Frage, mit eventuellen Codeausschnitten oder Verlinkungen. Für die Indizierung ist lediglich der Titel der Frage genutzt worden. Das bedeutet im Umkehrschluss, dass der Titel der Frage repräsentativ für die gesamte Frage stehen muss. Nach Möglichkeit soll der Titel den gesamten Inhalt der Frage kurz und bündig zusammenfassen. Aus diesem Grund eignet  Stackoverflow sich besonders gut für den Datensatz, da in den Guidelines \glqq Write a title that summarizes the specific problem\grqq{} explizit erwähnt wird.\footcite{stackoverflow2022question}
+
+Nach erfolgreicher Indizierung aller Fragestellungen, geht der Service in die Programmablaufschleife über. Die Schleife beginnt mit der Initialisierung der RabbitMQ Verbindung. Dort Verbindet sich der der Textähnlichkeitsservice mit der Queue \texttt{text-similarity}. Bei einer eingehenden Anfrage ruft die \texttt{callback} Funktion die \texttt{respond} Funktion auf, die den KI Algorithmus aufruft und sich um die Verarbeitung der Antwort kümmert. Die Funktion \texttt{handle\_{}query()} benötigt als Parameter die Query die vom Nutzer gestellt wurde und die Anzahl der Ergebnisse, die zurückgegeben werden sollen. Beide Parameter werden aus aus der Anfrage, die über RabbitMQ an den Service gesendet wurde, ausgelesen. Sollte es vorkommen, dass der Nutzer keine \texttt{search\_{}size} angegeben hat, wird der Standartwert 1 gesetzt.
+ 
+\begin{lstlisting}[language=Python]
+search_size = 1
+    for p in params:
+        if "search_size" in p.values():
+            search_size = p["value"]
+
+    message = handle_query(query, search_size)
+\end{lstlisting}
+
+Innerhalb der \texttt{handle\_{}query()} Methode wird zunächst der Satz, der vom Nutzer gesendet wurde, durch die Methode \texttt{embed\_{}text()} in einen Vektor konvertiert. Dieser  wird anschließend in das Feld \texttt{\glqq params\grqq{}} in der Such-Query für die Elasticsearch geschrieben. In dem Feld \texttt{\glqq source\grqq{}} wird die eigentliche Ähnlichkeitsanalyse definiert. Die Elasticsearch implementiert die Funktion \texttt{cosineSimilarity()}, die zwei Vektoren als Parameter annimmt. Der erste Vektor ist der  aus der Query zuvor generierte Vektor. Der zweite Vektor ist der aus dem Titel der Frage generierte Vektor. 
+
+Mit der \texttt{client.search()} stellt der Service die Anfrage an die Elasticsearch mit der zuvor definierten Query. In der Anfrage wird über das Feld \texttt{\glqq size\grqq} die Anzahl der gewünschten Ergebnisse mitgeliefert. Wenn die \texttt{search\_{}size} beispielsweise 3 beträgt, werden die drei Fragen mit den ähnlichsten Vektoren in die Variable \texttt{response} geschrieben. Im nachfolgen Codesegment sind die zuvor beschriebene Erstellung des Query Vektors, der Such-Query für die Elasticsearch und die Anfrage an die Elasticsearch dargestellt.
+
+\begin{lstlisting}[language=Python]
+query_vector = embed_text([query])[0]
+script_query = {
+    [...]
+        "source": "cosineSimilarity(params.query_vector, doc['title_vector']) + 1.0",
+        "params": {"query_vector": query_vector}  
+}
+response = client.search(
+    [...]
+        body={
+            "size": search_size,
+            "query": script_query,
+            [...]
+        }
+)
+\end{lstlisting}
+
+Die Response der Elasticsearch wird nach erfolgreicher Durchführung wieder an die \texttt{respond} Funktion übergeben. Dort wird die Nachricht vorbereitet, die als Response auf die Anfrage vom Backend zurückgesendet wird. Die Antwort wird an RabbitMQ in die Queue \texttt{response-text-similarity} gesendet.
+
+Der Schleifenduchlauf des Services ist damit abgeschlossen. Der Service geht nun wieder, wie in Abbildung 5 zu sehen, zum Zustand \glqq Auf Anfrage warten\grqq{} über. 
 
 \subsection{Webseite mit Angular}
 text

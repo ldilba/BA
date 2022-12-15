@@ -492,6 +492,37 @@
       \field{pages}{1}
       \range{pages}{1}
     \endentry
+    \entry{stackoverflow2022question}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=257281f9b2aa93be7c12f5c49e122ca3}{%
+           family={Stackoverflow},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{257281f9b2aa93be7c12f5c49e122ca3}
+      \strng{fullhash}{257281f9b2aa93be7c12f5c49e122ca3}
+      \strng{bibnamehash}{257281f9b2aa93be7c12f5c49e122ca3}
+      \strng{authorbibnamehash}{257281f9b2aa93be7c12f5c49e122ca3}
+      \strng{authornamehash}{257281f9b2aa93be7c12f5c49e122ca3}
+      \strng{authorfullhash}{257281f9b2aa93be7c12f5c49e122ca3}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{How do I ask a good question?}
+      \field{urlday}{15}
+      \field{urlmonth}{12}
+      \field{urlyear}{2022}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://stackoverflow.com/help/how-to-ask
+      \endverb
+      \verb{url}
+      \verb https://stackoverflow.com/help/how-to-ask
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
