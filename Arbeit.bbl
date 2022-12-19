@@ -51,6 +51,33 @@
       \field{pages}{102\bibrangedash c3}
       \range{pages}{-1}
     \endentry
+    \entry{bloch2006design}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6a5bff0c258c2289c332253eb9bdbe81}{%
+           family={Bloch},
+           familyi={B\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{6a5bff0c258c2289c332253eb9bdbe81}
+      \strng{fullhash}{6a5bff0c258c2289c332253eb9bdbe81}
+      \strng{bibnamehash}{6a5bff0c258c2289c332253eb9bdbe81}
+      \strng{authorbibnamehash}{6a5bff0c258c2289c332253eb9bdbe81}
+      \strng{authornamehash}{6a5bff0c258c2289c332253eb9bdbe81}
+      \strng{authorfullhash}{6a5bff0c258c2289c332253eb9bdbe81}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Companion to the 21st ACM SIGPLAN symposium on Object-oriented programming systems, languages, and applications}
+      \field{title}{How to design a good API and why it matters}
+      \field{year}{2006}
+      \field{pages}{506\bibrangedash 507}
+      \range{pages}{2}
+    \endentry
     \entry{chakraborty2021grafana}{incollection}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=ff3268f0d96f7ba0dcf28f84b33420f1}{%
@@ -86,6 +113,33 @@
       \field{year}{2021}
       \field{pages}{187\bibrangedash 240}
       \range{pages}{54}
+    \endentry
+    \entry{doglio2015pro}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=72079fcbb75988cdcb268309d8f4f167}{%
+           family={Doglio},
+           familyi={D\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Apress}%
+      }
+      \strng{namehash}{72079fcbb75988cdcb268309d8f4f167}
+      \strng{fullhash}{72079fcbb75988cdcb268309d8f4f167}
+      \strng{bibnamehash}{72079fcbb75988cdcb268309d8f4f167}
+      \strng{authorbibnamehash}{72079fcbb75988cdcb268309d8f4f167}
+      \strng{authornamehash}{72079fcbb75988cdcb268309d8f4f167}
+      \strng{authorfullhash}{72079fcbb75988cdcb268309d8f4f167}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Pro REST API Development with Node. js}
+      \field{year}{2015}
     \endentry
     \entry{dossot2014rabbitmq}{book}{}
       \name{author}{1}{}{%
@@ -254,7 +308,7 @@
            givenun=0}}%
       }
       \list{publisher}{1}{%
-        {O'Reilly Media, Inc.}%
+        {O\grq Reilly Media, Inc.}%
       }
       \strng{namehash}{aaaef1648428eda18566aae5dfb5acc8}
       \strng{fullhash}{aaaef1648428eda18566aae5dfb5acc8}
@@ -366,22 +420,22 @@
     \endentry
     \entry{masse2011rest}{book}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=d17b34343fbf45b0a0ec9962f1ac0431}{%
+        {{un=0,uniquepart=base,hash=eb741801b607d51917136d0d095c3107}{%
            family={Masse},
            familyi={M\bibinitperiod},
-           given={Mark},
+           given={M.},
            giveni={M\bibinitperiod},
            givenun=0}}%
       }
       \list{publisher}{1}{%
-        {" O'Reilly Media, Inc."}%
+        {O\grq Reilly Media, Inc.}%
       }
-      \strng{namehash}{d17b34343fbf45b0a0ec9962f1ac0431}
-      \strng{fullhash}{d17b34343fbf45b0a0ec9962f1ac0431}
-      \strng{bibnamehash}{d17b34343fbf45b0a0ec9962f1ac0431}
-      \strng{authorbibnamehash}{d17b34343fbf45b0a0ec9962f1ac0431}
-      \strng{authornamehash}{d17b34343fbf45b0a0ec9962f1ac0431}
-      \strng{authorfullhash}{d17b34343fbf45b0a0ec9962f1ac0431}
+      \strng{namehash}{eb741801b607d51917136d0d095c3107}
+      \strng{fullhash}{eb741801b607d51917136d0d095c3107}
+      \strng{bibnamehash}{eb741801b607d51917136d0d095c3107}
+      \strng{authorbibnamehash}{eb741801b607d51917136d0d095c3107}
+      \strng{authornamehash}{eb741801b607d51917136d0d095c3107}
+      \strng{authorfullhash}{eb741801b607d51917136d0d095c3107}
       \field{sortinit}{M}
       \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
       \field{extradatescope}{labelyear}
@@ -390,6 +444,37 @@
       \field{labeltitlesource}{title}
       \field{title}{REST API design rulebook: designing consistent RESTful web service interfaces}
       \field{year}{2011}
+    \endentry
+    \entry{mdn2022http}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=0536dfa83384c5ba3805472619b3a594}{%
+           family={MDN},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{0536dfa83384c5ba3805472619b3a594}
+      \strng{fullhash}{0536dfa83384c5ba3805472619b3a594}
+      \strng{bibnamehash}{0536dfa83384c5ba3805472619b3a594}
+      \strng{authorbibnamehash}{0536dfa83384c5ba3805472619b3a594}
+      \strng{authornamehash}{0536dfa83384c5ba3805472619b3a594}
+      \strng{authorfullhash}{0536dfa83384c5ba3805472619b3a594}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{HTTP request methods}
+      \field{urlday}{19}
+      \field{urlmonth}{12}
+      \field{urlyear}{2022}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+      \endverb
+      \verb{url}
+      \verb https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+      \endverb
     \endentry
     \entry{moiseev2018angular}{book}{}
       \name{author}{2}{}{%

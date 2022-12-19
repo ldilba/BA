@@ -1,21 +1,45 @@
 \section{Grundlagen}
 \subsection{Schnittstelle}
 text
-\subsection{Künstliche Intelligenz}
-text
-\subsubsection{Grundlagen einer KI}
-%recherche!
-
-\subsubsection{Künstliche Intelligenz als Service}
-%aus projektergebnissen
-%oftmals Blackbox von Drittanbieter
-Die KI-Services sind alleinstehende Programme, die die Aufgabe haben, Nachrichten anzunehmen, sie zu transformieren, zu analysieren und anschließend ein oder mehrere Ergebnisse zurückzugeben. 
-
-Um die Nachrichten empfangen und die Ergebnisse zurücksenden zu können, muss in jedem Service eine AMQP Verbindung zu RabbitMQ hergestellt werden.
-
-Im Prototypen zur Anbindung von austauschbaren Datenquellen an KI-Algorithmen wurde ein Service zur Textähnlichkeitssuche implementiert. Dieser nimmt nutzt das \ac{bert} Modell von Google. Beim Starten des Services werden alle Einträge in einer Elasticsearch Datenbank mithilfe der künstlichen Intelligenz analysiert und in semantische Vektoren konvertiert. Der Service kann anschließend vom Nutzer eingegebene Anfragen mit dem gleichen BERT Modell analysieren und den daraus entstandenen Vektor mit den Vektoren in der Datenbank abgleichen. Nach einem erfolgreichen Suchdurchlauf werden die semantisch ähnlichsten Einträge über RabbitMQ wieder an das Backend zurückgegeben.
 
 \subsection{REST und RabbitMQ}
+\subsubsection{Application Programming Interface}
+Ein \ac{api} ist eine Programmierschnittstelle, die dazu da ist, die Kommunikation zwischen einem Client, oder auch Anwender genannt, und einem Server durch festgelegte Funktionen zu regeln. Der Satz der verfügbaren Funktionen ist durch den Entwickler der API vorgegeben. Eine API sollte nach Möglichkeit selbsterklärend aufgebaut sein. \footcite{bloch2006design} Eine API dient dazu, dem Nutzer Daten bereitzustellen oder dem Server Daten zu senden.
+
+In Abbildung 1 ist die Kommunikation zwischen einem Anwender und der API durch ein Sequenzdiagramm dargestellt. Jede Anfrage an die API findet durch den Aufruf des API Endpunkts durch einen \ac{url} statt. Hinter der Grund-URL wird die genaue Ressource innerhalb der API durch den Pfad in der URL angegeben. Jede dieser Funktionen, die über eine bestimmte URL erreichbar sind, kann mehrere Effekte haben. Der Effekt, den die Funktion hat, ist durch die \ac{http} Methoden im groben Rahmen vorgegeben. Die Kommunikation zwischen API und Anwender geht immer vom Anwender aus. Die API kann von sich aus den Anwender nicht ansprechen. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 8cm]{bilder/APISequenzdiagramm}
+    \caption{UML Sequenzdiagramm einer API}
+\end{figure}
+
+Der gesamte Satz der verfügbaren HTTP-Funktionen lautet \texttt{GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH}. Jede der Funktionen hat eine bestimmte Aufgabe und bestimmte Rechte, die es vom Entwickler der API einzuhalten gilt.\footcite{mdn2022http} In der Bachelorarbeit werden die Funktionen \texttt{GET, POST} und \texttt{DELETE} verwendet. Routen der API, die mit einer \texttt{GET} Funktion aufgerufen werden, sollen lediglich Daten an den Nutzer zurückgeben, ohne Änderungen am Server vorzunehmen. Wenn zwei mal hintereinander die gleiche URL mit \texttt{GET} aufgerufen wird, sollte auch beide male das gleiche Ergebnis von der API zurückgegeben werden.
+
+Die \texttt{POST} Methode liefert Daten vom Nutzer an den Server. Innerhalb des \texttt{POST} Bodys können Daten unter Anderem im JSON Format an die API gesendet werden. API URLs die mit einer \texttt{POST} Methode aufgerufen werden, können Veränderungen auf dem Server auslösen. Dies kann Auswirkungen auf die Daten oder den Status des Servers haben, sodass eventuell andere Methoden davon beeinflusst sind. Ein beispielhafter Anwendungsfall für eine \texttt{POST} Methode ist die Registrierung eines neuen Accounts auf einer Website. Dort wird dann innerhalb des Bodys der Benutzername und das Passwort an die API geschickt. Die API Registriert den Account mit den erhaltenen Daten und gibt bei zukünftigen Aufrufen der URL mit den gleichen Daten einen Fehler zurück, dass der Benutzer bereits registriert ist.
+
+Die \texttt{DELETE} Methode entfernt eine Ressource unter der aufgerufenen URL. Sowohl bei \texttt{POST}, als auch bei \texttt{DELETE} Methoden, ist darauf zu achten, dass der Nutzer die Route nur aufrufen kann, wenn er entsprechende Rechte zur Ausführung verfügt. Ansonsten könnte es zu unkontrollierten Daten- und Statusänderungen innerhalb der API kommen. 
+
+Wie in Abbildung 1 zu sehen ist, gibt die API nicht nur die angeforderten Daten zurück, sondern auch einen Statuscode. Ein HTTP Statuscode besteht aus drei Ziffern. In Tabelle 1 sind die grundlegenden Statuscodes aufgelistet.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l}
+\textbf{Statuscode} & \textbf{Bedeutung} \\
+\hline
+1xx & Informationen, nur unter HTTP 1.1 definiert \\
+2xx & Request war erfolgreich (OK) \\
+3xx & Die Ressource wurde verschoben \\
+4xx & Die Eingabe war fehlerhaft \\
+5xx & Der Server hatte einen Fehler \\
+\end{tabular}
+\caption{HTTP Statuscodes nach \cite{doglio2015pro}}
+\end{table}
+
+Die Statuscodes, die im Prototypen der Bachelorarbeit verwendet wurden, sind Teil der häufiger genutzten Statuscodes für APIs. Der Statuscode \texttt{200:OK} ist der am häufigsten auftretende Statuscode. Dieser besagt, dass die Anfrage erfolgreich abgelaufen ist und das Ergebnis zurückgegeben werden konnte. Der Prototyp nutzt ein Authentifizierungssystem. Dadurch kann es dazu kommen, dass bei einer Anfrage mit fehlender Autorisierung der Statuscode \texttt{401:Unauthorized} zurückgegeben wird. Weitere Statuscodes, die häufiger auftreten können, sind \texttt{404:Not found}, \texttt{405:Method not allowed} und \texttt{500:Internal server error}. Bei einem Statuscode 404 wurde eine Route aufgerufen, die innerhalb der API nicht definiert ist. Bei dem Statuscode 405 wurde zwar eine vorhandene Route angesprochen, jedoch ist die genutzte HTTP Methode nicht zulässig. Der letzte verwendete Statuscode 500 beschreibt einen Serverabsturz bei der Ausführung der Anfrage. 
+
+Die HTTP Methoden und Statuscodes dienen dazu, die Entwicklung und Arbeit mit einer API für den Entwickler einfach zu gestalten. Wie die URLs der API aufgebaut sind und welche HTTP Methoden wann verwendet werden, liegt jedoch vollständig beim Entwickler der API. Um APIs im Allgemeinen etwas zu vereinheitlichen und die Effekte der Funktionen innerhalb der API selbsterklärender werden zu lassen, wurde ein Regelwerk namens \ac{rest} ins Leben gerufen.
+
 \subsubsection{Representational State Transfer}
 %Genaue Einfährung der REST prinzipien
 Eine API stellt einen Satz an Daten und Funktionen bereit, um den Austausch von Daten zwischen verschiedenen Programmen zu ermöglichen. REST ist ein Regelsatz, in dem die Form, Funktionalität und der Aufbau einer API beschrieben wird.\footcite{masse2011rest}
@@ -34,7 +58,7 @@ Bei einer grundlegenden Kommunikation gibt es zwei Kommunikationspartner, einen 
 
 Durch die Art der synchronen Kommunikation sind Client und Server sehr eng miteinander Verbunden. Wenn der Client erwartet eine Response von genau dem Server, an den er den Request geschickt hat. Das macht die Skalierung und Ausfallsicherheit allerdings relativ schwierig.
 
-Damit eine Kommunikation zwischen unabhängigen Programmen möglich wird, muss es einen Zwischendienst geben, der die Nachrichten von einem Programm zum anderen transportiert. Bei der Kommunikation zwischen einer Website und einer API wird das \ac{http} verwendet. Dieses stellt sicher, dass die die Nachrichten erfolgreich beim Empfänger ankommen. Sollte eine Nachricht nicht angekommen sein, hat der Absender die Möglichkeit, die Nachricht erneut zu schicken. Über HTTP wird automatisch eine erneute Anfrage geschickt, wenn keine Antwort vom Server zurück kam. Problematisch wird diese Herangehensweise, wenn die Antwortzeit sehr lang wird oder ungewiss ist, ob überhaupt eine Antwort kommen wird. 
+Damit eine Kommunikation zwischen unabhängigen Programmen möglich wird, muss es einen Zwischendienst geben, der die Nachrichten von einem Programm zum anderen transportiert. Bei der Kommunikation zwischen einer Website und einer API wird HTTP verwendet. Dieses stellt sicher, dass die die Nachrichten erfolgreich beim Empfänger ankommen. Sollte eine Nachricht nicht angekommen sein, hat der Absender die Möglichkeit, die Nachricht erneut zu schicken. Über HTTP wird automatisch eine erneute Anfrage geschickt, wenn keine Antwort vom Server zurück kam. Problematisch wird diese Herangehensweise, wenn die Antwortzeit sehr lang wird oder ungewiss ist, ob überhaupt eine Antwort kommen wird. 
 
 RabbitMQ ist ein eine nachrichtenorientierte Middleware, die eine Kommunikation zwischen zwei oder mehreren Programmen durch das \ac{amqp} ermöglicht. RabbitMQ dient als Broker, der Nachrichten von mehreren Clients an mehrere Server vermitteln kann. Im Gegensatz zu einer direkten Kommunikation zwischen Client und Server wie bei HTTP, wird in RabbitMQ eine Queue implementiert, in der alle Anfragen gesammelt werden. 
 
@@ -52,6 +76,20 @@ Durch diese Herangehensweise wird eine asynchrone Kommunikation zwischen Client 
 
 Die Middleware RabbitMQ wird für die Kommunikation zwischen der Flask API und den KI-Services genutzt. Der im Frontend vom Nutzer eingegebene Text-Input wird an die Flask API geschickt. Die Flask API modifiziert den Text im Anschluss so, dass es mittels der \ac{json} über den RabbitMQ Service in die Queue geschrieben werden kann. Jeder KI-Service hat eine Queue einprogrammiert, aus der die Nachrichten ausgelesen werden. Diese Nachrichten können dann verarbeitet und im Anschluss in eine Response-Queue geschrieben werden. Das Flask Backend kann diese Response-Queue auslesen und die einzelnen Antworten zusammenbauen.
 
+\subsection{Künstliche Intelligenz}
+text
+\subsubsection{Grundlagen einer KI}
+%recherche!
+
+\subsubsection{Künstliche Intelligenz als Service}
+%aus projektergebnissen
+%oftmals Blackbox von Drittanbieter
+Die KI-Services sind alleinstehende Programme, die die Aufgabe haben, Nachrichten anzunehmen, sie zu transformieren, zu analysieren und anschließend ein oder mehrere Ergebnisse zurückzugeben. 
+
+Um die Nachrichten empfangen und die Ergebnisse zurücksenden zu können, muss in jedem Service eine AMQP Verbindung zu RabbitMQ hergestellt werden.
+
+Im Prototypen zur Anbindung von austauschbaren Datenquellen an KI-Algorithmen wurde ein Service zur Textähnlichkeitssuche implementiert. Dieser nimmt nutzt das \ac{bert} Modell von Google. Beim Starten des Services werden alle Einträge in einer Elasticsearch Datenbank mithilfe der künstlichen Intelligenz analysiert und in semantische Vektoren konvertiert. Der Service kann anschließend vom Nutzer eingegebene Anfragen mit dem gleichen BERT Modell analysieren und den daraus entstandenen Vektor mit den Vektoren in der Datenbank abgleichen. Nach einem erfolgreichen Suchdurchlauf werden die semantisch ähnlichsten Einträge über RabbitMQ wieder an das Backend zurückgegeben.
+
 \subsection{Microservice Architekturen}
 text
 \subsection{Verwendete Werkzeuge}
@@ -59,7 +97,7 @@ text
 %Implementierung der Rest api durch Flask
 Python ist eine um 1991 von Guido van Rossum entwickelte Programmiersprache. Bei der Entwicklung von Python wurde ein besonderer Fokus auf die Lesbarkeit von Code gesetzt. Dank der simplifizierten Syntax im Vergleich zu anderen höheren Programmiersprachen wie Java oder C\#, ist Python auch in Bereichen, wie in der Mathematik oder der Wissenschaft ein häufig genutztes Werkzeug. Python bietet ebenfalls die Möglichkeit, von anderen Entwicklern bereitgestellte Bibliotheken in das eigene Projekt zu integrieren.\footcite{python2021python} 
 
-Flask ist eine der verfügbaren Bibliotheken, die ein Framework für die Implementierung eines Webbasierten \ac{api} bereitstellt. Eine API dient dazu, Funktionen und Routen zu definieren, um die Kommunikation zwischen dem Frontend und dem Backend herzustellen. Das Flask Framework ist im Gegensatz zu anderen Frameworks sehr klein. Dies ermöglicht ein schnelles aufsetzen und entwickeln. Da Flask nur die nötigsten Grundlagen für eine API mitliefert, ist der Code besser lesbar und damit für andere Entwickler besser wartbar.\footcite{grinberg2018flask} 
+Flask ist eine der verfügbaren Bibliotheken, die ein Framework für die Implementierung einer webbasierten API bereitstellt. Eine API dient dazu, Funktionen und Routen zu definieren, um die Kommunikation zwischen dem Frontend und dem Backend herzustellen. Das Flask Framework ist im Gegensatz zu anderen Frameworks sehr klein. Dies ermöglicht ein schnelles aufsetzen und entwickeln. Da Flask nur die nötigsten Grundlagen für eine API mitliefert, ist der Code besser lesbar und damit für andere Entwickler besser wartbar.\footcite{grinberg2018flask} 
 
 Die Flask API wird für die Anbindung des Frontends an die Datenbank, sowie die Anbindung an die Kommunikationsschnittstelle von RabbitMQ verwendet. Sie nimmt die Daten oder die Eingaben des Nutzers entgegen und vermittelt sie an den richtigen Dienst, damit sie von einer KI-Schnittstelle ausgewertet werden können. Anschließend kann die API angefragt werden, ob es bereits Antworten von einer \ac{ki} zu der vorher geschickten Anfrage gab. Falls die API die Auswertung der KI erhalten hat, wird diese für das Frontend bereitgestellt, um sie dort anzeigen zu können.  
 
