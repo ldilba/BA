@@ -197,12 +197,12 @@
     \endentry
     \entry{fielding1999rfc2616}{misc}{}
       \name{author}{7}{}{%
-        {{un=0,uniquepart=base,hash=a6155135a306bddfc30cc4f52d1924e6}{%
+        {{un=2,uniquepart=given,hash=a6155135a306bddfc30cc4f52d1924e6}{%
            family={Fielding},
            familyi={F\bibinitperiod},
            given={R.},
            giveni={R\bibinitperiod},
-           givenun=0}}%
+           givenun=2}}%
         {{un=0,uniquepart=base,hash=4991b9e5bfacbd86d4f778b16c57f9fa}{%
            family={Gettys},
            familyi={G\bibinitperiod},
@@ -260,6 +260,40 @@
       \field{pages}{66}
       \range{pages}{1}
     \endentry
+    \entry{fielding2000rest}{online}{}
+      \name{author}{1}{}{%
+        {{un=2,uniquepart=given,hash=a695b5ac0a30a983bef5143afacb5fe8}{%
+           family={Fielding},
+           familyi={F\bibinitperiod},
+           given={R.T.},
+           giveni={R\bibinitperiod},
+           givenun=2}}%
+      }
+      \strng{namehash}{a695b5ac0a30a983bef5143afacb5fe8}
+      \strng{fullhash}{a695b5ac0a30a983bef5143afacb5fe8}
+      \strng{bibnamehash}{a695b5ac0a30a983bef5143afacb5fe8}
+      \strng{authorbibnamehash}{a695b5ac0a30a983bef5143afacb5fe8}
+      \strng{authornamehash}{a695b5ac0a30a983bef5143afacb5fe8}
+      \strng{authorfullhash}{a695b5ac0a30a983bef5143afacb5fe8}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Architectural Styles and the Design of Network-based Software Architectures – Dissertation}
+      \field{urlday}{21}
+      \field{urlmonth}{12}
+      \field{urlyear}{2022}
+      \field{year}{2000}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation_2up.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation_2up.pdf
+      \endverb
+    \endentry
     \entry{FrauchigerDaniel2017AvDS}{incollection}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=85e49d9a6032cf4a2a57f3aeede73429}{%
@@ -297,6 +331,39 @@
       \field{pages}{107\bibrangedash 118}
       \range{pages}{12}
       \keyw{Architektur ; Design ; Design Science Research ; Forschungsmethoden ; Wirtschaftsinformatik}
+    \endentry
+    \entry{gorz2010handbuch}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=fd7243f1e42c4bcec8d0f318b9f1cb9c}{%
+           family={Görz},
+           familyi={G\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=281c2140aa932cd64760731ecb2fff40}{%
+           family={Schneeberger},
+           familyi={S\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Walter de Gruyter}%
+      }
+      \strng{namehash}{c9d992d54bbf71bf798cfc33ba8cf6e0}
+      \strng{fullhash}{b94af4073ad22b36a036737b6a54e7e4}
+      \strng{bibnamehash}{b94af4073ad22b36a036737b6a54e7e4}
+      \strng{authorbibnamehash}{b94af4073ad22b36a036737b6a54e7e4}
+      \strng{authornamehash}{c9d992d54bbf71bf798cfc33ba8cf6e0}
+      \strng{authorfullhash}{b94af4073ad22b36a036737b6a54e7e4}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Handbuch der künstlichen Intelligenz}
+      \field{year}{2010}
     \endentry
     \entry{grinberg2018flask}{book}{}
       \name{author}{1}{}{%
@@ -576,6 +643,36 @@
       \field{year}{2012}
       \field{pages}{1}
       \range{pages}{1}
+    \endentry
+    \entry{richards2006representational}{incollection}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d8fdb6e06aa8068adb2e45f49e133687}{%
+           family={Richards},
+           familyi={R\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{d8fdb6e06aa8068adb2e45f49e133687}
+      \strng{fullhash}{d8fdb6e06aa8068adb2e45f49e133687}
+      \strng{bibnamehash}{d8fdb6e06aa8068adb2e45f49e133687}
+      \strng{authorbibnamehash}{d8fdb6e06aa8068adb2e45f49e133687}
+      \strng{authornamehash}{d8fdb6e06aa8068adb2e45f49e133687}
+      \strng{authorfullhash}{d8fdb6e06aa8068adb2e45f49e133687}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Pro PHP XML and web services}
+      \field{title}{Representational state transfer (rest)}
+      \field{year}{2006}
+      \field{pages}{633\bibrangedash 672}
+      \range{pages}{40}
     \endentry
     \entry{stackoverflow2022question}{online}{}
       \name{author}{1}{}{%
