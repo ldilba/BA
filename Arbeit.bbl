@@ -392,6 +392,87 @@
       \field{title}{Flask web development: developing web applications with python}
       \field{year}{2018}
     \endentry
+    \entry{hamet2017artificial}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=4f5d337b4bc7b0acee285426e4e4a683}{%
+           family={Hamet},
+           familyi={H\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=439ce33e071dcc19b982981e174c8eab}{%
+           family={Tremblay},
+           familyi={T\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{1b8231cf63c69fadc1b274969e6c60c1}
+      \strng{fullhash}{58157b19412fbb8ba41e5c486196e967}
+      \strng{bibnamehash}{58157b19412fbb8ba41e5c486196e967}
+      \strng{authorbibnamehash}{58157b19412fbb8ba41e5c486196e967}
+      \strng{authornamehash}{1b8231cf63c69fadc1b274969e6c60c1}
+      \strng{authorfullhash}{58157b19412fbb8ba41e5c486196e967}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Metabolism}
+      \field{title}{Artificial intelligence in medicine}
+      \field{volume}{69}
+      \field{year}{2017}
+      \field{pages}{S36\bibrangedash S40}
+      \range{pages}{-1}
+    \endentry
+    \entry{hoque2015botnet}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=744f31e7f4a944a433660108192f32f8}{%
+           family={Hoque},
+           familyi={H\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56b6e45ac9806d17aece8d5db75da042}{%
+           family={Bhattacharyya},
+           familyi={B\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bad0dabccde27cc874c727ec611fac83}{%
+           family={Kalita},
+           familyi={K\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{d061c652e0609081b5f1e823c8666145}
+      \strng{fullhash}{5d026dc8a9e0d05fee5306b0b7a1b469}
+      \strng{bibnamehash}{5d026dc8a9e0d05fee5306b0b7a1b469}
+      \strng{authorbibnamehash}{5d026dc8a9e0d05fee5306b0b7a1b469}
+      \strng{authornamehash}{d061c652e0609081b5f1e823c8666145}
+      \strng{authorfullhash}{5d026dc8a9e0d05fee5306b0b7a1b469}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Communications Surveys \& Tutorials}
+      \field{number}{4}
+      \field{title}{Botnet in DDoS attacks: trends and challenges}
+      \field{volume}{17}
+      \field{year}{2015}
+      \field{pages}{2242\bibrangedash 2270}
+      \range{pages}{29}
+    \endentry
     \entry{ionescu2015analysis}{inproceedings}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=0dbe41eb7c039833e8e878dd3649636d}{%
@@ -419,8 +500,51 @@
       \field{booktitle}{2015 14th RoEduNet International Conference-Networking in Education and Research (RoEduNet NER)}
       \field{title}{The analysis of the performance of RabbitMQ and ActiveMQ}
       \field{year}{2015}
+      \true{nocite}
       \field{pages}{132\bibrangedash 137}
       \range{pages}{6}
+    \endentry
+    \entry{JohanssonLovisa2020REBD}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=004f7a4d306ba894f2cdf106205314ac}{%
+           family={Johansson},
+           familyi={J\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3d327c290144e93c90022af313ac35e4}{%
+           family={Dossot},
+           familyi={D\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {eng}%
+      }
+      \list{location}{1}{%
+        {Birmingham}%
+      }
+      \list{publisher}{1}{%
+        {Packt Publishing, Limited}%
+      }
+      \strng{namehash}{91467342ee2c393ba7402ce8a97d7036}
+      \strng{fullhash}{72f3eac0bba25f355e530c6a05801848}
+      \strng{bibnamehash}{72f3eac0bba25f355e530c6a05801848}
+      \strng{authorbibnamehash}{72f3eac0bba25f355e530c6a05801848}
+      \strng{authornamehash}{91467342ee2c393ba7402ce8a97d7036}
+      \strng{authorfullhash}{72f3eac0bba25f355e530c6a05801848}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{RabbitMQ Essentials}
+      \field{isbn}{9781789131666}
+      \field{title}{RabbitMQ Essentials: Build Distributed and Scalable Applications with Message Queuing Using RabbitMQ}
+      \field{year}{2020}
+      \keyw{Telecommunication-Message processing}
     \endentry
     \entry{jones2015json}{report}{}
       \name{author}{3}{}{%
@@ -577,6 +701,33 @@
       \field{title}{Angular Development with TypeScript}
       \field{year}{2018}
     \endentry
+    \entry{newman2015microservices}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=1e5a6f2efe2816bb056061ab04d16620}{%
+           family={Newman},
+           familyi={N\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {MITP-Verlags GmbH \& Co. KG}%
+      }
+      \strng{namehash}{1e5a6f2efe2816bb056061ab04d16620}
+      \strng{fullhash}{1e5a6f2efe2816bb056061ab04d16620}
+      \strng{bibnamehash}{1e5a6f2efe2816bb056061ab04d16620}
+      \strng{authorbibnamehash}{1e5a6f2efe2816bb056061ab04d16620}
+      \strng{authornamehash}{1e5a6f2efe2816bb056061ab04d16620}
+      \strng{authorfullhash}{1e5a6f2efe2816bb056061ab04d16620}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Microservices: Konzeption und design}
+      \field{year}{2015}
+    \endentry
     \entry{paksula2010persisting}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=8e4c0e27e6de471326841da3a0ac6fab}{%
@@ -704,6 +855,33 @@
       \verb{url}
       \verb https://stackoverflow.com/help/how-to-ask
       \endverb
+    \endentry
+    \entry{wolff2018microservices}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=62ec9f17ec72850252e84046e6ee0598}{%
+           family={Wolff},
+           familyi={W\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {dpunkt. verlag}%
+      }
+      \strng{namehash}{62ec9f17ec72850252e84046e6ee0598}
+      \strng{fullhash}{62ec9f17ec72850252e84046e6ee0598}
+      \strng{bibnamehash}{62ec9f17ec72850252e84046e6ee0598}
+      \strng{authorbibnamehash}{62ec9f17ec72850252e84046e6ee0598}
+      \strng{authornamehash}{62ec9f17ec72850252e84046e6ee0598}
+      \strng{authorfullhash}{62ec9f17ec72850252e84046e6ee0598}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Microservices: Grundlagen flexibler Softwarearchitekturen}
+      \field{year}{2018}
     \endentry
   \enddatalist
 \endrefsection
