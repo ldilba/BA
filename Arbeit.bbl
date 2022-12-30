@@ -195,6 +195,39 @@
       \field{title}{MySQL}
       \field{year}{2008}
     \endentry
+    \entry{endres2000open}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=83602e56cf29d1feb568be62d5fa625b}{%
+           family={Endres},
+           familyi={E\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer-Verlag}%
+      }
+      \strng{namehash}{83602e56cf29d1feb568be62d5fa625b}
+      \strng{fullhash}{83602e56cf29d1feb568be62d5fa625b}
+      \strng{bibnamehash}{83602e56cf29d1feb568be62d5fa625b}
+      \strng{authorbibnamehash}{83602e56cf29d1feb568be62d5fa625b}
+      \strng{authornamehash}{83602e56cf29d1feb568be62d5fa625b}
+      \strng{authorfullhash}{83602e56cf29d1feb568be62d5fa625b}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Informatik-Spektrum}
+      \field{number}{5}
+      \field{title}{\glqq Open Source\grqq{} und die Zukunft der Software}
+      \field{volume}{23}
+      \field{year}{2000}
+      \true{nocite}
+      \field{pages}{316\bibrangedash 321}
+      \range{pages}{6}
+    \endentry
     \entry{fielding1999rfc2616}{misc}{}
       \name{author}{7}{}{%
         {{un=2,uniquepart=given,hash=a6155135a306bddfc30cc4f52d1924e6}{%
@@ -824,6 +857,37 @@
       \field{year}{2006}
       \field{pages}{633\bibrangedash 672}
       \range{pages}{40}
+    \endentry
+    \entry{sneed2006integrating}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=7651369e51f98583286359db0068c92e}{%
+           family={Sneed},
+           familyi={S\bibinitperiod},
+           given={H.M.},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{7651369e51f98583286359db0068c92e}
+      \strng{fullhash}{7651369e51f98583286359db0068c92e}
+      \strng{bibnamehash}{7651369e51f98583286359db0068c92e}
+      \strng{authorbibnamehash}{7651369e51f98583286359db0068c92e}
+      \strng{authornamehash}{7651369e51f98583286359db0068c92e}
+      \strng{authorfullhash}{7651369e51f98583286359db0068c92e}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Conference on Software Maintenance and Reengineering (CSMR'06)}
+      \field{title}{Integrating legacy software into a service oriented architecture}
+      \field{year}{2006}
+      \true{nocite}
+      \field{pages}{11\bibrangedash pp}
+      \range{pages}{-1}
     \endentry
     \entry{stackoverflow2022question}{online}{}
       \name{author}{1}{}{%
