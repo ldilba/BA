@@ -114,6 +114,40 @@
       \field{pages}{187\bibrangedash 240}
       \range{pages}{54}
     \endentry
+    \entry{daniel2018anforderungen}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=cd4da016034f0b8fa957a48f84aa9427}{%
+           family={Daniel},
+           familyi={D\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{cd4da016034f0b8fa957a48f84aa9427}
+      \strng{fullhash}{cd4da016034f0b8fa957a48f84aa9427}
+      \strng{bibnamehash}{cd4da016034f0b8fa957a48f84aa9427}
+      \strng{authorbibnamehash}{cd4da016034f0b8fa957a48f84aa9427}
+      \strng{authornamehash}{cd4da016034f0b8fa957a48f84aa9427}
+      \strng{authorfullhash}{cd4da016034f0b8fa957a48f84aa9427}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Schlagwort: Software-Anforderungen IEC 62304 konform dokumentieren}
+      \field{urlday}{31}
+      \field{urlmonth}{12}
+      \field{urlyear}{2022}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.johner-institut.de/blog/tag/software-anforderungen/
+      \endverb
+      \verb{url}
+      \verb https://www.johner-institut.de/blog/tag/software-anforderungen/
+      \endverb
+    \endentry
     \entry{doglio2015pro}{book}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=72079fcbb75988cdcb268309d8f4f167}{%
@@ -885,7 +919,6 @@
       \field{booktitle}{Conference on Software Maintenance and Reengineering (CSMR'06)}
       \field{title}{Integrating legacy software into a service oriented architecture}
       \field{year}{2006}
-      \true{nocite}
       \field{pages}{11\bibrangedash pp}
       \range{pages}{-1}
     \endentry

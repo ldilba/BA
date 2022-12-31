@@ -1,9 +1,58 @@
 \section{Konzeption und prototypische Umsetzung}
-%Genauer ausführen
-In diesem Kapitel wird die prototypische Implementierung der Schnittstelle für die Anbindung von austauschbaren Datenquellen an KI-Algorithmen beschrieben.
+In diesem Kapitel wird die prototypische Implementierung der Schnittstelle für die Anbindung von austauschbaren Datenquellen an KI-Algorithmen beschrieben. Zunächst werden die Anforderungen für das Projekt innerhalb der Bachelorarbeit erläutert. Anschließend wird das erarbeitete Konzept beschrieben. Dar mithilfe des Konzeptes entwickelte Prototyp sowie das anschließende Deployment findet sich ebenfalls in diesem Kapitel wieder.  
+
 \subsection{Anforderungen}
-text
+Die Anforderungen für die Schnittstelle und den daraus resultierenden Prototypen wurden in Zusammenarbeit mit der CONET Solutions GmbH erhoben. Bei der CONET gab es ein offenes Forschung- und Entwicklungsprojekt zur Erstellung eines Trend-Scouting Systems. Das Ziel des Systems sollte es sein, eine Architektur bereitzustellen, die vom Nutzer gestellte Anfragen annimmt und diese mit einer KI analysiert, um Aussagen darüber treffen zu können, welche Technologien in der Zukunft relevant werden könnten. Da der Umfang eines Trend-Scouting Systems zu groß für den Zeitraum einer Bachelorarbeit ist, ergab sich als Zielsetzung die Entwicklung der Architektur, die ein solches System unterstützen könnte. Die genaue Anforderungserhebung wurde nach dem Leitfaden der von der \ac{iec} veröffentlichten Norm IEC 62304 Kapitel 5.2 entworfen.\footcite{daniel2018anforderungen} Innerhalb dieser Norm ist spezifiziert, wie Anforderungen an eine Software aufbereitet und dokumentiert werden sollen.
+
+Im ersten Schritt wurden die Benutzerschnittstellen spezifiziert. Die grundlegende Interaktion mit dem System findet über die Website statt. Dort hat der Nutzer die Möglichkeit seine Suchanfrage in Form eines ausgeschriebenen Satzes oder über einzelne Stichpunkte in ein Textfeld einzugeben. Die nächste Benutzerschnittstelle ist die Transformation der zuvor eingegebenen Suchanfrage. Der Nutzer soll dort mittels JSON-Syntax die Suchanfrage modifizieren können. Dies ist im Hinblick auf eine eventuell automatisierte Nutzung des Systems erforderlich. Im dritten Schritt soll der Nutzer die Option haben, die Suchparameter für die KI anzupassen. Vor allem relevant ist die Anzahl der Ergebnisse, die bei einer gestellten Suchanfrage zurückgegeben werden. An dieser Stelle soll aber auch weitere Parameter eingegeben werden können. Anschließend ist eine Möglichkeit vorgesehen die Anfrage inklusive der Parameter abzuschicken. In Abbildung 5 ist die Interaktion mit dem System in einem Use Case Diagramm dargestellt.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/UseCase}
+    \caption{Use Case Diagramm der Interaktion mit der Schnittstelle}
+\end{figure}
+
+Die letzte Möglichkeit, die der Nutzer hat, mit der Schnittstelle zu interagieren, ist über die API selbst. Dort gibt es eine Route, über die die aktiven KI-Services verwaltet werden können. Abhängig von der gewählten HTTP-Methode sollen verschiedene Funktionen angeboten werden. Die drei Hauptfunktionen sind die Auflistung aller aktiven Services, das erstellen eines neuen Services und das löschen eines Services.
+
+Der nächste Schritt der Anforderungsanalyse nach IEC 62304 ist die Festlegung des \ac{gui}. Die grafische Oberfläche sollte sich auf eine Seite beschränken und in drei Bereiche eingeteilt sein. Jeder der Bereiche beinhaltet eine Kachel mit einer Überschrift. Die drei Überschriften \glqq Query\grqq{}, \glqq Transformation\grqq{} und \glqq Service\grqq{} sollen verdeutlichen, welche Aktionen in der entsprechenden Kachel passieren.
+Der linke Bereich der Seite für die Query beinhaltet die Eingabe durch den Nutzer, welche durch ein Textfeld realisiert wird. Des Weiteren gibt es einen Button zum Hochladen der Anfrage an den Server. Im mittleren Bereich der Seite befindet sich die Kachel für die Transformation der Eingabe. Der Inhalt der Kachel selber ist nochmal in drei Bereiche aufgeteilt. Der erste Bereich zeigt die vom Nutzer hochgeladene Eingabe. In diesem Feld kann der Nutzer keine Änderungen vornehmen. Das zweite Feld enthält die Eingabe für die Transformation. Das Textfeld enthält einen vorgefertigter Text in JSON-Syntax, den der Nutzer anpassen kann. Unter dem Textfeld gibt es einen Button, der die Funktion hat, die Transformationsanleitung an den Server zu senden. Im dritten Feld wird das Ergebnis der Transformation angezeigt, damit der Nutzer überprüfen kann, ob das erzeugte Ergebnis seinen Erwartungen entspricht. 
+Der rechte Bereich der Seite ist für die Auswahl und Nutzung der KI-Services vorgesehen. Der gewünschte Service soll über ein Dropdown ausgewählt werden. Da die Services für ihre Anfragen Parameter übergeben bekommen müssen, muss eine Tabellenstruktur implementiert werden. Die Tabelle hat zwei Spalten und beliebig viele Reihen. Innerhalb der Tabelle können Schlüssel-Wert Paare eingegeben werden, wobei der Schlüssel in der ersten Spalte und der Wert in der zweiten Spalte steht. Unter der Tabelle muss es einen Button geben, der die Anfrage an den KI-Service sendet. Daraufhin startet der Abfrageprozess der die Antworten der KI-Services zusammenträgt. Die Ergebnisse des KI-Services werden in einem Feld unter dem Button angezeigt. Bei jedem Ergebnis wird zunächst nur die Überschrift angezeigt. Erst bei einem Klick auf die Überschrift soll der Inhalt ausgeklappt werden.
+
+Der Schritt nach der Anforderungserhebung der grafischen Oberfläche ist die Dokumentation des Verhaltens des Systems. Besonderer Fokus liegt hierbei auf dem Verhalten gegenüber Nutzerinterkationen.
+
+%\subsubsection{Benutzerschnittstellen}
+
+%\subsubsection{GUI}
+
+%\subsubsection{Verhalten des Systems}
+
+%\subsubsection{Geschwindigkeit des Systems}
+
+%\subsubsection{Umgebung und Installation}
+
+%\subsubsection{Benutzerfehler und Überlast}
+%- Benutzerschnittstelle(n)
+%- Die GUI: Positionierung von Elementen, Style Guides, …
+%- Verhalten des Systems auf Benutzeraktionen im Normal- und Fehlerfall: Vom System angezeigte Informationen, Berechnungen, Grafiken, Meldungen, Warnungen, “Screenflow”, …
+%- Die Geschwindigkeit, mit der diese Reaktionen geschehen
+%- Auf welchen Umgebungen, sich die Software (Blackbox) installieren lassen soll (Betriebssystem, vorausgesetzte Datenbanken und andere Server, Hardware einschließlich RAM) und wie diese Installation von statten gehen soll.
+%- Wie sich das System auf Benutzerfehler und Überlast reagieren soll.
+%
+%- modularisierung der einzelnen bereiche
+%- trennung von front und backend
+%- implementierung eines ki-services, der text in vektoren konvertiert
+%- vektor zur textähnlichkeitssuche in elasticsearch
+%- skalierbarkeit der ki-services
+%- webbasierte implementierung
+%- (performante auswertung der anfragen)
+%- api mit rest implementiert
+%- absturzsicherheit
+%- logging von events
+%- deployment über docker
+
 \subsection{Konzeption}
+
+
 % 4 Sichten Modell von Starke
 % Kontextsicht, Laufzeitsicht, Bausteinsicht, Verteilungssicht
 
@@ -196,15 +245,9 @@ Der Ablauf der Kommunikation zwischen dem Server und den Services mit RabbitMQ i
     \caption{Kommunikation mit RabbitMQ}
 \end{figure}
 
-\subsubsection{Textähnlichkeitssuche mit Elasticsearch}
-
-Für den Prototypen wurde ein KI-Service zur Textähnlichkeitssuche entwickelt. Dieser Service ermöglicht eine semantische Suche in einer Datenbank. Nicht-KI gestützte Textsuchalgorithmen können in einer Datenbank lediglich nach übereinstimmenden Wörtern oder Wortteilen suchen. Wenn ein Nutzer alle Einträge zu einem bestimmten Thema aus der Datenbank herausfiltern möchte, muss die passenden Schlüsselwörter kennen, die in den Datenbankeinträgen vorhanden sind. Such man in einer Datenbank beispielsweise nach \glqq JavaScript\grqq{} und es gibt nur Artikel, die die Abkürzung \glqq JS\grqq{} beinhalten, liefert die Suche keine Ergebnisse. Eine gewisse Textähnlichkeit kann erreicht werden, wenn zum Beispiel Leerzeichen oder Groß/Kleinschreibung ignoriert werden. 
-
-Eine Textänlichkeitssuche, die mittels KI durchgeführt wird, kann zu einer Anfrage wie \glqq JavaScript\grqq{} deutlich mehr Ergebnisse liefern. Sie ist nicht durch die in der Suche  angegebenen Zeichen beschränkt, sondern versucht den Inhalt der Anfrage zu verstehen. Anschließend kann in der Datenbank nach inhaltlich ähnlichen Artikeln gesucht werden, die zur Anfrage passen. Der \glqq verstandene\grqq{} Satz, den man für die Suche in der Datenbank nutzt, ist abhängig vom verwendeten KI Modell. Für die Textähnlichkeitssuche im Prototypen wird das BERT Modell von Google verwendet, um die Anfrage in einen 512-dimensionalen Vektor zu konvertieren. Jede Dimension des Vektors wirkt sich auf die Interpretation des Vektor aus. Der Vektor wird daher auch \glqq dense vector\grqq{}, oder auch dichter Vektor genannt. Damit die Suche über den Vektor funktioniert, muss es einen zweiten Vektor geben, mit dem der, durch die Suchanfrage erzeugte, Vektor verglichen werden kann. Jeder Eintrag in der Datenbank muss daher einmalig mit dem gleichen KI-Modell analysiert werden. Der jeweils erzeugte Vektor wird ebenfalls in der Datenbank abgespeichert, um ihn für kommende Suchanfragen nutzen zu können. Dieser Prozess ist in Abbildung 5 unter \glqq Daten indizieren\grqq{} aufgeführt.
-
-Der Grundsatz des KI-Modells ist es, dass zwei Sätze, die inhaltlich ähnlich sind, auch zwei ähnliche Vektoren besitzen. Vektoren sind dann ähnlich, wenn der Abstand der beiden gering und die Richtung ähnlich ist.\footcite{rahutomo2012semantic} Diese Abstandsberechnung kann in der Elasticsearch Datenbank seit Version 7.3, welche am 31.07.2019 veröffentlicht wurde, automatisch durchgeführt werden. 
-
-Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt die Programmablaufschleife. Der erste Schritt der Schleife ist das warten auf eingehende Nachrichten. Diese Nachrichten werden über RabbitMQ aus der, für den Service definierten, Queue ausgelesen. Falls keine Anfrage an den Service eingetroffen ist, wartet der Dienst auf unbestimmte Zeit. Nach dem erfolgreichen Auslesen einer Nachricht, fängt der KI-Service an, die Anfrage zu bearbeiten. Im ersten Schritt wird aus dem Satz, den der Nutzer an den Service geschickt hat, ein semantischer Vektor generiert. Dazu wird das gleiche KI-Modell wie bei der Indizierung der Einträge in der Datenbank genutzt. Daraufhin nutzt der Service den generierten Vektor und die \texttt{cosineSimilarity()} Funktion der Elasticsearch, um die semantisch ähnlichsten Texte aus der Datenbank herauszufiltern. Die Anzahl der gelieferten Ergebnisse ist abhängig von den übergebenen Parametern. Der Nutzer kann im Frontend das Key-Value Paar \texttt{search\_{}size} eingeben, welches in der Anfrage an den Service mitgeliefert wird. Sollte der Nutzer beispielsweise \texttt{\glqq search\_{}size : 3\grqq{}} eingeben, so werden die drei ähnlichsten Artikel zur gestellten Anfrage zurückgegeben. Die Ergebnisse werden in die Response Queue des Services geschrieben, damit sie im Backend weiter verarbeitet werden können. Nach erfolgreichem Durchlaufen des Prozesses, geht der Service wieder zum Zustand \glqq Auf Anfrage warten\grqq{} über. Veranschaulicht wird der Programmablauf des Services in Abbildung 5.
+\subsubsection{Implementierung des KI-Services}
+Der implementierte KI-Service lädt im ersten Schritt das KI-Modell, um mit diesem für jeden Eintrag in der Elasticsearch Datenbank einen semantischen Vektor zu generieren. Dieser semantische Vektor wird ebenfalls in der Datenbank gespeichert und kann für zukünftige abfragen genutzt werden.
+Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt die Programmablaufschleife. Der erste Schritt der Schleife ist das warten auf eingehende Nachrichten. Diese Nachrichten werden über RabbitMQ aus der, für den Service definierten, Queue ausgelesen. Falls keine Anfrage an den Service eingetroffen ist, wartet der Dienst auf unbestimmte Zeit. Nach dem erfolgreichen Auslesen einer Nachricht, fängt der KI-Service an, die Anfrage zu bearbeiten. Im ersten Schritt wird aus dem Satz, den der Nutzer an den Service geschickt hat, ein semantischer Vektor generiert. Dazu wird das gleiche KI-Modell wie bei der Indizierung der Einträge in der Datenbank genutzt. Daraufhin nutzt der Service den generierten Vektor und die \texttt{cosineSimilarity()} Funktion der Elasticsearch, um die semantisch ähnlichsten Texte aus der Datenbank herauszufiltern. Die Anzahl der gelieferten Ergebnisse ist abhängig von den übergebenen Parametern. Der Nutzer kann im Frontend das Key-Value Paar \texttt{search\_{}size} eingeben, welches in der Anfrage an den Service mitgeliefert wird. Sollte der Nutzer beispielsweise \texttt{\glqq search\_{}size : 3\grqq{}} eingeben, so werden die drei ähnlichsten Artikel zur gestellten Anfrage zurückgegeben. Die Ergebnisse werden in die Response Queue des Services geschrieben, damit sie im Backend weiter verarbeitet werden können. Nach erfolgreichem Durchlaufen des Prozesses, geht der Service wieder zum Zustand \glqq Auf Anfrage warten\grqq{} über. Veranschaulicht wird der Programmablauf des Services in Abbildung 7.
 
 \begin{figure}[H]
   \centering
@@ -212,7 +255,6 @@ Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt 
     \caption{Ablaufdiagramm der Textähnlichkeitssuche}
 \end{figure}
 
-\subsubsection{Implementierung des KI-Services}
 Damit der KI-Service eine Textähnlichkeitssuche durchführen kann, muss zunächst das BERT Modell importiert werden. Dieses kann der Service beim Starten automatisch aus dem offiziellen Tensorflow Hub herunterladen. Anschließen wird eine Tensorflow Session erstellt und gestartet. 
 
 \begin{lstlisting}[language=Python]
@@ -262,7 +304,7 @@ response = client.search(
 
 Die Response der Elasticsearch wird nach erfolgreicher Durchführung wieder an die \texttt{respond} Funktion übergeben. Dort wird die Nachricht vorbereitet, die als Response auf die Anfrage vom Backend zurückgesendet wird. Die Antwort wird an RabbitMQ in die Queue \texttt{response-text-similarity} gesendet.
 
-Der Schleifenduchlauf des Services ist damit abgeschlossen. Der Service geht nun wieder, wie in Abbildung 5 zu sehen, zum Zustand \glqq Auf Anfrage warten\grqq{} über. 
+Der Schleifendurchlauf des Services ist damit abgeschlossen. Der Service geht nun wieder, wie in Abbildung 7 zu sehen, zum Zustand \glqq Auf Anfrage warten\grqq{} über. 
 
 \subsubsection{Management der Services}
 Die entworfene Softwarearchitektur unterstützt eine beliebige Anzahl an KI-Services. Alle Services, die über das System erreichbar sein sollen, müssen über die API registriert werden. Jeder Service implementiert eine Verbindung zur RabbitMQ Schnittstelle, damit die Anfragen und Antworten asynchron zwischen dem Backend und dem jeweiligen Service gesendet werden können. Eine der Kernanforderungen für eine Architektur, die austauschbare KI-Services unterstützt, ist die dynamische Registrierung und Deregistrierung. Eine Registrierung beschreibt das Hinzufügen eines neuen Services im System, ohne den Quellcode anpassen zu müssen. Um dies zu ermöglichen, braucht es einen persistenten Speicher, in dem alle zur Verfügung stehenden Services aufgelistet sind. Zur persistenten Speicherung von kleineren Datenmengen, eignet sich eine MySQL Datenbank. Innerhalb der Datenbank werden alle aktiven Services in der Tabelle \texttt{services} abgespeichert. Zu jedem Service gibt es einen Namen, \texttt{servie}, und einen Anzeigenamen, \texttt{display\_{}name}. Der Name wird für das interne Routing über RabbitMQ genutzt. Der Anzeigename wird im Frontend innerhalb des Dropdowns für die Auswahl des Services verwendet.
