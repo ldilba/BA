@@ -395,6 +395,7 @@
       \field{booktitle}{Wirtschaftsinformatik in Theorie und Praxis}
       \field{title}{Anwendungen von Design Science Research in der Praxis}
       \field{year}{2017}
+      \true{nocite}
       \field{pages}{107\bibrangedash 118}
       \range{pages}{12}
       \keyw{Architektur ; Design ; Design Science Research ; Forschungsmethoden ; Wirtschaftsinformatik}
@@ -495,6 +496,40 @@
       \field{year}{2017}
       \field{pages}{S36\bibrangedash S40}
       \range{pages}{-1}
+    \endentry
+    \entry{harwardt2012wasserfallmodell}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=9449f6ae48149e57183412838e8b840e}{%
+           family={Harwardt},
+           familyi={H\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e8544a76dbb1e852ae4aa5df4abd7394}{%
+           family={Steimann},
+           familyi={S\bibinitperiod},
+           given={Friedrich},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b4f64f97ab384b9293b71c567aa6bfe3}
+      \strng{fullhash}{47b587ef31f2c610c8658e5fd5212383}
+      \strng{bibnamehash}{47b587ef31f2c610c8658e5fd5212383}
+      \strng{authorbibnamehash}{47b587ef31f2c610c8658e5fd5212383}
+      \strng{authornamehash}{b4f64f97ab384b9293b71c567aa6bfe3}
+      \strng{authorfullhash}{47b587ef31f2c610c8658e5fd5212383}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Gesellschaft für Informatik eV (GI) publishes this series in order to make available to a broad public recent findings in informatics (ie computer science and informa-tion systems), to document conferences that are organized in co-operation with GI and to publish the annual GI Award dissertation.}
+      \field{title}{Wasserfallmodell versus Scrum}
+      \field{year}{2012}
+      \true{nocite}
+      \field{pages}{235\bibrangedash 237}
+      \range{pages}{3}
     \endentry
     \entry{hoque2015botnet}{article}{}
       \name{author}{3}{}{%
@@ -820,6 +855,39 @@
       \field{title}{Persisting objects in redis key-value database}
       \field{volume}{27}
       \field{year}{2010}
+    \endentry
+    \entry{PorathRon2020ICuI}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f2a3d0baa85f0b53f3126781500ec66b}{%
+           family={Porath},
+           familyi={P\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer Berlin / Heidelberg}%
+      }
+      \strng{namehash}{f2a3d0baa85f0b53f3126781500ec66b}
+      \strng{fullhash}{f2a3d0baa85f0b53f3126781500ec66b}
+      \strng{bibnamehash}{f2a3d0baa85f0b53f3126781500ec66b}
+      \strng{authorbibnamehash}{f2a3d0baa85f0b53f3126781500ec66b}
+      \strng{authornamehash}{f2a3d0baa85f0b53f3126781500ec66b}
+      \strng{authorfullhash}{f2a3d0baa85f0b53f3126781500ec66b}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Internet, Cyber- und IT-Sicherheit Von A-Z}
+      \field{edition}{2. Aufl. 2020}
+      \field{isbn}{366260910X}
+      \field{title}{Internet, Cyber- und IT-Sicherheit Von A-Z: Aktuelle Begriffe Kurz und Einfach Erklärt - Für Beruf, Studium und Privatleben}
+      \field{year}{2020}
     \endentry
     \entry{rahutomo2012semantic}{inproceedings}{}
       \name{author}{3}{}{%
