@@ -420,6 +420,150 @@ Das Log Panel mit den aus der Query resultierenden Logs ist in Abbildung 10 abge
 \end{figure}
 
 \subsubsection{Website mit Angular}
-text
+Damit ein Anwender die Schnittstelle zur Anbindung von Daten an KI-Services nutzen kann, wurde eine Website entworfen und entwickelt. Die grundlegende Funktionsweise der Website ist in den Abschnitten 4.1 Anforderungen und 4.2 Konzeption beschrieben. In diesem Kapitel liegt der Fokus auf der technischen Umsetzung der Website. 
+
+Das Frontend wurde mit dem Framework Angular entwickelt. In Abbildung 15 ist der fertiggestellte Prototyp der Website dargestellt. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 15cm]{bilder/website}
+    \caption{Gesamtansicht der Website}
+\end{figure}
+
+Wie in den Anforderungen beschrieben, teilt sich die Website in drei Bereiche auf. In Angular ist es möglich, eigene Components zu definieren. Ein Component besteht aus drei Dateien. Die grundlegende Datei ist eine TypeScript Datei. Innerhalb dieser Datei wird der eigentliche Component definiert. Zunächst muss dafür \texttt{Component} aus \texttt{@anuglar/core} importiert werden. Im Anschluss im Bereich unter \texttt{@Component} ein selector, eine templateUrl und die styleUrls definiert. Der selector beschreibt, wie der Component im HTML Code aufgerufen werden soll. Jeder Component braucht einen individuellen Namen. Um die eigenen Components von den Components, die durch Angular bereitgestellt sind, unterscheiden zu können, befindet sich zu Beginn jedes Namens das Prefix \texttt{app-}. Die templateUrl gibt den Pfad der dazugehörigen HTML Datei an. Diese Datei ist die zweite Datei, die zur Erstellung eines Components notwendig ist. Innerhalb der styleUrls können mehrere Pfade zu verschiedenen Dateien angegeben werden. Die SCSS Datei ist die dritte Datei, die zur Erstellung eines Component benötigt wird. Im folgenden Codeausschnitt ist die Initialisierung des Query-Imput-Components innerhalb der TypeScript Datei dargestellt.
+
+\begin{lstlisting}[language=Python]
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-datasource-input',
+  templateUrl: './datasource.input.component.html',
+  styleUrls: ['./datasource.input.component.scss']
+})
+\end{lstlisting}
+
+Innerhalb der TypeScript Datei können Variablen und Funktionen definiert werden. Diese können dazu genutzt werden, Nutzerinteraktionen mit der Website festzuhalten, oder Ereignisse darzustellen. In der Query-Input-Component wird die Variable \texttt{inputStr} definiert. Innerhalb dieser Variable wird die Eingabe, die der Nutzer im Textfeld der Query-Kachel tätigt, gespeichert. Für sich alleine stehend, hat die Variable jedoch keine Funktion. Diese bekommt sie erst durch den Code aus der HTML Datei. 
+
+\begin{lstlisting}[language=Python]
+<textarea [(ngModel)]="inputStr" placeholder="Input..." class="text-input"></textarea>
+\end{lstlisting}
+
+Innerhalb der HTML Datei für die Query ist eine Textarea definiert. Über den Selector \texttt{[(ngModel)]} kann eine Variable angegeben werden, die mit dem Inhalt der Textarea synchronisiert wird. Sobald der Nutzer eine Eingabe in der Textarea tätigt, wird diese sofort in der TypeScript Datei aktualisiert. 
+
+Es ist ebenfalls ein \texttt{class} Attribut innerhalb der Textarea angegeben. Dieses setzt eine CSS Klasse für die Textarea. In der Definition der Componet ist eine SCSS Datei angegeben, die in diesem Schritt aufgerufen wird. Dort wird die Klasse \texttt{text-input} definiert und mit verschiedenen Style-Eigenschaften versehen. Diese Eigenschaften werden auf die Textarea angewandt.  
+
+\begin{lstlisting}
+.text-input{
+  border-radius: 5px;
+  border: 1px solid #9A9A9A;
+  box-shadow: 2px 2px 8px rgba(0,0,0,.15);
+  resize: vertical;
+  height: 206px;
+  width: 90%;
+  font-family: "Roboto Mono", sans-serif;
+  padding: 5px;
+}
+\end{lstlisting}
+
+Die daraus resultierende Textarea innerhalb der \glqq Query\grqq{} Kachel, ist in Abbildung 16 dargestellt.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 10cm]{bilder/websiteQuery}
+    \caption{Query Kachel im Frontend}
+\end{figure}
+
+Der Bereich der Transformation besteht aus mehreren Sub-Components. Die obere und mittlere Textarea ist analog zu der Textarea aus der Query implementiert. Da die obere Textarea jedoch ausschließlich zur Bestätigung der Eingabe dient und nicht selber zu Eingabe genutzt werden soll, wurde bei der Definition das Attribut \texttt{readonly} mitgegeben. Der untere Bereich der Transformation-Component teilt sich in zwei Components auf. Der übergeordnete Component ist das \texttt{transformation.result}. Dies ist die graue Box, in der eine Liste an transformierten Eingaben dargestellt werden. Jedes Element der Liste ist ein \texttt{transformation.result.item} Component. In Angular kann eine Liste im HTML Code direkt aus einer Variable erzeugt werden. Dazu wird \texttt{*ngFor} verwendet. Innerhalb der Schleife ist eine Variable aus der zugehörigen TypeScript Datei angegeben, über die iteriert wird. Sollte sich die Variable zur Laufzeit ändern, so wird auch direkt die HTML Datei angepasst. Der folgende Codeausschnitt zeigt die Implementierung des \texttt{transformation.result} Components.
+
+\begin{lstlisting}[language=Python]
+<div class="container">
+  <li *ngFor="let item of results; index as i" class="list-results">
+    <app-transformation-result-item [text]="item"></app-transformation-result-item>
+  </li>
+</div>
+\end{lstlisting}
+
+In Abbildung 17 ist die Transformation der Query, sowie das Ergebnis abgebildet.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 8cm]{bilder/websiteTransformation}
+    \caption{Transformation Kachel im Frontend}
+\end{figure}
+
+Den dritte Bereich der Website stellt die Auswahl und Ergebnisauflistung des KI-Services dar. Zur Datenakquirierung werden in Angular Services verwendet. Diese sind TypeScript Dateien, die Kommunikation zur API regeln. Eine der Funktionen aus dem Service für die Service-Component ist \texttt{getService()} Methode. 
+
+\begin{lstlisting}[language=Python]
+getServices() {
+  const headers = {'Authorization': environment.token}
+  return this.http.get<any>(environment.backend_url + '/service', {headers})
+}
+\end{lstlisting}
+
+
+Diese kann innerhalb der TypeScript Datei der Component aufgerufen werden. Die \texttt{getService()} Methode stellt einen HTTP GET-Request an die \texttt{/service} Route der API. Die genaue URL der API wird aus den Environmentvariablen ausgelesen. Die Methode gibt jedoch nicht direkt die Response auf den Request zurück, sondern ein Objekt vom Typ Observable. Innerhalb des TypeScript Datei des Components kann auf dieses Observable subscribed werden. Durch diese Herangehensweise wird ein asynchroner Aufruf an die API gesendet und bei einer Response das Ergebnis verarbeitet. Das Ergebnis ist hierbei eine Liste von allen verfügbaren KI-Services. Diese werden in der Variable \texttt{services} gespeichert.
+
+\begin{lstlisting}[language=Python]
+this.serviceService.getServices().subscribe(res => {
+  this.services = res['services']
+})
+\end{lstlisting}
+
+Im HTML des Service-Components wird die Liste der Services für ein Dropdown verwendet. Eine weitere Funktion von Angular sind Events. Ein Event kann von einem Component ausgelöst werden. Innerhalb des Components, das das untergeordnete Component implementiert, kann auf dieses Event reagiert werden. Es besteht die Möglichkeit TypeScript Code auszuführen oder vordefinierte Funktionen aufzurufen. Im Dropdown wird das \texttt{changeEvent} abgefangen. Dieses löst aus, wenn der Nutzer ein neues Element aus dem Dropdown ausgewählt hat. Dabei wird die Funktion \texttt{serviceSelected()} aufgerufen.
+
+\begin{lstlisting}[language=Python]
+<app-dropdown [elements]="services" (changeEvent)="serviceSelected($event)"></app-dropdown>
+\end{lstlisting}
+
+Die Tabelle für die Parameter nutzt ebenfalls \texttt{*ngFor}, um die einzelnen Reihen zu generieren. 
+
+Der letzte Component innerhalb des Services ist der \texttt{service.result} Component. Dieser zeigt ein Ergebnis aus dem KI-Service an. Das Ergebnis besteht dabei aus einer Überschrift und einem Body. Damit die Ergebnisse beim Frontend eintreffen, muss der Nutzer nach der Auswahl des Services auf den \glqq Execute\grqq{} Button klicken. Dadurch wird im Angular Service die Methode \texttt{sendRequests()} aufgerufen, die dafür sorgt, dass die Anfrage für den KI-Service an die API gesendet wird. Anschließend wird die Funktion \texttt{pollResponses(expectedResponses: number)} mit der Anzahl der erwarteten Ergebnisse aufgerufen. Diese führt in einem 200ms Intervall die \texttt{poll()} Funktion aus, die eine Anfrage an die API stellt, ob bereits neue Ergebnisse des KI-Service im Backend zwischengespeichert wurden. Falls dies der Fall sein sollte, werden die Ergebnisse in der Response mitgeteilt und die Anzahl der erhaltenen Ergebnisse hochgezählt. Die Schleife läuft so lange, bis die Anzahl der erhaltenen Ergebnisse gleich der Anzahl der erwarteten Ergebnisse ist. Für jedes Ergebnis wird ein \texttt{service.result} Component in einer \texttt{*ngFor} Schleife erzeugt. Die Auflistung der Ergebnisse, sowie die zuvor beschriebenen Elemente der \glqq Service\grqq{} Kachel, sind in Abbildung 18 zu sehen. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width = 10cm]{bilder/websiteService}
+    \caption{Service Kachel im Frontend}
+\end{figure}
+
 \subsection{Deployment der Software mit Docker}
-text
+\begin{lstlisting}[language=Python]
+version: '3.3'
+services: 
+    flask-backend:
+        build: 
+            context: ../BA-Backend/
+            network: host
+    
+    flask-services:
+        build:
+            context: ../BA-Services/
+            network: host
+    frontend:
+        build:
+            context: ../BA-Frontend/BA-Frontend/
+            network: host
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+services:
+    mysql: 
+        ports: 
+            - '3333:3306'
+        volumes: 
+            - mysql-conf:/etc/mysql/conf.d
+            - mysql-storage:/var/lib/mysql
+            - ./setup.sql:/docker-entrypoint-initdb.d/init.sql:r
+        restart: on-failure
+        environment: 
+            MYSQL_ROOT_PASSWORD: admin
+        image: mysql:latest
+        networks:
+            - custom-network
+networks: 
+    custom-network:
+        driver: bridge
+        name: custom-network
+volumes:
+    mysql-storage:
+    mysql-conf:
+\end{lstlisting}
