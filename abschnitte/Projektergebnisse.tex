@@ -568,10 +568,13 @@ CMD ["python", "app.py"]
 
 Innerhalb der Dockerfile können Pakete aus dem Dockerhub als Abhängigkeit angegeben werden, die beim bauen des Images heruntergeladen werden. Im Falle des Backendes wird das Paket \texttt{python:3.10-slim} bezogen. Innerhalb der Dockerfile ist ebenfalls die Festlegung der Ordnerstruktur, sowie die Ausführung von Kommandos möglich.
 
-Zum Bauen eines Images mithilfe der zuvor erstellten Dockerfile wird der \texttt{build} Befehl benötigt. Für das Backend, den KI-Service, sowie das Frontend ist eine Docker-Compose Datei zuständig.
+Zum Bauen eines Images mithilfe der zuvor erstellten Dockerfile wird der \texttt{build} Befehl benötigt. Für das Backend, den KI-Service, sowie das Frontend ist eine Docker-Compose Datei zuständig. Die Docker-Compose Datei kann in einer Linux- oder \ac{wsl} Umgebung ausgeführt werden. Der dazu nötige Befehlt lautet:
+\begin{lstlisting}
+sudo docker compose -f '/path/to/compose/' build
+\end{lstlisting}
+Anschließend existieren drei Images in der Dockerumgebung, die zum Bau der Container genutzt werden können. 
 
-
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}
 version: '3.3'
 services: 
     flask-backend:
@@ -588,7 +591,9 @@ services:
             network: host
 \end{lstlisting}
 
-\begin{lstlisting}[language=Python]
+Das nachfolgende Auszug aus der \texttt{docker-compose.core.yml} Datei zeigt die Bauanleitung für einen Container der MySQL Datenbank. Innerhalb dieser Compose-Datei wird zunächst der Name des Services definiert. Unter diesem Namen ist der Docker Container im Netzwerk durch andere Docker Container erreichbar. Innerhalb des Services stehen mehrere Optionen zur Festlegung von Eigenschaften des Containers zur Verfügung. Über \texttt{ports} können ein oder mehrere Ports freigeschaltet werden, sodass der Container Zugriffe von außerhalb erlaubt. Im Bereich \texttt{volumes} stehen alle Ordner oder Dateien, die persistent gespeichert werden. Bei MySQL gibt es die Möglichkeit, ein initiales SQL-Skript anzugeben, welches nur bei der ersten Erstellung des Docker Containers ausgeführt wird. Das SQL-Skript erstellt eine Datenbank und die benötigten Tabellen. Im \texttt{image} Bereich ist das Image zum Bauen des Containers angegeben. Dies ist entweder ein lokal vorhandenes oder ein im Docker Hub angebotenes Image. Der letzte aufgeführte Punk \texttt{networks} beinhaltet das Netzwerk, in dem sich der Docker Container befindet. Dieses wird benötigt, damit unterschiedliche Container miteinander kommunizieren können. Dazu muss sichergestellt werden, dass alle Container im gleichen Netzwerk sind.
+
+\begin{lstlisting}
 services:
     mysql: 
         ports: 
@@ -597,9 +602,7 @@ services:
             - mysql-conf:/etc/mysql/conf.d
             - mysql-storage:/var/lib/mysql
             - ./setup.sql:/docker-entrypoint-initdb.d/init.sql:r
-        restart: on-failure
-        environment: 
-            MYSQL_ROOT_PASSWORD: admin
+        [...]
         image: mysql:latest
         networks:
             - custom-network
@@ -610,4 +613,14 @@ networks:
 volumes:
     mysql-storage:
     mysql-conf:
+\end{lstlisting}
+
+Der Container kann mit folgendem Befehlt gebaut und gestartet werden:
+\begin{lstlisting}
+sudo docker compose -f '/path/to/compose/' up -d
+\end{lstlisting}
+
+Sollte der Container anschließend wieder beendet werden, so wird folgender Befehl benötigt: 
+\begin{lstlisting}
+sudo docker compose -f '/path/to/compose/' down
 \end{lstlisting}
