@@ -141,7 +141,7 @@ def respond(r, status=200, json_dump=True, cookie=""):
     return Response(json.dumps(r), status=status, mimetype='application/json', headers=headers)
 \end{lstlisting}
 
-In Tabelle 1 sind alle in der API verfügbaren Routen aufgelistet. Auf die genaue Funktionalität der einzelnen Funktionen wird in den folgenden Kapitel eingegangen.
+In Tabelle 1 sind alle in der API verfügbaren Routen aufgelistet. Auf die genaue Funktionalität der einzelnen Funktionen wird in den folgenden Kapiteln eingegangen.
 
 \begin{table}[H]
 \centering
@@ -187,7 +187,7 @@ def encode_token(param):
 token = encode_token({'uid': str(uuid_gen())})
 \end{lstlisting}
 
-Für jede Route, ausgenommen die \texttt{/service} Routen zum Management der Services, wird der JWT für die Ausführung benötigt. Die Überprüfung und Entschlüsselung des Tokens ist für jede Route gleich, daher ist es sinnvoll diese Funktionalität zu zentralisieren. Damit wird die Fehleranfälligkeit reduziert und und die Wartbarkeit erhöht, sollte sich zum Beispiel der Algorithmus oder das Passwort für die Verschlüsselung ändern. Wie auch Flask Annotations zum definieren einer Route verwendet, ist es möglich eigene Annotations zu entwerfen. Für diese Funktion ist das Python Package \texttt{functools} mit der Funktion \texttt{wraps} zuständig. Wraps ermöglicht es, Funktionen ineinander zu verschachteln.
+Für jede Route, ausgenommen die \texttt{/service} Routen zum Management der Services, wird der JWT für die Ausführung benötigt. Die Überprüfung und Entschlüsselung des Tokens ist für jede Route gleich, daher ist es sinnvoll diese Funktionalität zu zentralisieren. Damit wird die Fehleranfälligkeit reduziert und und die Wartbarkeit erhöht, sollte sich zum Beispiel der Algorithmus oder das Passwort für die Verschlüsselung ändern. Wie auch Flask Annotations zum Definieren einer Route verwendet, ist es möglich eigene Annotations zu entwerfen. Für diese Funktion ist das Python Package \texttt{functools} mit der Funktion \texttt{wraps} zuständig. Wraps ermöglicht es, Funktionen ineinander zu verschachteln.
 
 Im Prototyp wird die Funktion \texttt{token\_{}required(f)} definiert. Diese Funktion dient als eine Umgebung, in der eine weitere Funktion ausgeführt werden. Im Gegensatz zur normalen Ausführung einer Funktion, werden in der \texttt{token\_{}required(f)} Funktion vor der Ausführung der eigentlichen Funktion mehrere Rahmenbedingungen geprüft. Der vom Nutzer gesendete Token muss nach erfolgreicher Entschlüsselung syntaktisch korrektes JSON enthalten. Sollte dies nicht der Fall sein, wird die die eigentliche Funktion, die zur API Route gehört, gar nicht erst ausgeführt. Der Nutzer bekommt direkt eine Response mit dem HTTP Error-Code 401: Unauthorized gesendet. \footcite{fielding1999rfc2616}
 
@@ -216,7 +216,7 @@ pool_upload = redis.ConnectionPool(host=redis_host, port=6379, db=0)
 red_upload = redis.Redis(connection_pool=pool_upload)
 \end{lstlisting}
 
-In der Redis Instanz werden zwei Funktionen definiert, die im Prototyp Verwendung finden. Die \texttt{set(k,v)} Methode nimmt einen Schlüssel als ersten Parameter und einen Wert als zweiten Parameter an. Das übergebene Key-Value Paar wird mit diesem Methodenaufruf entweder neu in der Datenbank angelegt, oder falls bereits ein identischer Schlüssel vorhanden sein sollte, mit den aktuellen Werten überschrieben. Das Zwischenspeichern der hochgeladenen Query ist im nachfolgenden Codeausschnitt abgebildet.  
+In der Redis Instanz werden zwei Funktionen definiert, die im Prototyp Verwendung finden. Die \texttt{set(k,v)} Methode nimmt einen Schlüssel als ersten Parameter und einen Wert als zweiten Parameter an. Das übergebene Key-Value Paar wird mit diesem Methodenaufruf entweder neu in der Datenbank angelegt oder falls bereits ein identischer Schlüssel vorhanden sein sollte, mit den aktuellen Werten überschrieben. Das Zwischenspeichern der hochgeladenen Query ist im nachfolgenden Codeausschnitt abgebildet.  
 
 \begin{lstlisting}[language=Python]
 red_upload.set(uid, body['text'])
@@ -233,7 +233,7 @@ Für den Informationsaustausch zwischen dem Backend und den verschiedenen KI-Ser
 
 RabbitMQ dient als Middleware, die Anfragen vom Server annimmt und diese im in einer Queue zwischenspeichert, um sie anschließend an die Services zu verteilen. Damit die Nachrichten in eine Queue geschrieben werden können, muss im ersten Schritt eine Verbindung zu RabbitMQ aufgebaut werden. Mithilfe des Packages \texttt{pika} kann über den Host, unter dem RabbitMQ erreichbar ist, den Port 5672 und den Login-Credentials eine TCP Verbindung aufgebaut werden.
 
-Innerhalb einer Connection, können über einen Channel können sowohl der Server als auch die Services eine Verbindung mit dem RabbitMQ Dient aufbauen. Ein Channel beschreibt die logische Verbindung zwischen dem Server/Service und dem Broker. Für jede TCP Verbindung mit RabbitMQ können mehrere Channels erstellt werden.\footcite{dossot2014rabbitmq}
+Innerhalb einer Connection, können über einen Channel können sowohl der Server als auch die Services eine Verbindung mit dem RabbitMQ Dienst aufbauen. Ein Channel beschreibt die logische Verbindung zwischen dem Server/Service und dem Broker. Für jede TCP Verbindung mit RabbitMQ können mehrere Channels erstellt werden.\footcite{dossot2014rabbitmq}
 
 In einem Channel wird letztendlich die Queue definiert, in der die Nachrichten zwischengespeichert werden. Im folgenden Codeausschnitt ist gezeigt, wie eine Connection, ein Channel und eine Queue erstellt werden.
 
@@ -271,7 +271,7 @@ channel.basic_publish([...], body=f'{{"uid": "{uid}", "service": "{service}", "m
 
 Der Server implementiert, ähnlich wie der Service auch, eine Möglichkeit die Nachrichten in der Response Queue auszulesen. Innerhalb der Nachricht, die an den Service geht und vom Service wieder zurückkommt, wird die UUID des Nutzers mitgeliefert. Damit ist eine anschließende Zuordnung von Anfrage und Antwort möglich. Das Backend speichert die Antwort des KI-Services im Redis Cache und kann sie dem Frontend bei Bedarf zur Verfügung stellen.
 
-Der Ablauf der Kommunikation zwischen dem Server und den Services mit RabbitMQ ist in Abbildung 4 veranschaulicht. 
+Der Ablauf der Kommunikation zwischen dem Server und den Services mit RabbitMQ ist in Abbildung 12 veranschaulicht. 
 \begin{figure}[H]
   \centering
     \includegraphics[width = 15cm]{bilder/Rabbit3}
@@ -280,7 +280,7 @@ Der Ablauf der Kommunikation zwischen dem Server und den Services mit RabbitMQ i
 
 \subsubsection{Implementierung des KI-Services}
 Der implementierte KI-Service lädt im ersten Schritt das KI-Modell, um mit diesem für jeden Eintrag in der Elasticsearch Datenbank einen semantischen Vektor zu generieren. Dieser semantische Vektor wird ebenfalls in der Datenbank gespeichert und kann für zukünftige abfragen genutzt werden.
-Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt die Programmablaufschleife. Der erste Schritt der Schleife ist das Warten auf eingehende Nachrichten. Diese Nachrichten werden über RabbitMQ aus der, für den Service definierten, Queue ausgelesen. Falls keine Anfrage an den Service eingetroffen ist, wartet der Dienst auf unbestimmte Zeit. Nach dem erfolgreichen Auslesen einer Nachricht, fängt der KI-Service an, die Anfrage zu bearbeiten. Im ersten Schritt wird aus dem Satz, den der Nutzer an den Service geschickt hat, ein semantischer Vektor generiert. Dazu wird das gleiche KI-Modell wie bei der Indizierung der Einträge in der Datenbank genutzt. Daraufhin nutzt der Service den generierten Vektor und die \texttt{cosineSimilarity()} Funktion der Elasticsearch, um die semantisch ähnlichsten Texte aus der Datenbank herauszufiltern. Die Anzahl der gelieferten Ergebnisse ist abhängig von den übergebenen Parametern. Der Nutzer kann im Frontend das Key-Value Paar \texttt{search\_{}size} eingeben, welches in der Anfrage an den Service mitgeliefert wird. Sollte der Nutzer beispielsweise \texttt{\glqq search\_{}size : 3\grqq{}} eingeben, so werden die drei ähnlichsten Artikel zur gestellten Anfrage zurückgegeben. Die Ergebnisse werden in die Response Queue des Services geschrieben, damit sie im Backend weiter verarbeitet werden können. Nach erfolgreichem Durchlaufen des Prozesses, geht der Service wieder zum Zustand \glqq Auf Anfrage warten\grqq{} über. Veranschaulicht wird der Programmablauf des Services in Abbildung 7.
+Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt die Programmablaufschleife. Der erste Schritt der Schleife ist das Warten auf eingehende Nachrichten. Diese Nachrichten werden über RabbitMQ aus der, für den Service definierten, Queue ausgelesen. Falls keine Anfrage an den Service eingetroffen ist, wartet der Dienst auf unbestimmte Zeit. Nach dem erfolgreichen Auslesen einer Nachricht, fängt der KI-Service an, die Anfrage zu bearbeiten. Im ersten Schritt wird aus dem Satz, den der Nutzer an den Service geschickt hat, ein semantischer Vektor generiert. Dazu wird das gleiche KI-Modell wie bei der Indizierung der Einträge in der Datenbank genutzt. Daraufhin nutzt der Service den generierten Vektor und die \texttt{cosineSimilarity()} Funktion der Elasticsearch, um die semantisch ähnlichsten Texte aus der Datenbank herauszufiltern. Die Anzahl der gelieferten Ergebnisse ist abhängig von den übergebenen Parametern. Der Nutzer kann im Frontend das Key-Value Paar \texttt{search\_{}size} eingeben, welches in der Anfrage an den Service mitgeliefert wird. Sollte der Nutzer beispielsweise \texttt{\glqq search\_{}size : 3\grqq{}} eingeben, so werden die drei ähnlichsten Artikel zur gestellten Anfrage zurückgegeben. Die Ergebnisse werden in die Response Queue des Services geschrieben, damit sie im Backend weiter verarbeitet werden können. Nach erfolgreichem Durchlaufen des Prozesses, geht der Service wieder zum Zustand \glqq Auf Anfrage warten\grqq{} über. Veranschaulicht wird der Programmablauf des Services in Abbildung 13.
 
 \begin{figure}[H]
   \centering
@@ -303,7 +303,7 @@ client = Elasticsearch(elasticsearch_url)
 
 Nachdem sich der Service erfolgreich mit der Elasticsearch verbunden hat, beginnt das Indizieren der Daten in der Datenbank. Dazu wird die Methode \texttt{index\_{}data()} aufgerufen. Der Datensatz, der für den Prototyp verwendet wurde, ist ein Auszug aus den gestellten Fragen im Forum Stackoverflow. In dem Datensatz sind 18.600 Fragen vorhanden. Jede Frage besteht aus einem Titel und einem Body. In einem Fragen-Body ist eine genauere Erläuterung der Frage, mit eventuellen Codeausschnitten oder Verlinkungen. Für die Indizierung ist lediglich der Titel der Frage genutzt worden. Das bedeutet im Umkehrschluss, dass der Titel der Frage repräsentativ für die gesamte Frage stehen muss. Nach Möglichkeit soll der Titel den gesamten Inhalt der Frage kurz und bündig zusammenfassen. Aus diesem Grund eignet  Stackoverflow sich besonders gut für den Datensatz, da in den Guidelines \glqq Write a title that summarizes the specific problem\grqq{} explizit erwähnt wird.\footcite{stackoverflow2022question}
 
-Nach erfolgreicher Indizierung aller Fragestellungen, geht der Service in die Programmablaufschleife über. Die Schleife beginnt mit der Initialisierung der RabbitMQ Verbindung. Dort Verbindet sich der der Textähnlichkeitsservice mit der Queue \texttt{text-similarity}. Bei einer eingehenden Anfrage ruft die \texttt{callback} Funktion die \texttt{respond} Funktion auf, die den KI Algorithmus aufruft und sich um die Verarbeitung der Antwort kümmert. Die Funktion \texttt{handle\_{}query()} benötigt als Parameter die Query die vom Nutzer gestellt wurde und die Anzahl der Ergebnisse, die zurückgegeben werden sollen. Beide Parameter werden aus aus der Anfrage, die über RabbitMQ an den Service gesendet wurde, ausgelesen. Sollte es vorkommen, dass der Nutzer keine \texttt{search\_{}size} angegeben hat, wird der Standartwert 1 gesetzt.
+Nach erfolgreicher Indizierung aller Fragestellungen, geht der Service in die Programmablaufschleife über. Die Schleife beginnt mit der Initialisierung der RabbitMQ Verbindung. Dort verbindet sich der der Textähnlichkeitsservice mit der Queue \texttt{text-similarity}. Bei einer eingehenden Anfrage ruft die \texttt{callback} Funktion die \texttt{respond} Funktion auf, die den KI-Algorithmus aufruft und sich um die Verarbeitung der Antwort kümmert. Die Funktion \texttt{handle\_{}query()} benötigt als Parameter die Query die vom Nutzer gestellt wurde und die Anzahl der Ergebnisse, die zurückgegeben werden sollen. Beide Parameter werden aus aus der Anfrage, die über RabbitMQ an den Service gesendet wurde, ausgelesen. Sollte es vorkommen, dass der Nutzer keine \texttt{search\_{}size} angegeben hat, wird der Standartwert 1 gesetzt.
  
 \begin{lstlisting}[language=Python]
 search_size = 1
@@ -337,7 +337,7 @@ response = client.search(
 
 Die Response der Elasticsearch wird nach erfolgreicher Durchführung wieder an die \texttt{respond} Funktion übergeben. Dort wird die Nachricht vorbereitet, die als Response auf die Anfrage vom Backend zurückgesendet wird. Die Antwort wird an RabbitMQ in die Queue \texttt{response-text-similarity} gesendet.
 
-Der Schleifendurchlauf des Services ist damit abgeschlossen. Der Service geht nun wieder, wie in Abbildung 7 zu sehen, zum Zustand \glqq Auf Anfrage warten\grqq{} über. 
+Der Schleifendurchlauf des Services ist damit abgeschlossen. Der Service geht nun wieder, wie in Abbildung 13 zu sehen, zum Zustand \glqq Auf Anfrage warten\grqq{} über. 
 
 \subsubsection{Management der Services}
 Die entworfene Softwarearchitektur unterstützt eine beliebige Anzahl an KI-Services. Alle Services, die über das System erreichbar sein sollen, müssen über die API registriert werden. Jeder Service implementiert eine Verbindung zur RabbitMQ Schnittstelle, damit die Anfragen und Antworten asynchron zwischen dem Backend und dem jeweiligen Service gesendet werden können. Eine der Kernanforderungen für eine Architektur, die austauschbare KI-Services unterstützt, ist die dynamische Registrierung und Deregistrierung. Eine Registrierung beschreibt das Hinzufügen eines neuen Services im System, ohne den Quellcode anpassen zu müssen. Um dies zu ermöglichen, braucht es einen persistenten Speicher, in dem alle zur Verfügung stehenden Services aufgelistet sind. Zur persistenten Speicherung von kleineren Datenmengen, eignet sich eine MySQL Datenbank. Innerhalb der Datenbank werden alle aktiven Services in der Tabelle \texttt{services} abgespeichert. Zu jedem Service gibt es einen Namen mit der Bezeichnung \texttt{service} und einen Anzeigenamen mit der Bezeichnung \texttt{display\_{}name}. Der Name wird für das interne Routing über RabbitMQ genutzt. Der Anzeigename wird im Frontend innerhalb des Dropdowns für die Auswahl des Services verwendet.
@@ -392,7 +392,7 @@ Im Backend wird ein Exception Handler definiert der eine Funktion mit zuvor übe
             [...]
 \end{lstlisting}
 
-Jede Funktion, die in innerhalb des Exception Handlers ausgeführt werden soll, wird mit der Annotation \texttt{@exception\_{}handler("...")} versehen. Innerhalb des Parameters, wird der Ort, an dem die Funktion ausgeführt wird, und damit der Fehler auftritt, als String übergeben. Diese Information wird genutzt, um innerhalb des Fehlerlogs den Ort des Fehlers aufzulisten.
+Jede Funktion, die in innerhalb des Exception Handlers ausgeführt werden soll, wird mit der Annotation \texttt{@exception\_{}handler("...")} versehen. Innerhalb des Parameters wird der Ort, an dem die Funktion ausgeführt wird, und damit der Fehler auftritt, als String übergeben. Diese Information wird genutzt, um innerhalb des Fehlerlogs den Ort des Fehlers aufzulisten.
 
 \subsubsection{Event Logging}
 Das Backend implementiert ein Event Logging System mit dem Zustände und Informationen des Systems in einer Datenbank gespeichert werden können. Mithilfe von Logs können Entwickler den Ablauf eines Programms besser nachvollziehen und auftretende Fehler schneller zu ihrer Quelle zurückverfolgen. Es ist ebenfalls möglich, Systeme aufzusetzen, die die auf Logs auslesen und beim Auftreten eines Errors die zuständigen Personen alarmieren. Eine Herausforderung bei einem Logging System ist es, dass das System beim Entwickler durch das Loggen keinen erheblichen Mehraufwand produzieren soll. Im Backend wurde ein Logging System entwickelt, welches mit einer einzigen Funktion angesteuert werden kann. Die Log Funktions des Loggers wird in den verschiedenen Bereichen der Anwendung über \texttt{from logs.logger import log} importiert. Nach erfolgreichem Import, steht die \texttt{log} Funktion zur Verfügung. 
@@ -441,7 +441,7 @@ Die produzierten Logs, die in der MySQL Datenbank hinterlegt werden, können in 
 SELECT timestamp, message, level, uid from db_logs.logs;
 \end{lstlisting}
 
-Das Log Panel mit den aus der Query resultierenden Logs ist in Abbildung 10 abgebildet.
+Das Log Panel mit den aus der Query resultierenden Logs ist in Abbildung 14 abgebildet.
 
 \begin{figure}[H]
   \centering
@@ -472,7 +472,7 @@ import { Component, OnInit } from '@angular/core';
 })
 \end{lstlisting}
 
-Innerhalb der TypeScript Datei können Variablen und Funktionen definiert werden. Diese können dazu genutzt werden, Nutzerinteraktionen mit der Website festzuhalten, oder Ereignisse darzustellen. In der Query-Input-Component wird die Variable \texttt{inputStr} definiert. Innerhalb dieser Variable wird die Eingabe, die der Nutzer im Textfeld der Query-Kachel tätigt, gespeichert. Für sich allein stehend, hat die Variable jedoch keine Funktion. Diese bekommt sie erst durch den Code aus der HTML Datei. 
+Innerhalb der TypeScript Datei können Variablen und Funktionen definiert werden. Diese können dazu genutzt werden, Nutzerinteraktionen mit der Website festzuhalten, oder Ereignisse darzustellen. In der Query-Input-Component wird die Variable \texttt{inputStr} definiert. Innerhalb dieser Variable wird die Eingabe, die der Nutzer im Textfeld der Query-Kachel tätigt, gespeichert. Für sich alleinstehend, hat die Variable jedoch keine Funktion. Diese bekommt sie erst durch den Code aus der HTML Datei. 
 
 \begin{lstlisting}[language=Python]
 <textarea [(ngModel)]="inputStr" placeholder="Input..." class="text-input"></textarea>
@@ -566,9 +566,9 @@ EXPOSE 80
 CMD ["python", "app.py"]
 \end{lstlisting}
 
-Innerhalb der Dockerfile können Pakete aus dem Dockerhub als Abhängigkeit angegeben werden, die beim bauen des Images heruntergeladen werden. Im Falle des Backendes wird das Paket \texttt{python:3.10-slim} bezogen. Innerhalb der Dockerfile ist ebenfalls die Festlegung der Ordnerstruktur, sowie die Ausführung von Kommandos möglich.
+Innerhalb der Dockerfile können Pakete aus dem Dockerhub als Abhängigkeit angegeben werden, die beim Bauen des Images heruntergeladen werden. Im Falle des Backendes wird das Paket \texttt{python:3.10-slim} bezogen. Innerhalb der Dockerfile ist ebenfalls die Festlegung der Ordnerstruktur, sowie die Ausführung von Kommandos möglich.
 
-Zum Bauen eines Images mithilfe der zuvor erstellten Dockerfile wird der \texttt{build} Befehl benötigt. Für das Backend, den KI-Service, sowie das Frontend ist eine Docker-Compose Datei zuständig. Die Docker-Compose Datei kann in einer Linux- oder \ac{wsl} Umgebung ausgeführt werden. Der dazu nötige Befehlt lautet:
+Zum Bauen eines Images mithilfe der zuvor erstellten Dockerfile wird der \texttt{build} Befehl benötigt. Für das Backend, den KI-Service, sowie das Frontend ist eine Docker-Compose Datei zuständig. Die Docker-Compose Datei kann in einer Linux- oder \ac{wsl} Umgebung ausgeführt werden. Der dazu nötige Befehl lautet:
 \begin{lstlisting}
 sudo docker compose -f '/path/to/compose/' build
 \end{lstlisting}
@@ -591,7 +591,7 @@ services:
             network: host
 \end{lstlisting}
 
-Das nachfolgende Auszug aus der \texttt{docker-compose.core.yml} Datei zeigt die Bauanleitung für einen Container der MySQL Datenbank. Innerhalb dieser Compose-Datei wird zunächst der Name des Services definiert. Unter diesem Namen ist der Docker Container im Netzwerk durch andere Docker Container erreichbar. Innerhalb des Services stehen mehrere Optionen zur Festlegung von Eigenschaften des Containers zur Verfügung. Über \texttt{ports} können ein oder mehrere Ports freigeschaltet werden, sodass der Container Zugriffe von außerhalb erlaubt. Im Bereich \texttt{volumes} stehen alle Ordner oder Dateien, die persistent gespeichert werden. Bei MySQL gibt es die Möglichkeit, ein initiales SQL-Skript anzugeben, welches nur bei der ersten Erstellung des Docker Containers ausgeführt wird. Das SQL-Skript erstellt eine Datenbank und die benötigten Tabellen. Im \texttt{image} Bereich ist das Image zum Bauen des Containers angegeben. Dies ist entweder ein lokal vorhandenes oder ein im Docker Hub angebotenes Image. Der letzte aufgeführte Punk \texttt{networks} beinhaltet das Netzwerk, in dem sich der Docker Container befindet. Dieses wird benötigt, damit unterschiedliche Container miteinander kommunizieren können. Dazu muss sichergestellt werden, dass alle Container im gleichen Netzwerk sind.
+Der nachfolgende Auszug aus der \texttt{docker-compose.core.yml} Datei zeigt die Bauanleitung für einen Container der MySQL Datenbank. Innerhalb dieser Compose-Datei wird zunächst der Name des Services definiert. Unter diesem Namen ist der Docker Container im Netzwerk durch andere Docker Container erreichbar. Innerhalb des Services stehen mehrere Optionen zur Festlegung von Eigenschaften des Containers zur Verfügung. Über \texttt{ports} können ein oder mehrere Ports freigeschaltet werden, sodass der Container Zugriffe von außerhalb erlaubt. Im Bereich \texttt{volumes} stehen alle Ordner oder Dateien, die persistent gespeichert werden. Bei MySQL gibt es die Möglichkeit, ein initiales SQL-Skript anzugeben, welches nur bei der ersten Erstellung des Docker Containers ausgeführt wird. Das SQL-Skript erstellt eine Datenbank und die benötigten Tabellen. Im \texttt{image} Bereich ist das Image zum Bauen des Containers angegeben. Dies ist entweder ein lokal vorhandenes oder ein im Docker Hub angebotenes Image. Der letzte aufgeführte Punk \texttt{networks} beinhaltet das Netzwerk, in dem sich der Docker Container befindet. Dieses wird benötigt, damit unterschiedliche Container miteinander kommunizieren können. Dazu muss sichergestellt werden, dass alle Container im gleichen Netzwerk sind.
 
 \begin{lstlisting}
 services:
@@ -615,7 +615,7 @@ volumes:
     mysql-conf:
 \end{lstlisting}
 
-Der Container kann mit folgendem Befehlt gebaut und gestartet werden:
+Der Container kann mit folgendem Befehl gebaut und gestartet werden:
 \begin{lstlisting}
 sudo docker compose -f '/path/to/compose/' up -d
 \end{lstlisting}

@@ -19,6 +19,41 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
+    \entry{adenowo2013software}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=a77f8de1acf28e74284f8a59c2d9854e}{%
+           family={Adenowo},
+           familyi={A\bibinitperiod},
+           given={A.A.A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=22aad33f48c6427d2301285c9a6f7e6e}{%
+           family={Adenowo},
+           familyi={A\bibinitperiod},
+           given={B.A.},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{6b7b923ba1b3b4f2bac0fdccf2113c36}
+      \strng{fullhash}{5f9e04009b0fdd0b8157cc990597b5ff}
+      \strng{bibnamehash}{5f9e04009b0fdd0b8157cc990597b5ff}
+      \strng{authorbibnamehash}{5f9e04009b0fdd0b8157cc990597b5ff}
+      \strng{authornamehash}{6b7b923ba1b3b4f2bac0fdccf2113c36}
+      \strng{authorfullhash}{5f9e04009b0fdd0b8157cc990597b5ff}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Scientific \& Engineering Research}
+      \field{number}{7}
+      \field{title}{Software engineering methodologies: a review of the waterfall model and object-oriented approach}
+      \field{volume}{4}
+      \field{year}{2013}
+      \field{pages}{427\bibrangedash 434}
+      \range{pages}{8}
+    \endentry
     \entry{anderson2015docker}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=3aa40398350d3c8fd46db105c5bb5b3c}{%
@@ -228,6 +263,29 @@
       \field{labeltitlesource}{title}
       \field{title}{MySQL}
       \field{year}{2008}
+    \endentry
+    \entry{model2015waterfall}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bda576444751fa878d74541ded9ed24c}{%
+           family={eduNitas},
+           familyi={e\bibinitperiod}}}%
+      }
+      \strng{namehash}{bda576444751fa878d74541ded9ed24c}
+      \strng{fullhash}{bda576444751fa878d74541ded9ed24c}
+      \strng{bibnamehash}{bda576444751fa878d74541ded9ed24c}
+      \strng{authorbibnamehash}{bda576444751fa878d74541ded9ed24c}
+      \strng{authornamehash}{bda576444751fa878d74541ded9ed24c}
+      \strng{authorfullhash}{bda576444751fa878d74541ded9ed24c}
+      \field{sortinit}{e}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Luettavissa: http://www.waterfall-model.com/. Luettu}
+      \field{title}{Waterfall model}
+      \field{volume}{3}
+      \field{year}{2015}
     \endentry
     \entry{endres2000open}{article}{}
       \name{author}{1}{}{%
@@ -527,7 +585,6 @@
       \field{booktitle}{Gesellschaft für Informatik eV (GI) publishes this series in order to make available to a broad public recent findings in informatics (ie computer science and informa-tion systems), to document conferences that are organized in co-operation with GI and to publish the annual GI Award dissertation.}
       \field{title}{Wasserfallmodell versus Scrum}
       \field{year}{2012}
-      \true{nocite}
       \field{pages}{235\bibrangedash 237}
       \range{pages}{3}
     \endentry
@@ -960,6 +1017,66 @@
       \field{pages}{633\bibrangedash 672}
       \range{pages}{40}
     \endentry
+    \entry{rivero2010mockups}{inproceedings}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=93187a321e0fe40b896ddbde0829b0d2}{%
+           family={Rivero},
+           familyi={R\bibinitperiod},
+           given={J.M.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4e5e59fe2f03306385d58ba9e3eebeb5}{%
+           family={Rossi},
+           familyi={R\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=85f72f0c52fc3cc82126c99a168923ef}{%
+           family={Grigera},
+           familyi={G\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c49e5c05f5931b3cadf9dee3e136afd3}{%
+           family={Burella},
+           familyi={B\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0c5a63a323176c3b5d9cd286f9e1bd1b}{%
+           family={Luna},
+           familyi={L\bibinitperiod},
+           given={E.R.},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3a954a87827a8d6b5ca982c62aa3ef24}{%
+           family={Gordillo},
+           familyi={G\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{554537d669327fe0d969f2324a7657ec}
+      \strng{fullhash}{f757dc2515c0b25a0b2251afaf10469b}
+      \strng{bibnamehash}{f757dc2515c0b25a0b2251afaf10469b}
+      \strng{authorbibnamehash}{f757dc2515c0b25a0b2251afaf10469b}
+      \strng{authornamehash}{554537d669327fe0d969f2324a7657ec}
+      \strng{authorfullhash}{f757dc2515c0b25a0b2251afaf10469b}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Web Engineering}
+      \field{title}{From mockups to user interface models: an extensible model driven approach}
+      \field{year}{2010}
+      \field{pages}{13\bibrangedash 24}
+      \range{pages}{12}
+    \endentry
     \entry{sneed2006integrating}{inproceedings}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=7651369e51f98583286359db0068c92e}{%
@@ -989,6 +1106,33 @@
       \field{year}{2006}
       \field{pages}{11\bibrangedash pp}
       \range{pages}{-1}
+    \endentry
+    \entry{snyder2000music}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5abd794983b222497406d0ec43c6ee8f}{%
+           family={Snyder},
+           familyi={S\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {(MIT press)}%
+      }
+      \strng{namehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{fullhash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{bibnamehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{authorbibnamehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{authornamehash}{5abd794983b222497406d0ec43c6ee8f}
+      \strng{authorfullhash}{5abd794983b222497406d0ec43c6ee8f}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Music and memory: An introduction}}
+      \field{year}{2000}
     \endentry
     \entry{stackoverflow2022question}{online}{}
       \name{author}{1}{}{%
@@ -1020,6 +1164,184 @@
       \verb{url}
       \verb https://stackoverflow.com/help/how-to-ask
       \endverb
+    \endentry
+    \entry{statista2022daten}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=62182ca58a739daa8ddd8a48b7b19abb}{%
+           family={Statista},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{fullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{bibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorbibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authornamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorfullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Volumen der jährlich generierten digitalen Datenmenge}
+      \field{urlday}{5}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/
+      \endverb
+      \verb{url}
+      \verb https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/
+      \endverb
+    \endentry
+    \entry{taivalsaari2021full}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=4bbafb404cfc328a535f69c12dfbcef8}{%
+           family={Taivalsaari},
+           familyi={T\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f0b36cf75e895dfcea7bbdc8b6c88b15}{%
+           family={Mikkonen},
+           familyi={M\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4b99121df4346f8453bbcfacf2cea981}{%
+           family={Pautasso},
+           familyi={P\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=29359953380d2bd552355b9a2df5288f}{%
+           family={Systä},
+           familyi={S\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{cf7467ce419cc6fab2e2dd673627229e}
+      \strng{fullhash}{4df20f884c258f04b4dbe4a96ea5ea1a}
+      \strng{bibnamehash}{4df20f884c258f04b4dbe4a96ea5ea1a}
+      \strng{authorbibnamehash}{4df20f884c258f04b4dbe4a96ea5ea1a}
+      \strng{authornamehash}{cf7467ce419cc6fab2e2dd673627229e}
+      \strng{authorfullhash}{4df20f884c258f04b4dbe4a96ea5ea1a}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Web Engineering}
+      \field{title}{Full Stack Is Not What It Used to Be}
+      \field{year}{2021}
+      \field{pages}{363\bibrangedash 371}
+      \range{pages}{9}
+    \endentry
+    \entry{tibshirani2019ki}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f12d9b5e966660a4f87ea0e7c4e2e724}{%
+           family={Tibshirani},
+           familyi={T\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f12d9b5e966660a4f87ea0e7c4e2e724}
+      \strng{fullhash}{f12d9b5e966660a4f87ea0e7c4e2e724}
+      \strng{bibnamehash}{f12d9b5e966660a4f87ea0e7c4e2e724}
+      \strng{authorbibnamehash}{f12d9b5e966660a4f87ea0e7c4e2e724}
+      \strng{authornamehash}{f12d9b5e966660a4f87ea0e7c4e2e724}
+      \strng{authorfullhash}{f12d9b5e966660a4f87ea0e7c4e2e724}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Textähnlichkeitssuche mit Vektorfeldern}
+      \field{urlday}{5}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.elastic.co/de/blog/text-similarity-search-with-vectors-in-elasticsearch
+      \endverb
+      \verb{url}
+      \verb https://www.elastic.co/de/blog/text-similarity-search-with-vectors-in-elasticsearch
+      \endverb
+    \endentry
+    \entry{tibshirani2020github}{online}{}
+      \name{author}{2}{ul=2}{%
+        {{un=0,uniquepart=base,hash=f12d9b5e966660a4f87ea0e7c4e2e724}{%
+           family={Tibshirani},
+           familyi={T\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=74c2153531c3a4d7d5481f5efd0261c6}{%
+           family={Oak},
+           familyi={O\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e90749a79b3b9050118b4b190a625e9b}
+      \strng{fullhash}{e90749a79b3b9050118b4b190a625e9b}
+      \strng{bibnamehash}{e90749a79b3b9050118b4b190a625e9b}
+      \strng{authorbibnamehash}{e90749a79b3b9050118b4b190a625e9b}
+      \strng{authornamehash}{e90749a79b3b9050118b4b190a625e9b}
+      \strng{authorfullhash}{e90749a79b3b9050118b4b190a625e9b}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Text Embeddings in Elasticsearch}
+      \field{urlday}{5}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/jtibshirani/text-embeddings
+      \endverb
+      \verb{url}
+      \verb https://github.com/jtibshirani/text-embeddings
+      \endverb
+    \endentry
+    \entry{wirdemann2022scrum}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f5ca3c790b050aeb8980c5c1c347d147}{%
+           family={Wirdemann},
+           familyi={W\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Carl Hanser Verlag GmbH Co KG}%
+      }
+      \strng{namehash}{f5ca3c790b050aeb8980c5c1c347d147}
+      \strng{fullhash}{f5ca3c790b050aeb8980c5c1c347d147}
+      \strng{bibnamehash}{f5ca3c790b050aeb8980c5c1c347d147}
+      \strng{authorbibnamehash}{f5ca3c790b050aeb8980c5c1c347d147}
+      \strng{authornamehash}{f5ca3c790b050aeb8980c5c1c347d147}
+      \strng{authorfullhash}{f5ca3c790b050aeb8980c5c1c347d147}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Scrum mit user stories}
+      \field{year}{2022}
     \endentry
     \entry{wolff2018microservices}{book}{}
       \name{author}{1}{}{%

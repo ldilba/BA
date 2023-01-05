@@ -30,27 +30,36 @@
       
     \end{spacing}
 
-    \pagestyle{Hauptteil}
+    \pagestyle{Einleitung}
     \setcounter{page}{1}
     \pagenumbering{arabic}
     \begin{spacing}{1.25}
     
     
-    
     \input{abschnitte/Einleitung}
     \newpage
+    
+    \pagestyle{Grundlagen}
 
 	\input{abschnitte/Grundlagen}
 	\newpage
-
+	
+	\pagestyle{Methodik}	
+	
     \input{abschnitte/Methodik}
 	\newpage
 	
+	\pagestyle{Konzeption und prototypische Umsetzung}
+	
     \input{abschnitte/Projektergebnisse}
     \newpage
+    
+    \pagestyle{Evaluation}
 
 	\input{abschnitte/Evaluation}
 	\newpage
+	
+	\pagestyle{Fazit und Ausblick}
 	
     \input{abschnitte/Fazit_Ausblick}
     \newpage

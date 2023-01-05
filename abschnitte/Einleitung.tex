@@ -1,71 +1,13 @@
 \section{Einleitung}
-text
 \subsection{Motivation und Hintergrund}
 Jeden Tag werden riesige Mengen an Daten produziert. Im Jahr 2020 wurden weltweit
-64,2 Zettabyte produziert.1 Dies entspricht 64.000.000.000.000 Gigabyte. Doch aus reinen
-Daten kann nicht direkt Wissen abgeleitet werden. Mithilfe von Datenmanagement
-und Datenanalyse wird versucht, die Daten soweit aufzubereiten, dass sie durch Menschen
-und Computer ausgewertet werden können. Je nach Datenmenge und Abweichung
-der Daten untereinander kann dies ein aufwändiger, langwieriger und damit teurer Prozess
-sein. Bei größerer Komplexität oder Menge der Daten wird es für Menschen schwerer,
-Zusammenhänge, Abweichungen und Auffälligkeiten zu erkennen. Dies liegt unter
-anderem daran, dass Muster von neu erfassten Daten nur aus Erinnerungen aus dem
-Kurzzeitgedächtnis abgeleitet werden können.2 Um dieses Problem zu lösen, wurden
-Algorithmen entwickelt, die mit großen Datenmengen trainiert werden können um allgemeine
-Aussagen über die eingegebenen Daten treffen zu können. Je nach Datenquelle
-und Art der Aussage, die über diese Daten getroffen werden soll, werden unterschiedliche
-Algorithmen aus dem Bereich der künstlichen Intelligenz benötigt. Bei dem Ansatz, eine
-bestimmte Art von Datenquelle an eine KI anzubinden, entsteht eine feste Verdrahtung
-zwischen dem Datenerhebungsalgorithmus und dem KI-gestützten Datenverarbeitungsalgorithmus.
-Sollte sich entweder die Datenerhebung oder die Auswertung verändern,
-muss in der Regel der gesamte Prozess überarbeitet werden. Dies kann nur von jemandem
-durchgeführt werden, der sich mit den Daten, der eingesetzten künstlichen Intelligenz
-und den dazu programmierten Schnittstellen auskennt.
+64,2 Zettabyte produziert.\footcite{statista2022daten} Dies entspricht 64.000.000.000.000 Gigabyte. Doch aus reinen Daten kann nicht direkt Wissen abgeleitet werden. Mithilfe von Datenmanagement und Datenanalyse wird versucht, die Daten soweit aufzubereiten, dass sie durch Menschen und Computer ausgewertet werden können. Je nach Datenmenge und Abweichung der Daten untereinander kann dies ein aufwändiger, langwieriger und damit teurer Prozess sein. Bei größerer Komplexität oder Menge der Daten wird es für Menschen schwerer, Zusammenhänge, Abweichungen und Auffälligkeiten zu erkennen. Dies liegt unter anderem daran, dass Muster von neu erfassten Daten nur aus Erinnerungen aus dem Kurzzeitgedächtnis abgeleitet werden können.\footcite{snyder2000music} Um dieses Problem zu lösen, wurden Algorithmen entwickelt, die mit großen Datenmengen trainiert werden können, um allgemeine Aussagen über die eingegebenen Daten treffen zu können. Je nach Datenquelle und Art der Aussage, die über diese Daten getroffen werden soll, werden unterschiedliche Algorithmen aus dem Bereich der künstlichen Intelligenz benötigt. Bei dem Ansatz, eine bestimmte Art von Datenquelle an eine KI anzubinden, entsteht eine feste Verdrahtung zwischen dem Datenerhebungsalgorithmus und dem KI-gestützten Datenverarbeitungsalgorithmus. Sollte sich entweder die Datenerhebung oder die Auswertung verändern, muss in der Regel der gesamte Prozess überarbeitet werden. Dies kann nur von jemandem durchgeführt werden, der sich mit den Daten, der eingesetzten künstlichen Intelligenz und den dazu programmierten Schnittstellen auskennt.
 
 \subsection{Problemstellung}
-Das Thema der Bachelorarbeit soll die Entwicklung und Erarbeitung einer Methode sein,
-mit der die durch die Datenerhebung gesammelten Daten leichter an die KI-gestützte
-Datenverarbeitung angeschlossen werden können. Jede künstliche Intelligenz braucht
-als Input Daten in einem bestimmten Datenformat. Dieses kann sich von Algorithmus zu
-Algorithmus ändern. KI-basierte Textanalysealgorithmen wie der von Google entwickelte
-BERT Algorithmus (Bidirectional Encoder Representations from Transformers) benötigen
-reinen ASCII-Text als Input. Ein Entwickler, der eine KI mit gesammelten Daten benutzen
-möchte, muss diese Daten vorher genau auf das Format bringen, welches die KI benötigt.
-Sollte die KI oder der Datenerhebungsalgorithmus ausgetauscht werden, muss der Entwickler
-darauf achten, dass die Daten auch weiterhin kompatibel sind und das gewollte
-Ergebnis liefern. Die Frage ist demnach: „Wie kann ein Entwickler nach Einrichtung der
-KI die Daten austauschen ohne dabei den gesamten Anschluss neu programmieren zu
-müssen?“ Ebenso ist die andere Richtung eine zentrale Frage in der Bachelorarbeit. „Wie
-kann ein Entwickler eine bereits angeschlossene KI mit einer anderen austauschen, ohne
-die Daten verändern zu müssen?“
+Das Thema der Bachelorarbeit soll die Entwicklung und Erarbeitung einer Schnittstelle sein, mit der die durch die Datenerhebung gesammelten Daten leichter an die KI-gestützte Datenverarbeitungsalgorithmen angeschlossen werden können. Jede künstliche Intelligenz braucht als Input Daten in einem bestimmten Datenformat. Dieses kann sich von Algorithmus zu Algorithmus ändern. KI-basierte Textanalysealgorithmen wie der von Google entwickelte BERT Algorithmus benötigen reinen ASCII-Text als Input. Ein Entwickler, der eine KI mit gesammelten Daten benutzen möchte, muss diese Daten vorher genau auf das Format bringen, welches die KI benötigt. Sollte die KI oder der Datenerhebungsalgorithmus ausgetauscht werden, muss der Entwickler darauf achten, dass die Daten auch weiterhin kompatibel sind und das gewollte Ergebnis liefern. Die Frage ist demnach: \glqq Wie kann ein Entwickler nach Einrichtung der KI die Daten austauschen ohne dabei den gesamten Anschluss neu programmieren zu müssen?\grqq{} Ebenso ist die andere Richtung eine zentrale Frage in der Bachelorarbeit. \glqq Wie kann ein Entwickler eine bereits angeschlossene KI mit einer anderen austauschen, ohne die Daten verändern zu müssen? \grqq{}
+
 \subsection{Zielsetzung}
-Im Rahmen der Bachelorarbeit wird ein Konzept entwickelt, welches es ermöglicht, die
-Datenerhebung und Datenverarbeitung mithilfe einer Middleware dynamisch auszutauschen.
-Die Betreiber der KI sollen lediglich eine Konfigurationsdatei anpassen müssen,
-um die Daten für die KI vorzubereiten. Ziel der Bachelorarbeit wird es sein, eine Middleware
-zu entwickeln, welche mithilfe dieser Konfigurationsdatei, Daten aus einem Datenerhebungsalgorithmus
-mittels einer REST-API Schnittstelle annimmt und diese automatisch
-für eine vorgesehene KI präpariert. Im Anschluss soll das Programm mit den vorbereiteten
-Daten eine Anfrage an die KI senden und das Ergebnis dem Benutzer wieder zurücksenden.
-Dieses Konzept wird beispielhaft an einem Textanalysealgorithmus, der eine
-semantische Suche innerhalb eines Textes ermöglicht, implementiert.
-Wichtig bei der Entwicklung ist es, dass sowohl Datenerhebung als auch Datenverarbeitung
-modular entwickelt werden. Da die Middleware als REST-API entwickelt wird, können
-zukünftige Entwickler die Schnittstelle nutzen, auch wenn sich die Daten oder die KIs
-verändern sollten.
-Die REST-API wird mithilfe des Python Web-Frameworks Flask entwickelt. Dies bietet
-eine einfache und schnelle Möglichkeit einen Backend-Server aufzusetzen. Des weiteren
-ist Python eine umfangreiche und einfach zu benutzende Programmiersprache für
-Datenverarbeitung.
-Die Konfiguration der Datenverarbeitung wird mit dem Web-Frontend Framework Angular
-entwickelt. Dort soll der Entwickler eine Schritt für Schritt Anleitung für die Konfiguration
-der Middleware präsentiert bekommen, in der er die Art der Daten, deren Format und die
-anzuschließende KI auswählen kann.
-Mithilfe dieser Middleware soll sich der Arbeitsaufwand verringern, der durch die Anbindung
-neuer KIs entsteht. Damit können erfahrene Entwickler entlastet werden und Personalkosten
-gespart werden. Ebenso können schnell und ohne großen Mehraufwand alternative
-Aufbereitungen der Daten oder neue KIs getestet werden.
-\subsection{Stand der Forschung}
-text?
+Im Rahmen der Bachelorarbeit wird ein Konzept entwickelt, welches es ermöglicht, Anfragen und damit Daten zur Laufzeit der Anwendung einzugeben und diese Daten an einen KI-gestützten Datenverarbeitungsalgorithmus anzuschließen. Mithilfe der Schnittstelle soll die KI dynamisch austauschbar sein. Der Anwender der Software soll lediglich eine Konfigurationsdatei anpassen müssen, um die Anfrage für die KI vorzubereiten. Ziel der Bachelorarbeit wird es sein, eine Softwarearchitektur für eine Schnittstelle zu entwickeln, welche vom Nutzer gestellte Anfragen annimmt, die Anfrage mithilfe einer Konfigurationsanleitung automatisiert transformiert und die Anfrage anschließend an eine KI weiterleitet. Das daraus resultierende Ergebnis soll dem Nutzer daraufhin angezeigt werden. Dieses Konzept wird beispielhaft an einem Textanalysealgorithmus, der eine semantische Suche innerhalb eines Textes ermöglicht, implementiert. Wichtig bei der Entwicklung ist es, dass sowohl Datenerhebung als auch Datenverarbeitung modular entwickelt werden. Da das Backend der Schnittstelle als REST-API entwickelt wird, können zukünftige Entwickler die Schnittstelle nutzen, auch wenn sich die Daten oder die KIs verändern sollten. Mithilfe dieser Schnittstelle soll sich der Arbeitsaufwand verringern, der durch die Anbindung und Nutzung neuer KIs entsteht. Damit können erfahrene Entwickler entlastet werden und Personalkosten gespart werden. Ebenso können schnell und ohne großen Mehraufwand alternative Aufbereitungen der Daten oder neue KIs getestet werden.
+
 \subsection{Vorgehen}
 text?

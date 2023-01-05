@@ -75,8 +75,8 @@
 % Deutsch und passende Seitenränder
 \usepackage[ngerman]{babel,isodate}
 \usepackage{csquotes}
-\usepackage[paper=a4paper,left=40mm,right=20mm,top=25mm,bottom=20mm]{geometry}
-\setlength{\footskip}{8mm} % Abstand Seitenzahl zu Text
+\usepackage[paper=a4paper,left=40mm,right=20mm,top=25mm,bottom=30mm]{geometry}
+\setlength{\footskip}{10mm} % Abstand Seitenzahl zu Text
 
 %% Literatur
 % Zitate
@@ -95,10 +95,13 @@
 \parskip0.5ex % parskip auf font/2
 \parindent0ex % kein Einzug am Absatzbeginn
 
-\RedeclareSectionCommand[beforeskip=12pt,afterskip=5pt]{section}
+\RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{section}
 \RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{subsection}
 \RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{subsubsection}
 \RedeclareSectionCommand[beforeskip=11pt,afterskip=0pt]{paragraph}
+
+\usepackage{sectsty}
+\sectionfont{\fontsize{12}{0}\selectfont}
 
 % Kopfzeile und Fußzeile default
 \usepackage{lastpage}
@@ -106,12 +109,14 @@
 \pagestyle{scrheadings}
 \clearmainofpairofpagestyles
 \addtokomafont{pageheadfoot}{\upshape}
+%\clearscrheadfoot
+%\ohead{\leftmark}
 
 % Kopfzeile und Fußzeile definiert für Seiten zwischen Deckblatt und dem Hauptteil
 \newpagestyle{bisHauptteil}{
         {\hfill}
         {\hfill}
-        {\ThesisSubjectType\hfill}
+        {Bachelorarbeit - Laurenz Anton Dilba\hfill}
 }
 {
         {\hfill}
@@ -119,16 +124,83 @@
         {\hfill\pagemark}
 }
 
-\newpagestyle{Hauptteil}{
+\newpagestyle{Einleitung}{
         {\hfill}
         {\hfill}
-        {\ThesisSubjectType\hfill}
+        {Einleitung\hfill}
 }
 {
         {\hfill}
         {\hfill}
         {\hfill\ \pagemark}
 }
+
+\newpagestyle{Grundlagen}{
+        {\hfill}
+        {\hfill}
+        {Grundlagen\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Methodik}{
+        {\hfill}
+        {\hfill}
+        {Methodik\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Konzeption und prototypische Umsetzung}{
+        {\hfill}
+        {\hfill}
+        {Konzeption und prototypische Umsetzung\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Evaluation}{
+        {\hfill}
+        {\hfill}
+        {Evaluation\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Fazit und Ausblick}{
+        {\hfill}
+        {\hfill}
+        {Fazit und Ausblick\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+
+%\newpagestyle{Fazit und Ausblick}{
+%        {\hfill}
+%        {\hfill}
+%        {\ThesisSubjectType\hfill}
+%}
+%{
+%        {\hfill}
+%        {\hfill}
+%        {\hfill\ \pagemark}
+%}
 
 
 % Quellcode einfuegen und highlighten

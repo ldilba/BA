@@ -1,44 +1,63 @@
 \section{Methodik}
-Lineare Projektvorgehensmethode, bei welcher in jeder Projektphase definierte Ziele und
-Tätigkeiten fertiggestellt werden, bevor die nächste Phase startet. Dies erlaubt die ein-
-fachere und bewährte Durchführung eines Projekts, bietet jedoch im Gegensatz zu agilen
-Projektmethoden weniger Änderungsmöglichkeiten nach dem Beginn der Entwicklungs-
-phase des Projekts
+Die Bachelorarbeit wurde anhand eines modifizierten Wasserfallmodells bearbeitet. Das Wasserfallmodell ist ein im Jahre 1970 von Winston W. Royce erstmals beschriebener Designprozess zur Entwicklung von Softwareanwendungen.\footcite{model2015waterfall} Das Modell beschreibt einen sequenziellen Prozess der Softwareentwicklung. Dieser Prozess ist in fünf Unterpunkte aufgeteilt. \footcite{adenowo2013software}
 
-\footcite{PorathRon2020ICuI}
-\footcite{harwardt2012wasserfallmodell}
+\begin{enumerate}
+\item Requirement Analysis
+\item Design
+\item Implementation
+\item Testing
+\item Operation and Maintenance
+\end{enumerate}
+
+Da das Wasserfallmodell einen sequenziellen Prozess beschreibt, muss jeder Schritt vollständig abgeschlossen sein, bevor der nächste Schritt gestartet werden kann. Rückschritte sind in diesem Modell nicht vorgesehen. Ähnlich wie bei einem Wasserfall kann der Projektfluss nur von oben nach unten ablaufen.\footcite{PorathRon2020ICuI}
+
+Für die Bachelorarbeit wurde das Wasserfallmodell modifiziert. Der vierte Schritt \glqq Testing\grqq{} wurde durch den Schritt \glqq Umsetzung evaluieren\grqq{} ersetzt. Im Rahmen der Bachelorarbeit ist es wichtiger, die Funktion des Prototyps zu evaluieren, statt einzelne Codesegmente auf ihre Korrektheit zu testen. Der fünfte Schritt \glqq Wartung\grqq{} findet in dieser Bachelorarbeit ebenfalls keine Verwendung, da die entwickelte Software lediglich ein Prototyp ist, der ohne weitere Entwicklung nicht in einer Produktivumgebung genutzt werden kann. Dieser Schritt wurde durch den Schritt \glqq Anpassen\grqq{} ersetzt. Dort wird festgehalten, was für einen Einsatz in einer Produktivumgebung noch benötigt wird und geändert werden soll.
+
+Das daraus resultierende Modell für die Bachelorarbeit mit den dazugehörigen Kapiteln, in denen die einzelnen Schritte umgesetzt werden, ist in Tabelle 2 aufgeführt.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|l|l}
+\textbf{Schritt} & \textbf{Bezeichnung} & \textbf{Kapitel}\\
+\hline
+1 & Anforderungen definieren & 4.1 Anforderungen\\
+2 & Konzept entwickeln & 4.2 Konzeption\\
+3 & Prototypische Implementierung & 4.3 Prototypische Umsetzung\\
+4 & Umsetzung evaluieren & 5 Evaluation\\
+5 & Anpassen & 6.3 Ausblick\\
+\end{tabular}
+\caption{Schritte des Wasserfallmodells innerhalb der Bachelorarbeit}
+\end{table}
+
+Für die Bachelorarbeit wurde sich gegen ein moderneres Projektmanagementmodell wie Scrum entschieden. Scrum bietet viele Vorteile bei Entwicklerteams, die gemeinsam an einer Software arbeiten. Laut der Untersuchung von Harwardt wirkt Scrum einigen Risiken der Softwareentwicklung entgegen. Es ist innerhalb des Entwicklungszeitraums möglich Änderungen vorzunehmen und diese regelmäßig mit Kunden abzusprechen. Ebenso steigert es die Mitarbeiterzufriedenheit und Motivation im Gegensatz zur Arbeit mit dem Wasserfallmodell.\footcite{harwardt2012wasserfallmodell} Für die Software, die im Rahmen der Bachelorarbeit entwickelt wurde, gibt es jedoch keine Kunden. Des Weiteren waren keine weiteren Entwickler an der Software beteiligt. Ein Framework zur regelmäßigen Absprache mit Kunden und anderen Mitarbeitern ist demnach nicht notwendig. Der Entwicklungszeitraum betrug 6 Wochen. Eine Aufteilung dieser Zeit in mehrere Sprint-Zyklen bietet ebenfalls keinen Mehrwert. Scrum erzeugt im Gegensatz zu dem Wasserfallmodell einen größeren Verwaltungsaufwand, da alle zu entwickelnde Funktionalitäten der Software in User Stories formuliert und der Arbeitsaufwand mit Story Points abgeschätzt werden muss.\footcite{wirdemann2022scrum}
 
 \subsection{Anforderungen definieren}
-Im ersten Schritt werden alle Anforderungen an die zu entwickelnde Software erhoben.
-Die Anforderungserhebung wird in Zusammenarbeit mit der Conet gemacht. In einem
-Meeting mit Experten sollen mittels Brainstorming alle Aspekte der Middleware durchgegangen
-werden und dabei alle geplanten Features, erwünschten Ergebnisse sowie
-erforderlichen Dokumentationen festgehalten werden.
+Im ersten Schritt des Wasserfallmodells werden alle Anforderungen an die zu entwickelnde Software erhoben. Dabei wird sich nach den Vorgaben der IEC 62304 Kapitel 5.2\footcite{daniel2018anforderungen} zur Anforderungserhebung für Softwaresysteme orientiert. Die Durchführung der Anforderungserhebung findet in Zusammenarbeit mit der CONET statt. In einem Meeting mit einem Experten aus dem Bereich der Softwareentwicklung, auch im Bezug auf künstliche Intelligenzen, wurde eine Ausarbeitung der Anforderungen durchgeführt. Zunächst gab es eine von der CONET gestellte grobe Ideenbeschreibung. Auf Basis dieser Beschreibung wurde mittels Brainstorming eine Anforderungsliste, die die folgenden fünf Punkte der IEC 62304 abdeckt der entworfen.
+
+\begin{itemize}
+\item Benutzerschnittstellen
+\item Die GUI
+\item Verhalten des Systems auf Benutzeraktionen im Normal- und Fehlerfall
+\item Die Geschwindigkeit, mit der diese Reaktionen geschehen
+\item Auf welchen Umgebungen, sich die Software installieren lassen soll
+\end{itemize}
+
+In Kapitel 4.1 ist eine schriftliche Ausarbeitung der Liste dokumentiert.
 
 \subsection{Konzept entwickeln}
-Im zweiten Schritt des Wasserfallmodells wird das Konzept für die Software erstellt. Die
-zuvor definierten Anforderungen bieten dafür eine Leitlinie. In diesem Schritt wird bereits
-die zu implementierende KI analysiert, um festzustellen, welche Ein- und Ausgaben diese
-fordert. Anhand den Anforderungen der Experten und den Anforderungen der KI kann eine
-Softwarearchitektur und ein Programmablauf entwickelt werden. Ebenso werden hier alle
-verwendeten Technologien und benötigten Programme festgehalten.
+Im zweiten Schritt des Wasserfallmodells wird das Konzept für die Software erstellt. Die zuvor definierten Anforderungen bieten dafür eine Leitlinie. Zunächst wird ein Konzept für die verwendeten Technologien entworfen. Innerhalb dieses Konzepts ist die Architektur der Software beschrieben. In Kapitel 4.2.1 \glqq Softwarearchitektur\grqq{} ist das Zusammenspiel und die Abhängigkeiten der einzelnen Bestandteile des Systems aufgeführt. Da es sich bei der zu entwickelnden Anwendung um eine Full-Stack Architektur handelt, sprich sowohl ein Frontend als auch ein Backend mit allen dazugehörigen Komponenten, ist die Planung der Architektur für den Entwicklungsprozess äußerst entscheidend.\footcite{taivalsaari2021full} Änderungen der Architektur nach dem Aufsetzen der einzelnen Systeme sind aufwändig und zeitintensiv.
 
-\subsection{Prototypisch umsetzen}
-Die anschließend erfolgende prototypische Umsetzung wird den Großteil der Bachelorarbeit
-ausmachen. Dort wird die Schnittstelle zwischen Datenerhebungs- und Datenverarbeitungsalgorithmen
-entwickelt und dokumentiert. Ebenso wird die Benutzerschnittstelle
-für die Einrichtung der Middleware entwickelt. Das zuvor erarbeitete Konzept kann hier
-als Leitlinie für die zu entwickelnde Middleware verwendet werden.
+Das Konzept beinhaltet neben der Planung der Architektur auch einen Programmablaufplan. Dieser Plan ist in Kapitel 4.2.2 \glqq Programmablauf\grqq{} aufgeführt. Innerhalb des Ablaufplans ist die Nutzerinteraktion mit dem System und die dadurch ausgelösten Ereignisse im Backend beschrieben. In diesem Schritt werden Rand- und Fehlerfälle nicht behandelt.
+
+Zur besseren Visualisierung des Konzepts werden Mockups für die Website entworfen. Da alle Ereignisse innerhalb des Prototyps durch einen Anwender ausgelöst sind, ist die Darstellung der Eingabefelder, Buttons und Ergebnisanzeigen zum Verständnis des Programmablaufs hilfreich. Mockups verbessern den Prozess der Erhebung und Bestätigung der Anforderungen.\footcite{rivero2010mockups}
+
+\subsection{Prototypische Implementierung}
+Der dritte Schritt des Wasserfallmodells umfasst die prototypische Umsetzung der Software. Die dazu verwendeten Werkzeuge sind in Kapitel 2.5 \glqq Werkzeuge\grqq{} beschrieben. Bei der Auswahl der Werkzeuge für die Erstellung der Schnittstelle wird darauf geachtet, moderne und in der Praxis genutzte Frameworks und Technologien zu verwenden. Die Auswahl basiert auf Expertenmeinungen der CONET, eigener Recherche und Technologien, die bei der CONET bereits im Einsatz sind. Das zuvor definierte Konzept diente als Anleitung für den Entwurf und die Implementierung der Softwarearchitektur. Die Mockups werden als visuelle Referenz für das Design des Frontends verwendet. Für den KI-Service wird sich an dem Artikel von Tibshirani zur Implementierung einer Textähnlichkeitssuche in Elasticsearch orientiert.\footcite{tibshirani2019ki} Da die Entwicklung einer Künstlichen Intelligenz nicht das zentrale Thema der Bachelorarbeit ist, wird eine implementierte Version des BERT Modells von Tibshirani in den KI-Service integriert.\footcite{tibshirani2020github} Die Implementierung der Software ist in Kapitel 4.3 \glqq Prototypische Umsetzung\grqq{} beschrieben.
 
 \subsection{Umsetzung evaluieren}
-Die Umsetzung wird nach der prototypischen Implementierung mit den zu Beginn der
-Arbeit erhobenen Anforderungen verglichen. Nach Abschluss der prototypischen Umsetzung
-wird eine Präsentation der Middleware in einer Expertenrunde gehalten. Anschließend
-wird mit den Experten ein Architektur- und Codereview des Backends durchgeführt.
-Währenddessen wird auch die Bedienbarkeit und Verständlichkeit der Middleware evaluiert. Dazu werden beispielhafte Daten zur Implementation vorbereitet und eine vorher
-vorbereitete KI zur Auswertung der Daten bereitgestellt.
+Die Umsetzung wird während der prototypischen Implementierung mit den zu Beginn der Arbeit erhobenen Anforderungen in regelmäßigen Code-Reviews verglichen. Die Durchführung der Code-Reviews findet mit einem Experten aus der CONET statt. Innerhalb dieser Code-Reviews wird darauf geachtet, dass die Fertigstellung des Prototyps erreicht werden kann, die Qualität des Codes gewährleistet ist und die in den Anforderungen erhobenen Features implementiert werden. Des Weiteren wird auf die Modularität, Skalierbarkeit und Performance des Codes geachtet.
+
+Die Ergebnisse der Code-Reviews sind in Kapitel 5.3 \glqq Ergebnisse des Code-Reviews\grqq{} festgehalten. 
 
 \subsection{Anpassen}
-Zuletzt wird in der „Anpassen“ Phase das Feedback der Probanden genutzt, um eventuelle
-Schwachstellen, Unklarheiten oder Fehler der Software zu beheben. Alle weiteren
-gesammelten Informationen werden in der Bachelorarbeit im Fazit und im Ausblick behandelt.
+Im letzten Schritt des Wasserfallmodells \glqq Anpassen\grqq{} wird der Prototyp Mitarbeiten und Experten der CONET vorgestellt. Das nach der Präsentation gesammelte Feedback wird diskutiert und anschließend notiert. In Kapitel 6.3 \glqq Ausblick\grqq{} sind die gesammelten Punkte aufgeführt. 
