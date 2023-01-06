@@ -1,8 +1,25 @@
 \section{Evaluation}
-text
-%\subsection{Performanceanalyse}
+Die Evaluation der Software wurde mit einem Mitarbeiter aus der CONET Solutions GmbH während der Entwicklungsphase durchgeführt. Innerhalb des sechswöchigen Entwicklungszeitraums wurden sechs Code-Reviews in regelmäßigen Abständen durchgeführt. Während des Code-Reviews wurde der aktuelle Stand der Software präsentiert, eventuell bestehende Probleme und Schwachstellen aufgeführt und die Planung für die Weiterarbeit bis zum nächsten Review besprochen.
 
-\subsection{Untersuchung der Erfüllung der erhobenen Anforderungen}
-text
-\subsection{Ergebnisse des Code-Reviews}
-text
+\subsection{Ergebnisse der Code-Reviews}
+\begin{itemize}[leftmargin=6em]
+\item [Woche 1:] In der ersten Woche wurde im Bereich von Microservice-Architekturen und Schnittstellen recherchiert. Im ersten Code-Review fand eine Vorstellung der geplanten Architektur statt. Das primäre Feedback zur geplanten Architektur war, dass nicht nur eine allgemeingültige Schnittstelle entwickelt werden soll, sondern die Implementierung einer Textähnlichkeitssuche im Vordergrund steht. Anhand dieser KI soll die Funktionalität der Schnittstelle gezeigt werden.
+\item [Woche 2:] In der zweiten Woche wurde ein Konzept für die Implementierung der Schnittstelle entworfen. Dieses Konzept umfasst ein Architekturdiagramm, welches die Komponenten innerhalb der Software darstellt, ein Prozessablaufdiagramm. in dem die Funktionsweise und Abläufe der Schnittelle visualisiert sind und Mockups für die zu implementierende Website. Aus diesem Review ging hervor, dass die ursprünglich geplante Kommunikation von dem Service zur API ebenfalls mit RabbitMQ umgesetzt werden sollte, statt den API-Endpunkt des Backendes zu nutzen. Dies vereinheitlicht den Programmcode und beschleunigt die Antwortzeit der KI-Services.
+\item [Woche 3:] Nach Abschluss der dritten Woche, war ein Großteil der REST-API implementiert. Innerhalb dieses Code-Reviews wurde auf den Aufbau der Routen, sowie die Anbindung an die MySQL-Datenbank und den Redis-Cache geachtet. Hierzu gab es seitens CONET keine Kritik oder Verbesserungsvorschläge.
+\item [Woche 4:] Während der vierten Woche wurde die API fertiggestellt und anschließend im Code-Review vorgestellt. Besonderer Fokus lag dabei auf der Implementierung des Errormanagement- und Loggingsystems. Innerhalb dieses Reviews wurde auch Grafana zur Visualisierung der Logs vorgestellt. Ein Kritikpunkt an der gewählten Kombination aus einer MySQL Datenbank und Grafana war, dass das System bei der Anzeige einer größeren Anzahl an Logs langsam wird. Die Anzahl der angezeigten Logs in Grafana musste demnach beschränkt werden. Des Weiteren benötigt das System zum Error-Handling für den Einsatz in einer Produktivumgebung eine genauere Aufteilung der Error-Codes. Im aktuellen Zustand des Prototyps wird bei einer fehlerhaften Eingabe der Error-Code 500 zurückgegeben. Dies ist für den realen Einsatz der Anwendung allerdings nicht ausreichend.
+\item [Woche 5:] In der fünften Woche wurde das Frontend entwickelt. Dabei wurde sich an den Mockups zur visuellen Gestaltung orientiert. Die Nutzung der Website war laut CONET allerdings erst mit einer kleinen Einführung verständlich. Die Website, für sich alleinstehend, bietet zu wenig Erklärungen oder Hilfestellungen, als das sie ein Unbeteiligter nutzen könnte. Die Funktionalität der Website ist jedoch gewährleistet und deckt die in den Anforderungen erhobenen Punkte ab.
+\item [Woche 6:] In der letzten Woche der Entwicklungsphase wurde der KI-Service zur Textähnlichkeitssuche implementiert. Zur Kommunikation zum Backend wurde der Service an den Dienst RabbitMQ angeschlossen. Anschließend wurden alle Teile der Software über Docker in einzelne Container verpackt. Dadurch konnte die Softwarearchitektur auf den Rechnern mehrerer CONET Mitarbeiter installiert und getestet werden.
+\end{itemize}
+
+Nach dem Abschluss der Code-Reviews wurde der entwickelte Prototyp vor mehreren Mitarbeitern der CONET Solutions GmbH präsentiert. Im Anschluss an die Präsentation wurde das Ergebnis der Bachelorarbeit mit den zu Beginn erhobenen Anforderungen verglichen. Grundsätzlich konnten alle Anforderungen durch den Prototyp erfüllt werden. Die entworfene Architektur wurde für modernen, performant und skalierbar befunden. Sie bietet eine gute Grundlage, um komplexere Systeme darauf aufbauen zu können.
+
+Es gibt jedoch, wie auch in den Code-Reviews angemerkt wurde, einige Bereiche, bei denen es Verbesserungspotential gibt. Diese betreffen jedoch ausschließlich die visuelle Aufbereitung und Nutzerinteraktion mit dem System. Die angemerkten Kritikpunkte sind folgende:
+
+\begin{itemize}
+\item Die Nutzung der Website ist nicht intuitiv für neue Nutzer
+\item Grafana wird mit MySQL zu langsam für eine große Anzahl an Logs
+\item Der Nutzer kann falsche Eingaben auf der Website tätigen, ohne darüber in Kenntnis gesetzt zu werden
+\item Die Installation der Software ist relativ zeitaufwändig, wenn Docker nicht bereits installiert ist
+\item Die Elasticsearch-Datenbank im KI-Service kann nicht mit weiteren Daten befüllt werden
+\end{itemize}
+  

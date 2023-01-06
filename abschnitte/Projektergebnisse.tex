@@ -2,7 +2,7 @@
 In diesem Kapitel wird die prototypische Implementierung der Schnittstelle für die Anbindung von austauschbaren Datenquellen an KI-Algorithmen beschrieben. Zunächst werden die Anforderungen für das Projekt innerhalb der Bachelorarbeit erläutert. Anschließend wird das erarbeitete Konzept beschrieben. Der mithilfe des Konzeptes entwickelte Prototyp sowie das anschließende Deployment findet sich ebenfalls in diesem Kapitel wieder.  
 
 \subsection{Anforderungen}
-Die Anforderungen für die Schnittstelle und den daraus resultierenden Prototyp wurden in Zusammenarbeit mit der CONET Solutions GmbH erhoben. Bei der CONET gab es ein offenes Forschung- und Entwicklungsprojekt zur Erstellung eines Trend-Scouting Systems. Das Ziel des Systems sollte es sein, eine Architektur bereitzustellen, die vom Nutzer gestellte Anfragen annimmt und diese mit einer KI analysiert, um Aussagen darüber treffen zu können, welche Technologien in der Zukunft relevant werden könnten. Da der Umfang eines Trend-Scouting Systems zu groß für den Zeitraum einer Bachelorarbeit ist, ergab sich als Zielsetzung die Entwicklung der Architektur, die ein solches System unterstützen könnte. Die genaue Anforderungserhebung wurde nach dem Leitfaden der von der \ac{iec} veröffentlichten Norm IEC 62304 Kapitel 5.2 entworfen.\footcite{daniel2018anforderungen} Innerhalb dieser Norm ist spezifiziert, wie Anforderungen an eine Software aufbereitet und dokumentiert werden sollen.
+Die Anforderungen für die Schnittstelle und den daraus resultierenden Prototyp wurden in Zusammenarbeit mit der CONET Solutions GmbH erhoben. Die Projektidee entstand im Kontext eines Projektes zu \glqq Trendscouting Systemen\grqq{}. Das Ziel des Systems sollte es sein, eine Architektur bereitzustellen, die vom Nutzer gestellte Anfragen annimmt und diese mit einer KI analysiert, um Aussagen darüber treffen zu können, welche Technologien in der Zukunft relevant werden könnten. Da der Umfang eines Trend-Scouting Systems zu groß für den Zeitraum einer Bachelorarbeit ist, ergab sich als Zielsetzung die Entwicklung der Architektur, die ein solches System unterstützen könnte. Die genaue Anforderungserhebung wurde nach dem Leitfaden der von der \ac{iec} veröffentlichten Norm IEC 62304 Kapitel 5.2 entworfen.\footcite{daniel2018anforderungen} Innerhalb dieser Norm ist spezifiziert, wie Anforderungen an eine Software aufbereitet und dokumentiert werden sollen.
 
 Im ersten Schritt wurden die Benutzerschnittstellen spezifiziert. Die grundlegende Interaktion mit dem System findet über die Website statt. Dort hat der Nutzer die Möglichkeit seine Suchanfrage in Form eines ausgeschriebenen Satzes oder über einzelne Stichpunkte in ein Textfeld einzugeben. Die nächste Benutzerschnittstelle ist die Transformation der zuvor eingegebenen Suchanfrage. Der Nutzer soll dort mittels JSON-Syntax die Suchanfrage modifizieren können. Dies ist im Hinblick auf eine eventuell automatisierte Nutzung des Systems erforderlich. Im dritten Schritt soll der Nutzer die Option haben, die Suchparameter für die KI anzupassen. Vor allem relevant ist die Anzahl der Ergebnisse, die bei einer gestellten Suchanfrage zurückgegeben werden. An dieser Stelle soll aber auch weitere Parameter eingegeben werden können. Anschließend ist eine Möglichkeit vorgesehen die Anfrage inklusive der Parameter abzuschicken. In Abbildung 5 ist die Interaktion mit dem System in einem Use Case Diagramm dargestellt.
 
@@ -55,7 +55,7 @@ Der im Prototyp implementierte KI-Service nutzt das BERT Modell von Google zum K
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width = 15cm]{bilder/Architektur}
+    \includegraphics[width = 12cm]{bilder/Architektur}
     \caption{Softwarearchitekturdiagramm}
 \end{figure}
 
@@ -94,15 +94,15 @@ Der dritte Schritt ist die Ausführung der Anfrage durch einen KI-Service. In Ab
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width = 10cm]{bilder/mockupService}
+    \includegraphics[width = 7.5cm]{bilder/mockupService}
     \caption{Mockup Service}
 \end{figure}
 
 \subsection{Prototypische Umsetzung}
 \subsubsection{Implementierung der REST-API}
-Python bietet mit dem Package Flask die Möglichkeit einen simplen und gut skalierbaren Webserver aufzusetzen. Für das Starten einer Flask Instanz muss das Package Flask in die Python Umgebung importiert werden. Anschließend kann ein Flask-Objekt erzeugt und die Flask Instanz mit den gewünschten Parametern gestartet werden.
+Python bietet mit dem Package Flask die Möglichkeit einen simplen und gut skalierbaren Webserver aufzusetzen. Für das Starten einer Flask-Instanz muss das Package Flask in die Python Umgebung importiert werden. Anschließend kann ein Flask-Objekt erzeugt und die Flask-Instanz mit den gewünschten Parametern gestartet werden.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Aufsetzen einer Flask-Instanz}]
 from flask import Flask
 app = Flask(__name__)
 app.run(host="0.0.0.0", port=80, use_reloader=False)
@@ -110,7 +110,7 @@ app.run(host="0.0.0.0", port=80, use_reloader=False)
 
 Damit die API auch automatisiert aus einem Docker Container heraus gestartet werden kann, muss die Ausführung des Flask Services in die Main Methode von Python ausgelagert werden. Flask blockiert den Thread, auf dem es ausgeführt wird, was eine asynchrone Kommunikation über RabbitMQ nicht möglich macht. Der Receiver benötigt seinen eigenen Thread, weswegen eine Multithreading-Architektur implementiert werden muss. Zu diesem Zweck wird das threading Package genutzt. Über den Parameter \texttt{daemon} kann bei der Erzeugung eines Threads festgelegt werden, dass der Thread im Hintergrund läuft und den Hauptthread nicht blockiert.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Flask im eigenen Thread starten}]
 def start_server():
     app.run(host="0.0.0.0", port=80, use_reloader=False)
 
@@ -118,11 +118,11 @@ if __name__ == '__main__':
     thread_server = threading.Thread(target=start_server, daemon=True).start()
 \end{lstlisting}
 
-Eine in der API adressierbare Route kann in Flask über Function-Annotations definiert werden. Die von Flask implementierten Anntotations haben die Form \texttt{instanz.route('path', methods=["METHOD"])}. Der Name der Instanz wird am Anfang des Projekts als \texttt{app} definiert. Der \texttt{path} beschreibt die Route, die vom Frontend aufgerufen werden muss, damit die nachfolgende Funktion ausgeführt wird. Im Array \texttt{methods} besteht die Möglichkeit, ein oder mehrere Request Typen zu definieren, die die Funktion akzeptieren soll.
+Eine in der API adressierbare Route kann in Flask über Function-Annotations definiert werden. Die von Flask implementierten Anntotations haben die Form \texttt{instanz.route('path', methods=["METHOD"])}. Der Name der Instanz wird am Anfang des Projekts als \texttt{app} definiert. Der \texttt{path} beschreibt die Route, die vom Frontend aufgerufen werden muss, damit die nachfolgende Funktion ausgeführt wird. Im Array \texttt{methods} besteht die Möglichkeit, ein oder mehrere Request-Typen zu definieren, die die Funktion akzeptieren soll.
 
 Eine beispielhafte Nutzung der Annotations, um eine Route in der API zu definieren, ist nachfolgend aufgeführt. 
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Beispiel einer API-Routendefinition über Annotations}]
 @app.route('/', methods=["GET"])
 def index():
     [..]
@@ -133,7 +133,7 @@ Der Inhalt der Methode und deren genaue Funktionsweise wird in den folgenden Kap
 
 Die Funktion \texttt{respond} ist im Skript \texttt{api/response\_{}generator.py} definiert. Sie dient als Function Wrapper, der bei jeder ausgehenden Response die Response-Header, eventuelle Cookies und den Reponse Typen setzt. Der Output der Response wird mithilfe des \texttt{json} Packages in JSON Syntax konvertiert.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Respond Funktion zur Rückgabe von JSON-Responses}]
 import json
 from flask import Response
 def respond(r, status=200, json_dump=True, cookie=""):
@@ -177,7 +177,7 @@ Das Backend nutzt einen \ac{uuid} der sich durch das Python Package \texttt{uuid
 Ein \ac{jwt} ist ein kompaktes, URL-sicheres Mittel zur Darstellung von Forderungen, die zwischen zwei Parteien übertragen werden sollen. Die Angaben in einem JWT werden als JSON-Objekt kodiert. Der Inhalt des JST kann digital signiert oder die Integrität mit einem \ac{mac} geschützt und/oder verschlüsselt werden.\footcite{jones2015json}
 
 Im nachfolgenden Codeausschnitt ist die Generierung der UUID und die Verschlüsselung des JWT dargestellt.
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Generierung der UUID und Erstellung des JWT}]
 def uuid_gen():
     return uuid.uuid4()
     
@@ -193,7 +193,7 @@ Im Prototyp wird die Funktion \texttt{token\_{}required(f)} definiert. Diese Fun
 
 Wenn die Entschlüsselung des Tokens erfolgreich war, wird die innere Funktion ausgeführt. Als Parameter der inneren Funktion wird die im JWT enthaltene UUID übergeben. Durch diesen Aufbau ist der Code für die Verifizierung des Tokens und die Logik der Funktion unter der angesprochenen Route vollständig getrennt.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Route zum Upload von Queries mit Nutzung des JWTs}]
 @routes.route('/upload/text', methods=['POST'])
 @token_required
 def upload_text(uid):
@@ -210,7 +210,7 @@ Redis ist ein Key-Value Store der vollständig im RAM ausgeführt wird. Innerhal
 
 Redis wird zum Cachen von Nutzereingaben und für die Zwischenspeicherung von Ergebnissen aus den KI-Services verwendet. In der ersten Datenbank werden die vom Nutzer eingegebenen Queries gespeichert. Redis kann grundsätzlich nur textbasierte Daten speichern. Dies reicht für den Anwendungsfall der Software jedoch aus. Um die Query in Redis speichern zu können, muss zunächst eine Verbindung zum Redis Cache aufgebaut werden. Die URL, unter der Redis erreichbar ist, wird aus den Environmentvariablen bezogen. Im ersten Schritt wird ein \texttt{ConnectionPool} angelegt. Dieser verbindet sich unter einem angegebenen Host, einem Port mit einer Datenbank. Anschließend kann im zweiten Schritt eine Redis Instanz in Python erstellt werden. Diese bekommt den \texttt{ConnectionPool} als Argument übergeben. Innerhalb der Redis Instanz befinden sich alle Funktionen, die benötigt werden, um mit der Redis Datenbank arbeiten zu können.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Aufsetzen der Redis-Verbindung}]
 redis_host = os.environ.get('REDIS_HOST')
 pool_upload = redis.ConnectionPool(host=redis_host, port=6379, db=0)
 red_upload = redis.Redis(connection_pool=pool_upload)
@@ -218,13 +218,13 @@ red_upload = redis.Redis(connection_pool=pool_upload)
 
 In der Redis Instanz werden zwei Funktionen definiert, die im Prototyp Verwendung finden. Die \texttt{set(k,v)} Methode nimmt einen Schlüssel als ersten Parameter und einen Wert als zweiten Parameter an. Das übergebene Key-Value Paar wird mit diesem Methodenaufruf entweder neu in der Datenbank angelegt oder falls bereits ein identischer Schlüssel vorhanden sein sollte, mit den aktuellen Werten überschrieben. Das Zwischenspeichern der hochgeladenen Query ist im nachfolgenden Codeausschnitt abgebildet.  
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Set-Funktion aus Redis}]
 red_upload.set(uid, body['text'])
 \end{lstlisting}
 
 Die zweite Funktion der Redis Instanz ist die \texttt{get(k)} Methode. Diese bekommt einen Schlüssel übergeben und gibt den dazugehörigen Wert zurück. Das nachfolgende Codesegment stammt aus der Transform-Route. Hier wird die zwischengespeicherte Query, sowie die Transformationsanleitung aus dem Redis Cache geladen. Wichtig dabei zu beachten ist es, dass die aus dem Redis Cache geladenen Werte noch in ein Zeichenformat konvertiert werden müssen. In diesem Fall ist die Kodierung UTF-8 gewählt worden, da diese die meisten Sonderzeichen unterstützt.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Get-Funktion aus Redis}]
 messages = transform(red_upload.get(uid).decode('utf-8'), red_transform.get(uid))
 \end{lstlisting}
 
@@ -237,7 +237,7 @@ Innerhalb einer Connection, können über einen Channel können sowohl der Serve
 
 In einem Channel wird letztendlich die Queue definiert, in der die Nachrichten zwischengespeichert werden. Im folgenden Codeausschnitt ist gezeigt, wie eine Connection, ein Channel und eine Queue erstellt werden.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Verbindung zu RabbitMQ und Erstellung eines Channels und einer Queue}]
 def produce(uid, service, query, params):
     connection = pika.BlockingConnection(pika.ConnectionParameters(rabbit_host, 5672, '/', credentials))
     channel = connection.channel()
@@ -254,7 +254,7 @@ Auf Seiten des Services wird eine Methode implementiert, die die Nachrichten in 
 
 Um den Consumer zu starten und damit auf neue Nachrichten in der Queue zu warten, wird die Methode \texttt{start\_{}consuming()} ausgeführt. Im nachfolgenden Codesegment ist der eben beschriebene Prozess im KI-Service aufgeführt.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Aufsetzen und Konsumieren der RabbitMQ-Queue im KI-Service}]
 channel.queue_declare(queue='text-similarity')
 channel.basic_consume(queue='text-similarity',
                           auto_ack=True,
@@ -264,7 +264,7 @@ channel.start_consuming()
 
 Nachdem die KI die eingehende Anfrage verarbeitet hat, schreibt der Service die Response in eine Queue. Es kann jedoch nicht die gleiche Queue für Anfragen und Antworten verwendet werden, da es sonst dazu führen könnte, dass vom Service produzierte Antworten wieder als Anfrage interpretiert werden und es so zur fehlerhaften Ausführung des KI-Algorithmus kommt. Ein weiteres Problem wäre, dass die Antworten dann aus der Queue herausgenommen wurden und der Server keine Antwort mehr zur gestellten Anfrage erhält. Um dem entgegenzuwirken, wurde eine zweite \glqq Response-Queue\grqq{} implementiert, in die ausschließlich die Antworten des Services geschrieben werden. Da die Queues über ihren Namen definiert werden, hat jede Response Queue einen vom Service abhängigen, automatisch generierten Namen. Der Name hat die Form \texttt{response-\{service\}}. Im Falle des \texttt{text-similarity} Services, hat die Antwort Queue den Namen \texttt{response-text-similarity}. 
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Senden eines KI-Ergebnisses an das Backend }]
 channel.queue_declare(queue='response-text-similarity')
 channel.basic_publish([...], body=f'{{"uid": "{uid}", "service": "{service}", "message": {json.dumps(message)}}}'.encode('utf-8'))
 \end{lstlisting}
@@ -290,13 +290,13 @@ Nachdem alle Einträge in der Elasticsearch Datenbank indiziert wurden, beginnt 
 
 Damit der KI-Service eine Textähnlichkeitssuche durchführen kann, muss zunächst das BERT Modell importiert werden. Dieses kann der Service beim Starten automatisch aus dem offiziellen Tensorflow Hub herunterladen. Anschließen wird eine Tensorflow Session erstellt und gestartet. 
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Laden des BERT-Modells}]
 embed = hub.Module("https://tfhub.dev/google/universal-sentence-encoder/2")
 \end{lstlisting}
 
-Im zweiten Schritt verbindet sich der Service mit der Elasticsearch Datenbank. Dazu wird die URL, unter der die Elasticsearch erreichbar ist aus den Environment Variablen geladen. Die Environment Variablen können entweder beim manuellen Starten des Services mitgegeben werden oder falls der Service mit Docker gestartet wird, in der Docker-Compose File definiert werden. Mithilfe der URL initialisiert der Service eine Elasticsearch Instanz und speichert sie in der Variable \texttt{client} ab. 
+Im zweiten Schritt verbindet sich der Service mit der Elasticsearch-Datenbank. Dazu wird die URL, unter der die Elasticsearch erreichbar ist aus den Environment Variablen geladen. Die Environment Variablen können entweder beim manuellen Starten des Services mitgegeben werden oder falls der Service mit Docker gestartet wird, in der Docker-Compose File definiert werden. Mithilfe der URL initialisiert der Service eine Elasticsearch-Instanz und speichert sie in der Variable \texttt{client} ab. 
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Starten der Elasticsearch-Instanz}]
 elasticsearch_url = os.environ.get('ELASTIC_URL')
 client = Elasticsearch(elasticsearch_url)
 \end{lstlisting}
@@ -305,7 +305,7 @@ Nachdem sich der Service erfolgreich mit der Elasticsearch verbunden hat, beginn
 
 Nach erfolgreicher Indizierung aller Fragestellungen, geht der Service in die Programmablaufschleife über. Die Schleife beginnt mit der Initialisierung der RabbitMQ Verbindung. Dort verbindet sich der der Textähnlichkeitsservice mit der Queue \texttt{text-similarity}. Bei einer eingehenden Anfrage ruft die \texttt{callback} Funktion die \texttt{respond} Funktion auf, die den KI-Algorithmus aufruft und sich um die Verarbeitung der Antwort kümmert. Die Funktion \texttt{handle\_{}query()} benötigt als Parameter die Query die vom Nutzer gestellt wurde und die Anzahl der Ergebnisse, die zurückgegeben werden sollen. Beide Parameter werden aus aus der Anfrage, die über RabbitMQ an den Service gesendet wurde, ausgelesen. Sollte es vorkommen, dass der Nutzer keine \texttt{search\_{}size} angegeben hat, wird der Standartwert 1 gesetzt.
  
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Auslesen der search\_{}size und Ausführen der KI}]
 search_size = 1
     for p in params:
         if "search_size" in p.values():
@@ -318,7 +318,7 @@ Innerhalb der \texttt{handle\_{}query()} Methode wird zunächst der Satz, der vo
 
 Mit der \texttt{client.search()} stellt der Service die Anfrage an die Elasticsearch mit der zuvor definierten Query. In der Anfrage wird über das Feld \texttt{\glqq size\grqq} die Anzahl der gewünschten Ergebnisse mitgeliefert. Wenn die \texttt{search\_{}size} beispielsweise 3 beträgt, werden die drei Fragen mit den ähnlichsten Vektoren in die Variable \texttt{response} geschrieben. Im nachfolgen Codesegment sind die zuvor beschriebene Erstellung des Query Vektors, der Such-Query für die Elasticsearch und die Anfrage an die Elasticsearch dargestellt.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Ähnlichkeitssuche in der Elasticsearch}]
 query_vector = embed_text([query])[0]
 script_query = {
     [...]
@@ -347,7 +347,7 @@ Bei der Nutzung eines KI-Services kann es dazu kommen, dass die Eingaben in eine
 
 Um diesem Problem entgegenzuwirken, wurde im Backend ein Algorithmus entwickelt, der Daten mithilfe einer Transformationsanleitung automatisch bereinigen kann. Die Transformationsanleitung wird durch den Anwender eingegeben und hat folgende Form:
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Beispiel einer Transformationsanleitung}]
 {
   "seperator": "\n",
   "replace": [
@@ -361,7 +361,7 @@ Um diesem Problem entgegenzuwirken, wurde im Backend ein Algorithmus entwickelt,
 
 Aktuell im Prototyp unterstützte Transformationsoperationen sind \texttt{sperator} und \texttt{replace}. Der \texttt{sperator} teilt die vom Nutzer eingegebene Query in mehrere einzelne Queries auf. Dazu nutzt er die \texttt{split} Operation aus Python, die für Strings standardmäßig verfügbar ist. In der Transformationsanleitung wird ebenfalls ein Array an \texttt{replace} Operationen angegeben. Jeder Eintrag im \texttt{replace} Array enthält ein Objekt mit Key-Value Paaren \texttt{old} und \texttt{new}. Der alte String wird durch den neuen String ersetzt. Dazu wird die \texttt{replace} Funktion aus dem Python Package \texttt{re} verwendet. Die \texttt{replace} Funktion nutzt Regular Expression als Syntax für das Ersetzen. Dadurch sind auch komplexere Ersetzungsverfahren möglich. Im Beispiel für eine Transformationsanleitung wurde eine Regular Expression zur Entfernung eines Zeitstempels mit der Form \texttt{[12:25:10]} angegeben. Der nachfolgende Code zeigt die Implementierung der \texttt{transform} Methode, die mithilfe der Anleitung die Transformation durchführt. Zunächst wird die Query in einzelne Nachrichten geteilt. Anschließend läuft eine Schleife über alle Nachrichten und wendet alle gegebenen Transformationsschritte an. Der Algorithmus gibt ein Array an transformierten Nachrichten zurück.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Transformationsalgorithmus}]
 def transform(file: str, transform_json):
     [...]
     parts = file.split(transform_json['seperator'])
@@ -376,11 +376,11 @@ def transform(file: str, transform_json):
 \end{lstlisting}
 
 \subsubsection{Fehlerbehandlung}
-Während der Laufzeit des Programms kann es dazu kommen, dass im vom Nutzer produzierte Fehler auftreten. Der Nutzer kann im Bereich der Transformation syntaktisch nicht korrekte Texte eingeben, die Backend verarbeitet werden. Da Nutzereingaben ohne weitere Behandlung ebenfalls ein Sicherheitsrisiko für die Infrastruktur darstellen können, wird im Backend ein System implementiert, um die Verarbeitung der Eingaben in einer isolierten Umgebung ausführen zu können. Ähnlich wie bei der Verifizierung des JWT, ist das System zur Fehlerbehandlung auch mit Function Wrappern und Annotations umgesetzt. 
+Während der Laufzeit des Programms kann es dazu kommen, dass im vom Nutzer produzierte Fehler auftreten. Der Nutzer kann im Bereich der Transformation syntaktisch nicht korrekte Texte eingeben, die Backend verarbeitet werden. Da Nutzereingaben ohne weitere Behandlung ebenfalls ein Sicherheitsrisiko für die Infrastruktur darstellen können, wird im Backend ein System implementiert, um die Verarbeitung der Eingaben in einer isolierten Umgebung ausführen zu können. Ähnlich wie bei der Verifizierung des JWT, ist das System zur Fehlerbehandlung auch mit Function-Wrappern und Annotations umgesetzt. 
 
-Im Backend wird ein Exception Handler definiert der eine Funktion mit zuvor übergebenen Parametern ausführt. Da eine fehlerhafte Ausführung auch dort zum Programmabsturz führen würde, wird die Funktion in einem try-except Block gekapselt. Alle innerhalb dieses Blocks auftretende Fehler werden abgefangen und in einem Exception Objekt gespeichert. Innerhalb des Exception Objekts ist die produzierte Fehlermeldung gespeichert. Über \texttt{str(e)} kann auf die Fehlermeldung zugegriffen werden. Innerhalb des Except Blocks wird die Fehlermeldung an den Logger weitergegeben, um diese in einer Datenbank persistent zu speichern. Nach erfolgreichem Log wird dem Frontend in einer HTTP Response der Statuscode 500 \glqq Internal Server Error\grqq{} zurückgegeben.\footcite{fielding1999rfc2616}
+Im Backend wird ein Exception-Handler definiert der eine Funktion mit zuvor übergebenen Parametern ausführt. Da eine fehlerhafte Ausführung auch dort zum Programmabsturz führen würde, wird die Funktion in einem try-except Block gekapselt. Alle innerhalb dieses Blocks auftretende Fehler werden abgefangen und in einem Exception Objekt gespeichert. Innerhalb des Exception Objekts ist die produzierte Fehlermeldung gespeichert. Über \texttt{str(e)} kann auf die Fehlermeldung zugegriffen werden. Innerhalb des Except Blocks wird die Fehlermeldung an den Logger weitergegeben, um diese in einer Datenbank persistent zu speichern. Nach erfolgreichem Log wird dem Frontend in einer HTTP-Response der Statuscode 500 \glqq Internal Server Error\grqq{} zurückgegeben.\footcite{fielding1999rfc2616}
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Exception-Handling mithilfe von Wrappern}]
 [...]
  @wraps(f)
         def decorator(*args, **kwargs):
@@ -397,7 +397,7 @@ Jede Funktion, die in innerhalb des Exception Handlers ausgeführt werden soll, 
 \subsubsection{Event Logging}
 Das Backend implementiert ein Event Logging System mit dem Zustände und Informationen des Systems in einer Datenbank gespeichert werden können. Mithilfe von Logs können Entwickler den Ablauf eines Programms besser nachvollziehen und auftretende Fehler schneller zu ihrer Quelle zurückverfolgen. Es ist ebenfalls möglich, Systeme aufzusetzen, die die auf Logs auslesen und beim Auftreten eines Errors die zuständigen Personen alarmieren. Eine Herausforderung bei einem Logging System ist es, dass das System beim Entwickler durch das Loggen keinen erheblichen Mehraufwand produzieren soll. Im Backend wurde ein Logging System entwickelt, welches mit einer einzigen Funktion angesteuert werden kann. Die Log Funktions des Loggers wird in den verschiedenen Bereichen der Anwendung über \texttt{from logs.logger import log} importiert. Nach erfolgreichem Import, steht die \texttt{log} Funktion zur Verfügung. 
 
-Für einen Log müssen drei Parameter übergeben werden, der Log Level, eine Message und die UUID. Die möglichen Ausdrücke für die Log Level sind in Tabelle 3 aufgeführt. Die unterstützten Log Level leiten sich aus der Funktionalität von Grafana ab, welche diese Logs mit einer zugeordneten Farbe visualisiert.
+Für einen Log müssen drei Parameter übergeben werden, der Log Level, eine Message und die UUID. Die möglichen Ausdrücke für die Log Level sind in Tabelle 4 aufgeführt. Die unterstützten Log Level leiten sich aus der Funktionalität von Grafana ab, welche diese Logs mit einer zugeordneten Farbe visualisiert.
 
 \begin{table}[H]
 \centering
@@ -427,7 +427,7 @@ trace & trace & hellblau\\
 
 Innerhalb der Log Funktion wird eine Datenbank Query mit den drei Parametern und einem aktuellen Zeitstempel erstellt. Der Zeitstempel kann mithilfe des \texttt{datetime} Packages erstellt werden. Über \texttt{cursor.execute()} wird die erstellte Query in der MySQL Datenbank ausgeführt. Der Log wird als Eintrag in der Tabelle \texttt{logs} gespeichert. Im folgenden Codeausschnitt ist die Log Funktion abgebildet.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Erstellung eines Logs}]
 def log(level, message, uid):
     [...]
     query = f"INSERT INTO logs (`level`, `message`, `timestamp`, `uid`) VALUES (%s, %s, %s, %s)"
@@ -437,7 +437,7 @@ def log(level, message, uid):
 
 Die produzierten Logs, die in der MySQL Datenbank hinterlegt werden, können in Grafana visualisiert werden. Dazu muss ein Dashboard angelegt werden. Innerhalb des Dashboards wird ein durch Grafana bereitgestelltes Logs Panel benötigt. Grafana ordnet alle anzuzeigenden Daten grundsätzlich nach dem Zeitpunkt der Erstellung. Innerhalb des Logs Panels wird der aktuellste Log ganz oben angezeigt. Alle anderen werden chronologisch absteigend sortiert angezeigt. Da in Grafana die MySQL Datenbank als Datenquelle hinterlegt ist, muss auch die Abfrage der Daten ist SQL stattfinden. Innerhalb der SQL Abfrage ist die Auswahl des timestamps an erster Stelle durch Grafana vorgegeben. Alle weiteren Spalten können beliebig gewählt werden. Wichtig zu beachten ist, dass eine Spalte mit dem Namen \glqq message\grqq{} direkt im Logs Panel angezeigt wird, ohne den jeweiligen Log ausklappen zu müssen. Der Name \glqq level\grqq{} ist ebenfalls von Grafana reserviert. Sollte sich der Eintrag der \glqq level\grqq{} Spalte mit einem der Ausdrücke aus Tabelle 3 decken, so wird die entsprechende Farbe für den Log genutzt. Alle weiteren selektierten Spalten werden durch Ausklappen des jeweiligen Logeintrags sichtbar. Die genutzte Query zur Abfrage der Logs ist im nachfolgenden Codesegment dargestellt.
 
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL, caption={Query zur Abfrage der Logs in Grafana}]
 SELECT timestamp, message, level, uid from db_logs.logs;
 \end{lstlisting}
 
@@ -462,7 +462,7 @@ Das Frontend wurde mit dem Framework Angular entwickelt. In Abbildung 15 ist der
 
 Wie in den Anforderungen beschrieben, teilt sich die Website in drei Bereiche auf. In Angular ist es möglich, eigene Components zu definieren. Ein Component besteht aus drei Dateien. Die grundlegende Datei ist eine TypeScript Datei. Innerhalb dieser Datei wird der eigentliche Component definiert. Zunächst muss dafür \texttt{Component} aus \texttt{@anuglar/core} importiert werden. Im Anschluss im Bereich unter \texttt{@Component} ein selector, eine templateUrl und die styleUrls definiert. Der selector beschreibt, wie der Component im HTML Code aufgerufen werden soll. Jeder Component braucht einen individuellen Namen. Um die eigenen Components von den Components, die durch Angular bereitgestellt sind, unterscheiden zu können, befindet sich zu Beginn jedes Namens das Prefix \texttt{app-}. Die templateUrl gibt den Pfad der dazugehörigen HTML Datei an. Diese Datei ist die zweite Datei, die zur Erstellung eines Components notwendig ist. Innerhalb der styleUrls können mehrere Pfade zu verschiedenen Dateien angegeben werden. Die SCSS Datei ist die dritte Datei, die zur Erstellung eines Component benötigt wird. Im folgenden Codeausschnitt ist die Initialisierung des Query-Imput-Components innerhalb der TypeScript Datei dargestellt.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Definition eines Components}]
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -474,15 +474,15 @@ import { Component, OnInit } from '@angular/core';
 
 Innerhalb der TypeScript Datei können Variablen und Funktionen definiert werden. Diese können dazu genutzt werden, Nutzerinteraktionen mit der Website festzuhalten, oder Ereignisse darzustellen. In der Query-Input-Component wird die Variable \texttt{inputStr} definiert. Innerhalb dieser Variable wird die Eingabe, die der Nutzer im Textfeld der Query-Kachel tätigt, gespeichert. Für sich alleinstehend, hat die Variable jedoch keine Funktion. Diese bekommt sie erst durch den Code aus der HTML Datei. 
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Erstellung einer Textarea innerhalb der HTML-Datei}]
 <textarea [(ngModel)]="inputStr" placeholder="Input..." class="text-input"></textarea>
 \end{lstlisting}
 
 Innerhalb der HTML Datei für die Query ist eine Textarea definiert. Über den Selector \texttt{[(ngModel)]} kann eine Variable angegeben werden, die mit dem Inhalt der Textarea synchronisiert wird. Sobald der Nutzer eine Eingabe in der Textarea tätigt, wird diese sofort in der TypeScript Datei aktualisiert. 
 
-Es ist ebenfalls ein \texttt{class} Attribut innerhalb der Textarea angegeben. Dieses setzt eine CSS Klasse für die Textarea. In der Definition der Component ist eine SCSS Datei angegeben, die in diesem Schritt aufgerufen wird. Dort wird die Klasse \texttt{text-input} definiert und mit verschiedenen Style-Eigenschaften versehen. Diese Eigenschaften werden auf die Textarea angewandt.  
+Es ist ebenfalls ein \texttt{class} Attribut innerhalb der Textarea angegeben. Dieses setzt eine CSS Klasse für die Textarea. In der Definition der Component ist eine SCSS-Datei angegeben, die in diesem Schritt aufgerufen wird. Dort wird die Klasse \texttt{text-input} definiert und mit verschiedenen Style-Eigenschaften versehen. Diese Eigenschaften werden auf die Textarea angewandt.  
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Style-Definition innerhalb einer SCSS-Datei}]
 .text-input{
   border-radius: 5px;
   border: 1px solid #9A9A9A;
@@ -505,7 +505,7 @@ Die daraus resultierende Textarea innerhalb der \glqq Query\grqq{} Kachel, ist i
 
 Der Bereich der Transformation besteht aus mehreren Sub-Components. Die obere und mittlere Textarea ist analog zu der Textarea aus der Query implementiert. Da die obere Textarea jedoch ausschließlich zur Bestätigung der Eingabe dient und nicht selbst zu Eingabe genutzt werden soll, wurde bei der Definition das Attribut \texttt{readonly} mitgegeben. Der untere Bereich der Transformation-Component teilt sich in zwei Components auf. Der übergeordnete Component ist das \texttt{transformation.result}. Dies ist die graue Box, in der eine Liste an transformierten Eingaben dargestellt werden. Jedes Element der Liste ist ein \texttt{transformation.result.item} Component. In Angular kann eine Liste im HTML Code direkt aus einer Variable erzeugt werden. Dazu wird \texttt{*ngFor} verwendet. Innerhalb der Schleife ist eine Variable aus der zugehörigen TypeScript Datei angegeben, über die iteriert wird. Sollte sich die Variable zur Laufzeit ändern, so wird auch direkt die HTML Datei angepasst. Der folgende Codeausschnitt zeigt die Implementierung des \texttt{transformation.result} Components.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Anzeige der Results aus der Transformation}]
 <div class="container">
   <li *ngFor="let item of results; index as i" class="list-results">
     <app-transformation-result-item [text]="item"></app-transformation-result-item>
@@ -523,7 +523,7 @@ In Abbildung 17 ist die Transformation der Query, sowie das Ergebnis abgebildet.
 
 Der dritte Bereich der Website stellt die Auswahl und Ergebnisauflistung des KI-Services dar. Zur Datenakquirierung werden in Angular Services verwendet. Diese sind TypeScript Dateien, die Kommunikation zur API regeln. Eine der Funktionen aus dem Service für die Service-Component ist \texttt{getService()} Methode. 
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Abfrage der Services}]
 getServices() {
   const headers = {'Authorization': environment.token}
   return this.http.get<any>(environment.backend_url + '/service', {headers})
@@ -532,7 +532,7 @@ getServices() {
 
 Diese kann innerhalb der TypeScript Datei der Component aufgerufen werden. Die \texttt{getService()} Methode stellt einen HTTP GET-Request an die \texttt{/service} Route der API. Die genaue URL der API wird aus den Environmentvariablen ausgelesen. Die Methode gibt jedoch nicht direkt die Response auf den Request zurück, sondern ein Objekt vom Typ Observable. Innerhalb des TypeScript Datei des Components kann auf dieses Observable subscribed werden. Durch diese Herangehensweise wird ein asynchroner Aufruf an die API gesendet und bei einer Response das Ergebnis verarbeitet. Das Ergebnis ist hierbei eine Liste aller verfügbaren KI-Services. Diese werden in der Variable \texttt{services} gespeichert.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Subscriben auf einen Observable}]
 this.serviceService.getServices().subscribe(res => {
   this.services = res['services']
 })
@@ -540,7 +540,7 @@ this.serviceService.getServices().subscribe(res => {
 
 Im HTML des Service-Components wird die Liste der Services für ein Dropdown verwendet. Eine weitere Funktion von Angular sind Events. Ein Event kann von einem Component ausgelöst werden. Innerhalb des Components, dass das untergeordnete Component implementiert, kann auf dieses Event reagiert werden. Es besteht die Möglichkeit TypeScript Code auszuführen oder vordefinierte Funktionen aufzurufen. Im Dropdown wird das \texttt{changeEvent} abgefangen. Dieses löst aus, wenn der Nutzer ein neues Element aus dem Dropdown ausgewählt hat. Dabei wird die Funktion \texttt{serviceSelected()} aufgerufen.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Dropdown zur Auswahl der Services}]
 <app-dropdown [elements]="services" (changeEvent)="serviceSelected($event)"></app-dropdown>
 \end{lstlisting}
 
@@ -557,7 +557,7 @@ Der letzte Component innerhalb des Services ist der \texttt{service.result} Comp
 \subsection{Deployment der Software mit Docker}
 Eine der Anforderungen der CONET war es, dass die entwickelte Schnittstelle Plattformunabhängig genutzt werden kann. Aus diesem Grund wurden alle Bereiche der Softwarearchitektur über Docker Container deploybar gemacht. Um eine eigens entwickelte Software in einen Container zu packen, muss zunächst ein Image aus der Software erstellt werden. Ein Image dient als Bauanleitung für den Container und enthält alle Dateien, die zur Ausführung des Programms benötigt werden. Ein Image kann über eine Dockerfile generiert werden. Die Dockerfile zur Erstellung des Images für das Backend ist nachfolgend abgebildet.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, caption={Beispiel einer Dockefile}]
 FROM python:3.10-slim
 WORKDIR /app
 ADD . /app
@@ -569,12 +569,12 @@ CMD ["python", "app.py"]
 Innerhalb der Dockerfile können Pakete aus dem Dockerhub als Abhängigkeit angegeben werden, die beim Bauen des Images heruntergeladen werden. Im Falle des Backendes wird das Paket \texttt{python:3.10-slim} bezogen. Innerhalb der Dockerfile ist ebenfalls die Festlegung der Ordnerstruktur, sowie die Ausführung von Kommandos möglich.
 
 Zum Bauen eines Images mithilfe der zuvor erstellten Dockerfile wird der \texttt{build} Befehl benötigt. Für das Backend, den KI-Service, sowie das Frontend ist eine Docker-Compose Datei zuständig. Die Docker-Compose Datei kann in einer Linux- oder \ac{wsl} Umgebung ausgeführt werden. Der dazu nötige Befehl lautet:
-\begin{lstlisting}
+\begin{lstlisting}[caption={Build Befehl zur Erstellung von Docker-Images aus einer Compose-Datei}]
 sudo docker compose -f '/path/to/compose/' build
 \end{lstlisting}
 Anschließend existieren drei Images in der Dockerumgebung, die zum Bau der Container genutzt werden können. 
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Docker-Compose-Datei zum Bauen der Docker-Images}]
 version: '3.3'
 services: 
     flask-backend:
@@ -593,7 +593,7 @@ services:
 
 Der nachfolgende Auszug aus der \texttt{docker-compose.core.yml} Datei zeigt die Bauanleitung für einen Container der MySQL Datenbank. Innerhalb dieser Compose-Datei wird zunächst der Name des Services definiert. Unter diesem Namen ist der Docker Container im Netzwerk durch andere Docker Container erreichbar. Innerhalb des Services stehen mehrere Optionen zur Festlegung von Eigenschaften des Containers zur Verfügung. Über \texttt{ports} können ein oder mehrere Ports freigeschaltet werden, sodass der Container Zugriffe von außerhalb erlaubt. Im Bereich \texttt{volumes} stehen alle Ordner oder Dateien, die persistent gespeichert werden. Bei MySQL gibt es die Möglichkeit, ein initiales SQL-Skript anzugeben, welches nur bei der ersten Erstellung des Docker Containers ausgeführt wird. Das SQL-Skript erstellt eine Datenbank und die benötigten Tabellen. Im \texttt{image} Bereich ist das Image zum Bauen des Containers angegeben. Dies ist entweder ein lokal vorhandenes oder ein im Docker Hub angebotenes Image. Der letzte aufgeführte Punk \texttt{networks} beinhaltet das Netzwerk, in dem sich der Docker Container befindet. Dieses wird benötigt, damit unterschiedliche Container miteinander kommunizieren können. Dazu muss sichergestellt werden, dass alle Container im gleichen Netzwerk sind.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Docker-Compose-Datei zum Aufsetzen und Starten der Container}]
 services:
     mysql: 
         ports: 
@@ -616,11 +616,11 @@ volumes:
 \end{lstlisting}
 
 Der Container kann mit folgendem Befehl gebaut und gestartet werden:
-\begin{lstlisting}
+\begin{lstlisting}[caption={Starten eines Docker-Containers}]
 sudo docker compose -f '/path/to/compose/' up -d
 \end{lstlisting}
 
 Sollte der Container anschließend wieder beendet werden, so wird folgender Befehl benötigt: 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Beenden eines Docker-Containers}]
 sudo docker compose -f '/path/to/compose/' down
 \end{lstlisting}

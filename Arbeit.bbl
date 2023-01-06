@@ -149,6 +149,59 @@
       \field{pages}{187\bibrangedash 240}
       \range{pages}{54}
     \endentry
+    \entry{QuickGuide}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=203ec3aadcf4c4e0acccbb4afa580757}{%
+           family={CONET},
+           familyi={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {(internes Dokument)}%
+      }
+      \strng{namehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{fullhash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{bibnamehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{authorbibnamehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{authornamehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{authorfullhash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Quick Guide für Studierende}}
+      \field{year}{2022}
+    \endentry
+    \entry{Kunden}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=dd6e9e10d0aaed19a8f23d6d0a542b4f}{%
+           family={Conet},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
+      \strng{fullhash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
+      \strng{bibnamehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
+      \strng{authorbibnamehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
+      \strng{authornamehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
+      \strng{authorfullhash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Auszug aus der Kundenliste}
+      \field{urlday}{11}
+      \field{urlmonth}{5}
+      \field{urlyear}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.conet.de/DE/conet-group/kunden/auszug-aus-der-kundenliste
+      \endverb
+      \verb{url}
+      \verb https://www.conet.de/DE/conet-group/kunden/auszug-aus-der-kundenliste
+      \endverb
+    \endentry
     \entry{daniel2018anforderungen}{online}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=cd4da016034f0b8fa957a48f84aa9427}{%
