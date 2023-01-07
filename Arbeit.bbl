@@ -164,6 +164,7 @@
       \strng{authorbibnamehash}{203ec3aadcf4c4e0acccbb4afa580757}
       \strng{authornamehash}{203ec3aadcf4c4e0acccbb4afa580757}
       \strng{authorfullhash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \field{extraname}{1}
       \field{sortinit}{C}
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{extradatescope}{labelyear}
@@ -175,16 +176,17 @@
     \endentry
     \entry{Kunden}{online}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=dd6e9e10d0aaed19a8f23d6d0a542b4f}{%
-           family={Conet},
+        {{un=0,uniquepart=base,hash=203ec3aadcf4c4e0acccbb4afa580757}{%
+           family={CONET},
            familyi={C\bibinitperiod}}}%
       }
-      \strng{namehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
-      \strng{fullhash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
-      \strng{bibnamehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
-      \strng{authorbibnamehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
-      \strng{authornamehash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
-      \strng{authorfullhash}{dd6e9e10d0aaed19a8f23d6d0a542b4f}
+      \strng{namehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{fullhash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{bibnamehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{authorbibnamehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{authornamehash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \strng{authorfullhash}{203ec3aadcf4c4e0acccbb4afa580757}
+      \field{extraname}{2}
       \field{sortinit}{C}
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{labeldatesource}{nodate}
@@ -1232,13 +1234,15 @@
       \strng{authorfullhash}{62182ca58a739daa8ddd8a48b7b19abb}
       \field{sortinit}{S}
       \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{labeldatesource}{nodate}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Volumen der jährlich generierten digitalen Datenmenge}
       \field{urlday}{5}
       \field{urlmonth}{1}
       \field{urlyear}{2023}
+      \field{year}{2021}
       \field{urldateera}{ce}
       \verb{urlraw}
       \verb https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/
