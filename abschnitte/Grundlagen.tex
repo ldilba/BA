@@ -6,7 +6,7 @@ Die Schnittstelle in der Informatik beschreibt sowohl den Bereich einer Software
 Es wurden zwei Bereiche innerhalb der Schnittstelle entworfen. Der erste Bereich der Schnittstelle verbindet die Website mit dem Backend. Innerhalb des Backends wurde eine Schnittstelle in Form eines \ac{api} implementiert. Der zweite implementierte Bereich der Schnittstelle schließt das Backend mittels RabbitMQ an die einzelnen KI-Services an. In Kapitel 2.2 wird der Aufbau und die Funktionsweise der beiden Schnittstellen genauer erläutert.
 
 \subsection{REST und RabbitMQ}
-\subsubsection{Application Programming Interface}
+\subsubsection{Application-Programming-Interface}
 Eine API ist eine Programmierschnittstelle, die dazu da ist, die Kommunikation zwischen einem Client, oder auch Anwender genannt, und einem Server durch festgelegte Funktionen zu regeln. Der Satz der verfügbaren Funktionen ist durch den Entwickler der API vorgegeben. Eine API sollte nach Möglichkeit selbsterklärend aufgebaut sein. \footcite{bloch2006design} Eine API dient dazu, dem Nutzer Daten bereitzustellen oder dem Server Daten zu senden.
 
 In Abbildung 1 ist die Kommunikation zwischen einem Anwender und der API durch ein Sequenzdiagramm dargestellt. Jede Anfrage an die API findet durch den Aufruf des API Endpunkts durch einen \ac{url} statt. Hinter der Grund-URL wird die genaue Ressource innerhalb der API durch den Pfad in der URL angegeben. Jede dieser Funktionen, die über eine bestimmte URL erreichbar sind, kann mehrere Effekte haben. Der Effekt, den eine Funktion hat, ist durch die \ac{http} Methoden im groben Rahmen vorgegeben. Die Kommunikation zwischen API und Anwender geht immer vom Anwender aus. Die API kann den Anwender von sich aus nicht ansprechen. 
@@ -129,7 +129,7 @@ Eine Textänlichkeitssuche, die mittels KI durchgeführt wird, kann zu einer Anf
 Der Grundsatz des KI-Modells ist es, dass zwei Sätze, die inhaltlich ähnlich sind, auch zwei ähnliche Vektoren besitzen. Vektoren sind ähnlich, wenn der Abstand der beiden gering und die Richtung ähnlich ist.\footcite{rahutomo2012semantic} Diese Abstandsberechnung kann in der Elasticsearch Datenbank seit Version 7.3, welche am 31.07.2019 veröffentlicht wurde, automatisch durchgeführt werden. 
 
 \subsection{Verwendete Werkzeuge}
-\subsubsection{Python API mit Flask}
+\subsubsection{Python-API mit Flask}
 %Implementierung der Rest api durch Flask
 Python ist eine um 1991 von Guido van Rossum entwickelte Programmiersprache. Bei der Entwicklung von Python wurde ein besonderer Fokus auf die Lesbarkeit von Code gesetzt. Dank der simplifizierten Syntax im Vergleich zu anderen höheren Programmiersprachen wie Java oder C\#, ist Python auch in Bereichen, wie in der Mathematik oder der Wissenschaft ein häufig genutztes Werkzeug. Python bietet ebenfalls die Möglichkeit, von anderen Entwicklern bereitgestellte Bibliotheken in das eigene Projekt zu integrieren.\footcite{python2021python} 
 
@@ -149,7 +149,7 @@ In relationalen Datenbanken werden Daten strukturiert in Tabellenform abgespeich
 
 Das RDBMS MySQL wird u. a. für die Speicherung der Logs, die der Flask-Server während der Verarbeitung von Requests oder Nachrichten an die KI produziert, verwendet. Ein weiterer Einsatzzweck der MySQL-Datenbank ist die Speicherung der im System registrieren KI-Services. Ein Dienst kann über die Flask-API im System registriert oder deregistriert werden. Das Frontend kann im Anschluss eine Auflistung der verfügbaren Services beim Backend anfragen.
 
-\subsubsection{Angular Frontend}
+\subsubsection{Angular-Frontend}
 Eine Website wird üblicherweise mit \ac{html} und JavaScript erstellt. Um eine moderne Website zu entwickeln, die ihren Inhalt nicht beim ersten Aufrufen lädt, sondern erst dann, wenn er benötigt wird, müssen Konzepte wie \ac{ajax} verwendet werden. Angular ist ein von Google entwickeltes und gepflegtes Open Source-Framework, zur Vereinfachung des Entwickelns von komplexen webbasierten Anwendungen. Angular bietet im Gegensatz zu anderen Webframeworks wie React und Vue.js eine vollumfängliche Bibliothek, mit der nahezu sämtliche Aspekte in der Web-Entwicklung abgedeckt werden können.\footcite{moiseev2018angular}
 
 In Angular wird die Programmiersprache TypeScript verwendet. Diese ist eine Erweiterung der Programmiersprache JavaScript und implementiert Konzepte wie feste Typisierung von Variablen. Weitere Konzepte wie Dependency-Injection oder die Trennung von \ac{bl} und \ac{ui} ermöglichen eine schnelle Entwicklung von komplexen Systemen. 
