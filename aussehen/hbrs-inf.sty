@@ -92,13 +92,13 @@
 
 \usepackage{setspace}
 
-\parskip0.5ex % parskip auf font/2
+\parskip1ex % parskip auf font/2
 \parindent0ex % kein Einzug am Absatzbeginn
 
 \RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{section}
 \RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{subsection}
 \RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{subsubsection}
-\RedeclareSectionCommand[beforeskip=11pt,afterskip=0pt]{paragraph}
+\RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{paragraph}
 
 \usepackage{sectsty}
 \sectionfont{\fontsize{12}{0}\selectfont}
@@ -113,16 +113,84 @@
 %\ohead{\leftmark}
 
 % Kopfzeile und Fußzeile definiert für Seiten zwischen Deckblatt und dem Hauptteil
-\newpagestyle{bisHauptteil}{
+
+\newpagestyle{Eidesstattliche Erklärung}{
         {\hfill}
         {\hfill}
-        {Bachelorarbeit - Laurenz Anton Dilba\hfill}
+        {Eidesstattliche Erklärung\hfill}
 }
 {
         {\hfill}
         {\hfill}
-        {\hfill\pagemark}
+        {\hfill\ \pagemark}
 }
+
+\newpagestyle{Inhaltsverzeichnis}{
+        {\hfill}
+        {\hfill}
+        {Inhaltsverzeichnis\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Abbildungsverzeichnis}{
+        {\hfill}
+        {\hfill}
+        {Abbildungsverzeichnis\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+
+\newpagestyle{Tabellenverzeichnis}{
+        {\hfill}
+        {\hfill}
+        {Tabellenverzeichnis\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Code Listings}{
+        {\hfill}
+        {\hfill}
+        {Code Listings\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Abkürzungsverzeichnis}{
+        {\hfill}
+        {\hfill}
+        {Abkürzungsverzeichnis\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+%\newpagestyle{bisHauptteil}{
+%        {\hfill}
+%        {\hfill}
+%        {Bachelorarbeit - Laurenz Anton Dilba\hfill}
+%}
+%{
+%        {\hfill}
+%        {\hfill}
+%        {\hfill\pagemark}
+%}
 
 \newpagestyle{Einleitung}{
         {\hfill}
@@ -183,6 +251,17 @@
         {\hfill}
         {\hfill}
         {Fazit und Ausblick\hfill}
+}
+{
+        {\hfill}
+        {\hfill}
+        {\hfill\ \pagemark}
+}
+
+\newpagestyle{Literaturverzeichnis}{
+        {\hfill}
+        {\hfill}
+        {Literaturverzeichnis\hfill}
 }
 {
         {\hfill}

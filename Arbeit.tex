@@ -14,17 +14,22 @@
         \pagestyle{empty}
         \input{abschnitte/Deckblatt}
 
-        \pagestyle{bisHauptteil}
+        \pagestyle{Eidesstattliche Erklärung}
         \input{abschnitte/Erklärung}
         \newpage
+        \pagestyle{Inhaltsverzeichnis}
         \tableofcontents
         \newpage
+        \pagestyle{Abbildungsverzeichnis}
         \listoffigures
         \newpage
+        \pagestyle{Tabellenverzeichnis}
         \listoftables
         \newpage
+        \pagestyle{Code Listings}
         \lstlistoflistings
         \newpage
+        \pagestyle{Abkürzungsverzeichnis}
         \setcounter{secnumdepth}{0}
         \input{datenbanken/Abkuerzungsverzeichnis}
         \setcounter{secnumdepth}{3}
@@ -67,7 +72,7 @@
     \newpage
     
     \nocite{*}
-
+	\pagestyle{Literaturverzeichnis}
     \printbibliography[title={Literaturverzeichnis}]
     
     %\input{abschnitte/Gliederung}
