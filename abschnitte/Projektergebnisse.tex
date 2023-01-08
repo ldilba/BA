@@ -458,7 +458,7 @@ Das Frontend wurde mit dem Framework Angular entwickelt. In Abbildung 15 ist der
     \caption{Gesamtansicht der Website}
 \end{figure}
 
-Die Website teilt sich in drei Bereiche auf. In Angular ist es möglich, eigene Components zu definieren. Ein Component besteht aus drei Dateien. Die grundlegende Datei ist eine TypeScript Datei. Innerhalb dieser Datei wird der eigentliche Component definiert. Zunächst muss dafür \texttt{Component} aus \texttt{@anuglar/core} importiert werden. Im Anschluss im Bereich unter \texttt{@Component} ein \texttt{selector}, eine \texttt{templateUrl} und die \textttstyleUrls} definiert. Der \texttt{selector} beschreibt, wie der Component im HTML Code aufgerufen werden soll. Jeder Component erfordert einen individuellen Namen. Um die eigenen Components von den Components, die durch Angular bereitgestellt sind, unterscheiden zu können, enthält jeder Namen das Prefix \texttt{app-}. Die \texttt{templateUrl} gibt den Pfad der dazugehörigen HTML Datei an. Diese Datei ist die zweite Datei, die zur Erstellung eines Components notwendig ist. Innerhalb der \texttt{styleUrls} können mehrere Pfade zu verschiedenen Dateien angegeben werden. Die SCSS-Datei ist die dritte Datei, die zur Erstellung eines Component benötigt wird. Im folgenden Codeausschnitt ist die Initialisierung des Query-Imput-Components innerhalb der TypeScript-Datei dargestellt:
+Die Website teilt sich in drei Bereiche auf. In Angular ist es möglich, eigene Components zu definieren. Ein Component besteht aus drei Dateien. Die grundlegende Datei ist eine TypeScript Datei. Innerhalb dieser Datei wird der eigentliche Component definiert. Zunächst muss dafür \texttt{Component} aus \texttt{@anuglar/core} importiert werden. Im Anschluss im Bereich unter \texttt{@Component} ein \texttt{selector}, eine \texttt{templateUrl} und die \texttt{styleUrls} definiert. Der \texttt{selector} beschreibt, wie der Component im HTML Code aufgerufen werden soll. Jeder Component erfordert einen individuellen Namen. Um die eigenen Components von den Components, die durch Angular bereitgestellt sind, unterscheiden zu können, enthält jeder Namen das Prefix \texttt{app-}. Die \texttt{templateUrl} gibt den Pfad der dazugehörigen HTML Datei an. Diese Datei ist die zweite Datei, die zur Erstellung eines Components notwendig ist. Innerhalb der \texttt{styleUrls} können mehrere Pfade zu verschiedenen Dateien angegeben werden. Die SCSS-Datei ist die dritte Datei, die zur Erstellung eines Component benötigt wird. Im folgenden Codeausschnitt ist die Initialisierung des Query-Imput-Components innerhalb der TypeScript-Datei dargestellt:
 
 \begin{lstlisting}[language=Python, caption={Definition eines Components}]
 import { Component, OnInit } from '@angular/core';
@@ -519,7 +519,7 @@ Abbildung 17 stellt die Transformation der Query, sowie das Ergebnis dar.
     \caption{Transformation Kachel im Frontend}
 \end{figure}
 
-Der dritte Bereich der Website stellt die Auswahl und Ergebnisauflistung des KI-Services dar. Zur Datenakquirierung werden in Angular-Services verwendet. Diese sind TypeScript-Dateien, die Kommunikation zur API regeln. Eine der Funktionen aus dem Service für die Service-Component ist \texttt{getService()} Methode. 
+Der dritte Bereich der Website enthält die Auswahl und Ergebnisauflistung des KI-Services. Die Kommunikation zur API wird durch Services, die in TypeScript-Dateien definiert werden, bereitgestellt. Eine der Funktionen aus dem Service für den Service-Component ist \texttt{getService()}-Methode. Diese kann innerhalb der TypeScript-Datei der Component aufgerufen werden. Die \texttt{getService()} Methode stellt einen HTTP-GET-Request an die \texttt{/service} Route der API. Die genaue URL der API wird aus den Environmentvariablen ausgelesen. Die Methode gibt nicht direkt die Response auf den Request zurück, sondern ein Objekt vom Typ Observable. Innerhalb der TypeScript-Datei des Components kann auf das Observable subscribed werden. 
 
 \begin{lstlisting}[language=Python, caption={Abfrage der Services}]
 getServices() {
@@ -528,7 +528,7 @@ getServices() {
 }
 \end{lstlisting}
 
-Diese kann innerhalb der TypeScript-Datei der Component aufgerufen werden. Die \texttt{getService()} Methode stellt einen HTTP-GET-Request an die \texttt{/service} Route der API. Die genaue URL der API wird aus den Environmentvariablen ausgelesen. Die Methode gibt jedoch nicht direkt die Response auf den Request zurück, sondern ein Objekt vom Typ Observable. Innerhalb des TypeScript-Datei des Components kann auf dieses Observable subscribed werden. Durch diese Herangehensweise wird ein asynchroner Aufruf an die API gesendet und bei einer Response das Ergebnis verarbeitet. Das Ergebnis ist hierbei eine Liste der verfügbaren KI-Services. Diese werden in der Variable \texttt{services} gespeichert.
+Ein asynchroner Aufruf wird an die API gesendet und bei einer Response das Ergebnis verarbeitet. Das Ergebnis ist eine Liste der verfügbaren KI-Services, die in der Variable \texttt{services} gespeichert werden:
 
 \begin{lstlisting}[language=Python, caption={Subscriben auf einen Observable}]
 this.serviceService.getServices().subscribe(res => {
@@ -536,7 +536,7 @@ this.serviceService.getServices().subscribe(res => {
 })
 \end{lstlisting}
 
-Im HTML des Service-Components wird die Liste der Services für ein Dropdown verwendet. Eine weitere Funktion von Angular sind Events. Ein Event kann von einem Component ausgelöst werden. Innerhalb des Components, dass das untergeordnete Component implementiert, kann auf dieses Event reagiert werden. Es besteht die Möglichkeit TypeScript Code auszuführen oder vordefinierte Funktionen aufzurufen. Im Dropdown wird das \texttt{changeEvent} abgefangen. Dieses löst aus, wenn der Nutzer ein neues Element aus dem Dropdown ausgewählt hat. Dabei wird die Funktion \texttt{serviceSelected()} aufgerufen.
+Im HTML des Service-Components wird die Liste der Services für ein Dropdown verwendet. In Angular werden Events bereitgestellt, die von einem Component ausgelöst werden können. Ein Component reagiert auf ein durch ein Sub-Component ausgelöstes Event. Innerhalb des Events wir die Funktionalität bereitgestellt, TypeScript-Code auszuführen oder vordefinierte Funktionen aufzurufen. Im Dropdown wird das \texttt{changeEvent} abgefangen. Bei der Auswahl eines neuen Elements aus dem Dropdown wird das Event ausgelöst. Die Funktion \texttt{serviceSelected()} wird durch das Event aufgerufen:
 
 \begin{lstlisting}[language=Python, caption={Dropdown zur Auswahl der Services}]
 <app-dropdown [elements]="services" (changeEvent)="serviceSelected($event)"></app-dropdown>
@@ -544,16 +544,16 @@ Im HTML des Service-Components wird die Liste der Services für ein Dropdown ver
 
 Die Tabelle für die Parameter nutzt ebenfalls \texttt{*ngFor}, um die einzelnen Reihen zu generieren. 
 
-Der letzte Component innerhalb des Services ist der \texttt{service.result} Component. Dieser zeigt ein Ergebnis aus dem KI-Service an. Das Ergebnis besteht dabei aus einer Überschrift und einem Body. Damit die Ergebnisse beim Frontend eintreffen, muss der Nutzer nach der Auswahl des Services auf den Execute-Button klicken. Dadurch wird im Angular-Service die Methode \texttt{sendRequests()} aufgerufen, die dafür sorgt, dass die Anfrage für den KI-Service an die API gesendet wird. Anschließend wird die Funktion \texttt{pollResponses(expectedResponses: number)} mit der Anzahl der erwarteten Ergebnisse aufgerufen. Diese führt in einem 200ms Intervall die \texttt{poll()} Funktion aus, die eine Anfrage an die API stellt, ob bereits neue Ergebnisse des KI-Service im Backend zwischengespeichert wurden. Falls dies der Fall sein sollte, werden die Ergebnisse in der Response mitgeteilt und die Anzahl der erhaltenen Ergebnisse hochgezählt. Die Schleife läuft so lange, bis die Anzahl der erhaltenen Ergebnisse gleich der Anzahl der erwarteten Ergebnisse ist. Für jedes Ergebnis wird ein \texttt{service.result} Component in einer \texttt{*ngFor} Schleife erzeugt. Die Auflistung der Ergebnisse, sowie die zuvor beschriebenen Elemente der Service-Kachel, sind in Abbildung 18 zu sehen. 
+Der letzte Component innerhalb des Services ist der \texttt{service.result}-Component, der ein Ergebnis aus dem KI-Service anzeigt. Das Ergebnis besteht aus einer Überschrift und einem Body. Damit die Ergebnisse beim Frontend eintreffen, muss der Nutzer nach der Auswahl des Services auf den Execute-Button klicken. Dadurch wird im Angular-Service die Methode \texttt{sendRequests()} aufgerufen, die Anfrage für den KI-Service an die API sendet. Anschließend wird die Funktion \texttt{pollResponses(expectedResponses: number)} mit der Anzahl der erwarteten Ergebnisse aufgerufen. Diese führt in einem 200ms Intervall die \texttt{poll()}-Funktion aus, die eine Anfrage an die API stellt, ob bereits neue Ergebnisse des KI-Service im Backend zwischengespeichert wurden. Falls dies der Fall sein sollte, werden die Ergebnisse in der Response mitgeteilt und die Anzahl der erhaltenen Ergebnisse hochgezählt. Die Schleife läuft, bis die Anzahl der erhaltenen Ergebnisse gleich der Anzahl der erwarteten Ergebnisse ist. Für jedes Ergebnis wird ein \texttt{service.result}-Component in einer \texttt{*ngFor} Schleife erzeugt. Abbildung 18 zeigt die Auflistung der Ergebnisse und die zuvor beschriebenen Elemente der Service-Kachel.
 
 \begin{figure}[H]
   \centering
     \includegraphics[width = 10cm]{bilder/websiteService}
-    \caption{Service Kachel im Frontend}
+    \caption{Service-Kachel im Frontend}
 \end{figure}
 
 \subsection{Deployment der Software mit Docker}
-Eine der Anforderungen von CONET war die plattformunabhängige Entwicklung der Schnittstelle. Aus diesem Grund wurden alle Bereiche der Softwarearchitektur über Docker-Container deploybar gemacht. Um eine eigens entwickelte Software in einen Container zu packen, muss zunächst ein Image aus der Software erstellt werden. Ein Image dient als Bauanleitung für den Container und enthält alle Dateien, die zur Ausführung des Programms benötigt werden. Ein Image kann über eine Docker-File generiert werden. Die Docker-File zur Erstellung des Images für das Backend ist nachfolgend abgebildet.
+Eine der Anforderungen von CONET war die plattformunabhängige Entwicklung der Schnittstelle. Sämtliche Bereiche der Softwarearchitektur sind daher über Docker-Container deploybar. Um eine entwickelte Software in einen Container zu packen, wird ein Docker-Image aus der Software erstellt. Ein Image dient als Bauanleitung für den Container und enthält sämtliche Dateien, die zur Ausführung des Programms benötigt werden. Ein Image kann über eine Docker-File generiert werden. Die Docker-File zur Erstellung des Images für das Backend ist nachfolgend abgebildet:
 
 \begin{lstlisting}[language=Python, caption={Beispiel einer Dockefile}]
 FROM python:3.10-slim
@@ -564,13 +564,12 @@ EXPOSE 80
 CMD ["python", "app.py"]
 \end{lstlisting}
 
-Innerhalb der Docker-File können Pakete aus dem Docker-Hub als Abhängigkeit angegeben werden, die beim Bauen des Images heruntergeladen werden. Im Falle des Backendes wird das Paket \texttt{python:3.10-slim} bezogen. Innerhalb der Dockerfile ist ebenfalls die Festlegung der Ordnerstruktur, sowie die Ausführung von Kommandos möglich.
+Innerhalb der Docker-File können Pakete aus dem Docker-Hub als Abhängigkeit angegeben werden, die beim Bauen des Images heruntergeladen werden. Im Falle des Backends wird das Paket \texttt{python:3.10-slim} bezogen. Innerhalb der Docker-File ist die Festlegung der Ordnerstruktur und die Ausführung von Kommandos möglich.
 
-Zum Bauen eines Images mithilfe der zuvor erstellten Docker-File wird der \texttt{build} Befehl benötigt. Für das Backend, den KI-Service, sowie das Frontend ist eine Docker-Compose-Datei zuständig. Die Docker-Compose-Datei kann in einer Linux- oder \ac{wsl}-Umgebung ausgeführt werden. Der dazu nötige Befehl lautet:
+Zum Bauen eines Images mithilfe der zuvor erstellten Docker-File wird der \texttt{build}-Befehl benötigt. Für das Backend, den KI-Service sowie das Frontend ist eine Docker-Compose-Datei zuständig, die in einer Linux- oder \ac{wsl}-Umgebung ausgeführt wird. Der Befehl zum Erstellen der Docker-Images lautet:
 \begin{lstlisting}[caption={Build Befehl zur Erstellung von Docker-Images aus einer Compose-Datei}]
 sudo docker compose -f '/path/to/compose/' build
 \end{lstlisting}
-Anschließend existieren drei Images in der Docker-Umgebung, die zum Bau der Container genutzt werden können. 
 
 \begin{lstlisting}[caption={Docker-Compose-Datei zum Bauen der Docker-Images}]
 version: '3.3'
@@ -589,7 +588,9 @@ services:
             network: host
 \end{lstlisting}
 
-Der nachfolgende Auszug aus der \texttt{docker-compose.core.yml} Datei zeigt die Bauanleitung für einen Container der MySQL-Datenbank. Innerhalb dieser Compose-Datei wird zunächst der Name des Services definiert. Unter diesem Namen ist der Docker-Container im Netzwerk durch andere Docker-Container erreichbar. Innerhalb des Services stehen mehrere Optionen zur Festlegung von Eigenschaften des Containers zur Verfügung. Über \texttt{ports} können ein oder mehrere Ports freigeschaltet werden, sodass der Container Zugriffe von außerhalb erlaubt. Im Bereich \texttt{volumes} stehen alle Ordner oder Dateien, die persistent gespeichert werden. Bei MySQL gibt es die Möglichkeit, ein initiales SQL-Skript anzugeben, welches nur bei der ersten Erstellung des Docker-Containers ausgeführt wird. Das SQL-Skript erstellt eine Datenbank und die benötigten Tabellen. Im \texttt{image} Bereich ist das Image zum Bauen des Containers angegeben. Dies ist entweder ein lokal vorhandenes oder ein im Docker-Hub angebotenes Image. Der letzte aufgeführte Punk \texttt{networks} beinhaltet das Netzwerk, in dem sich der Docker-Container befindet. Das Netzwerk wird benötigt, damit unterschiedliche Container miteinander kommunizieren können. Dazu muss sichergestellt werden, dass sämtliche Container im gleichen Netzwerk sind.
+Nach Ausführung der Compose-Datei sind drei Images in der Docker-Umgebung verfügbar, die zum Bau der Container genutzt werden. 
+
+Der Auszug aus der \texttt{docker-compose.core.yml}-Datei in Listing 32 zeigt die Bauanleitung für einen Container der MySQL-Datenbank. Innerhalb dieser Compose-Datei wird zunächst der Name des Services definiert. Unter diesem Namen ist der Docker-Container im Netzwerk von anderen Docker-Containern erreichbar. Innerhalb des Services stehen mehrere Optionen zur Festlegung von Eigenschaften des Containers zur Verfügung. Über \texttt{ports} können ein oder mehrere Ports freigeschaltet werden, um dem Container Zugriffe von außerhalb zu erlauben. Im Bereich \texttt{volumes} sind die Ordner oder Dateien enthalten, die persistent gespeichert werden. Bei MySQL gibt es die Möglichkeit, ein initiales SQL-Skript anzugeben, welches nur bei der ersten Erstellung des Docker-Containers ausgeführt wird. Das SQL-Skript erstellt eine Datenbank und die benötigten Tabellen. Im \texttt{image}-Bereich ist das Image zum Bauen des Containers angegeben. Dies ist entweder ein lokal vorhandenes oder ein im Docker-Hub angebotenes Image. Der Punkt \texttt{networks} beinhaltet den Namen des Netzwerks, in dem sich der Docker-Container befindet. Das Netzwerk wird benötigt, damit unterschiedliche Container miteinander kommunizieren können. Sämtliche Container müssen dazu im gleichen Netzwerk sein.
 
 \begin{lstlisting}[caption={Docker-Compose-Datei zum Aufsetzen und Starten der Container}]
 services:
@@ -613,12 +614,12 @@ volumes:
     mysql-conf:
 \end{lstlisting}
 
-Der Container kann mit folgendem Befehl gebaut und gestartet werden:
+Der Container wird mit folgendem Befehl gebaut und gestartet:
 \begin{lstlisting}[caption={Starten eines Docker-Containers}]
 sudo docker compose -f '/path/to/compose/' up -d
 \end{lstlisting}
 
-Sollte der Container anschließend wieder beendet werden, so wird folgender Befehl benötigt: 
+Beendet wird der Container mit folgendem Befehl:
 \begin{lstlisting}[caption={Beenden eines Docker-Containers}]
 sudo docker compose -f '/path/to/compose/' down
 \end{lstlisting}
