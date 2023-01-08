@@ -101,7 +101,9 @@
 \RedeclareSectionCommand[beforeskip=11pt,afterskip=5pt]{paragraph}
 
 \usepackage{sectsty}
+\setsansfont{Arial}
 \sectionfont{\fontsize{12}{0}\selectfont}
+
 
 % Kopfzeile und Fußzeile default
 \usepackage{lastpage}
@@ -297,8 +299,9 @@
 % des Schriftbildes geht. Hier gewaehlt, damit auf keinen Fall
 % Woerter im Blocksatz ueber den Rand laufen.
 \tolerance 9999
-
-
+%\hyphenpenalty 10000
+%\exhyphenpenalty 10000
+%\raggedright
 %%%%%%%%
 %Makros
 %%%%%%%%

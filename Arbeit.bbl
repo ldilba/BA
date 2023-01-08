@@ -173,6 +173,7 @@
       \field{labeltitlesource}{title}
       \field{title}{{Quick Guide für Studierende}}
       \field{year}{2022}
+      \true{nocite}
     \endentry
     \entry{Kunden}{online}{}
       \name{author}{1}{}{%
